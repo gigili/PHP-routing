@@ -78,13 +78,13 @@
 				return true;
 			}
 
-			foreach ($this->routes as $ruta) {
+			foreach ($this->routes as $route) {
 				if (is_null($ruta["regex"]) === FALSE) {
 					if (preg_match("/^{$ruta["regex"]}-{$_SERVER['REQUEST_METHOD']}/", $url) === 1) {
 						$urlIndex = $ruta["url"];
 
-						preg_match_all("/^{$ruta["regex"]}-{$_SERVER['REQUEST_METHOD']}/", $url, $tmpParams);
-						preg_match_all("/^{$ruta["regex"]}-{$_SERVER['REQUEST_METHOD']}/", $ruta["url"], $paramNames);
+						preg_match_all("/^{$route["regex"]}-{$_SERVER['REQUEST_METHOD']}/", $url, $tmpParams);
+						preg_match_all("/^{$route["regex"]}-{$_SERVER['REQUEST_METHOD']}/", $ruta["url"], $paramNames);
 						array_shift($tmpParams);
 						array_shift($paramNames);
 
