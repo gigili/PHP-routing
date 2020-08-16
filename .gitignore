@@ -1,2 +1,4 @@
 .idea/
 sample/logs
+vendor/
+*.lock

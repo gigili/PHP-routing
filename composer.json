@@ -1,0 +1,22 @@
+{
+  "name": "gac/routing",
+  "type": "class",
+  "description": "Custom routing class",
+  "keywords": [
+	"route",
+	"routing"
+  ],
+  "homepage": "https://github.com/gigili/PHP-routing",
+  "license": "GPL-3.0-only",
+  "authors": [
+	{
+	  "name": "Igor Ilić",
+	  "email": "igor@igorilic.net",
+	  "role": "Developer"
+	}
+  ],
+  "require": {
+	"php": ">=7.4",
+	"ext-json": "*"
+  }
+}
