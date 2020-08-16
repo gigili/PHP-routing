@@ -9,12 +9,12 @@
 		/**
 		 * @var array $routes List of available routs
 		 */
-		private $routes;
+		private array $routes;
 
 		/**
 		 * Constructor function used to initialize the Routes class
 		 */
-		public function construct() {
+		public function __construct() {
 			$this->routes = [];
 		}
 
@@ -24,11 +24,12 @@
 		 * @param string $url URL of the rout
 		 * @param null|callable $callback Callback method or an anonymous function to be executed
 		 * @param null|array $params Parameters to be sent to the callback function
-		 * @param string $method Allowed request methods (GET, POST, PUT...)
+		 * @param array $method Allowed request methods (GET, POST, PUT...)
 		 *
+		 * @return Routes returns the instance of the Routes class
 		 * @throws Exception Throws an exception when you try to declare and already existing route
 		 */
-		public function add($url = "", $callback = NULL, $params = [], $method = "GET") {
+		public function add(string $url = "", callable $callback = NULL, array $params = [], array $method = ["GET"]): self {
 			if (is_string($method)) {
 				$method = [$method];
 			}
@@ -57,34 +58,42 @@
 					"callback" => $callback,
 					"allowed_method" => $m,
 					"params" => $params,
-					"regex" => $nUrl
+					"regex" => $nUrl,
+					"middleware" => []
 				];
 			}
+
+			return $this;
 		}
 
 		/**
 		 * Method which handles all the routing and mapping of dynamic routes
 		 *
 		 * @return Boolean Returns true if the route was found and called or false with a 404 status code on error
+		 * @throws Exception Throws an exception if the middleware function can't be found
 		 */
-		public function route() {
+		public function route(): bool {
 			$url = isset($_GET['myUri']) ? $_GET['myUri'] : "";
 			$url = rtrim($url, "/");
 			$url .= "-{$_SERVER['REQUEST_METHOD']}";
 			$url = ltrim($url, "-");
 
 			if (isset($this->routes[$url]) && $this->routes[$url]["allowed_method"] == $_SERVER["REQUEST_METHOD"]) {
+				if (count($this->routes[$url]["middleware"]) > 0) {
+					$this->execute_middleware($this->routes[$url]["middleware"]);
+				}
+
 				$this->routes[$url]["callback"]($this->routes[$url]["params"]);
 				return true;
 			}
 
 			foreach ($this->routes as $route) {
-				if (is_null($ruta["regex"]) === FALSE) {
-					if (preg_match("/^{$ruta["regex"]}-{$_SERVER['REQUEST_METHOD']}/", $url) === 1) {
-						$urlIndex = $ruta["url"];
+				if (is_null($route["regex"]) === FALSE) {
+					if (preg_match("/^{$route["regex"]}-{$_SERVER['REQUEST_METHOD']}/", $url) === 1) {
+						$urlIndex = $route["url"];
 
 						preg_match_all("/^{$route["regex"]}-{$_SERVER['REQUEST_METHOD']}/", $url, $tmpParams);
-						preg_match_all("/^{$route["regex"]}-{$_SERVER['REQUEST_METHOD']}/", $ruta["url"], $paramNames);
+						preg_match_all("/^{$route["regex"]}-{$_SERVER['REQUEST_METHOD']}/", $route["url"], $paramNames);
 						array_shift($tmpParams);
 						array_shift($paramNames);
 
@@ -97,6 +106,10 @@
 							$params = array_merge($params, $this->routes[$urlIndex]["params"]);
 						}
 
+						if (count($this->routes[$urlIndex]["middleware"]) > 0) {
+							$this->execute_middleware($this->routes[$urlIndex]["middleware"]);
+						}
+
 						$this->routes[$urlIndex]["callback"]($params);
 						return true;
 					}
@@ -105,5 +118,70 @@
 
 			header('HTTP/1.1 404 Not Found');
 			return false;
+		}
+
+		/**
+		 * Method used to set the middleware to be run before accessing API endpoint
+		 *
+		 * @param array $data List of methods to be executed before accessing the endpoint
+		 *
+		 * @return Routes returns an instance of it self so that the next method can be chained onto it.
+		 * @throws Exception If the specified method is not found
+		 */
+		public function middleware(array $data): self {
+			$routeKeys = array_keys($this->routes);
+			$tmpRoute = $this->routes[$routeKeys[count($routeKeys) - 1]]["url"];
+
+			foreach ($data as $function) {
+				$param = NULL;
+
+				if (!is_string($function)) {
+					$param = $function[1];
+					$function = $function[0];
+				}
+
+				if (function_exists($function)) {
+					if (!is_null($param)) {
+						array_push($this->routes[$tmpRoute]["middleware"], [$function, $param]);
+					} else {
+						array_push($this->routes[$tmpRoute]["middleware"], $function);
+					}
+				} else {
+					throw new Exception("Function $function doesn't exists");
+				}
+			}
+
+			return $this;
+		}
+
+		/**
+		 * Method which executes each specified middleware before the endpoint is called
+		 *
+		 * @param array $data List of methods to be executed before accessing the endpoint
+		 *
+		 * @return Routes returns an instance of it self so that the next method can be chained onto it.
+		 * @throws Exception If the specified method is not found
+		 */
+		private function execute_middleware(array $data): self {
+			foreach ($data as $function) {
+				$param = NULL;
+
+				if (!is_string($function)) {
+					$param = $function[1];
+					$function = $function[0];
+				}
+
+				if (function_exists($function)) {
+					if (!is_null($param)) {
+						$function(is_array($param) && count($param) === 1 ? $param[0] : $param);
+					} else {
+						$function();
+					}
+				} else {
+					throw new Exception("Function $function doesn't exists");
+				}
+			}
+
+			return $this;
 		}
 	}
