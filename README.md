@@ -10,18 +10,21 @@ try{
 	$input = json_decode(file_get_contents("php://input"));
 
 	$routes->add("/", function(){ 
-		echo "Welcome"
+		echo "Welcome";
 	});
 
-	$routes->add("/blog/:id", function($request){
-		echo "Post id: {$prequest['id']}";
-	}, $input, ["POST", "PATCH"]); // Only allow POST or PATCH requests to this route
-	
-	$routes->add("blog/:id", deleteBlogPost($postData), $input, ["DELETE"]);
+	$routes->add("/blog/:id", function($request){ 
+        echo "Post id: {$request['id']}"; 
+    }, $input, ["POST", "PATCH"])->middleware(["verify_token"]); // Only allow POST or PATCH requests to this route
+    
+    
+
+    $routes->route();
 }catch( Exception $ex){
   echo "Error: {$ex->getMessage()}";
 }
 ```
+
 
 To use this class properly you will need to create a `.htaccess` file at the root of the project.
 
@@ -39,9 +42,13 @@ RewriteRule ^(.+)$ index.php?myUri=$1 [QSA,L]
 
 Do **NOT** change the `?myUri=$1` part in the `.htaccess` file as that will prevent the class from working.
 
+
+## Note ##
+When using middleware make sure the middleware function has benn declared before the Routes class import.  
+
 # Features
 
 * [x] Static routes
 * [x] Dynamic routes
-* [] Middlewares 
+* [x] Middleware 
 * [] Prefixing routes 
