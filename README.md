@@ -4,6 +4,10 @@ This class allows you to create static or dynamic routes. This class was inspire
 # Example
 
 ```php
+function verify_token(string $token = ""){
+	echo "Token: $token";
+}
+
 include_once("Routes.php");
 try{
 	$routes = new Routes();
@@ -15,10 +19,10 @@ try{
 
 	$routes->add("/blog/:id", function($request){ 
         echo "Post id: {$request['id']}"; 
-    }, $input, ["POST", "PATCH"])->middleware(["verify_token"]); // Only allow POST or PATCH requests to this route
+    }, $input, ["POST", "PATCH"])->middleware([
+    	["verify_token", "token123"]
+    ]); // Only allow POST or PATCH requests to this rout
     
-    
-
     $routes->route();
 }catch( Exception $ex){
   echo "Error: {$ex->getMessage()}";
