@@ -1,6 +1,17 @@
 # Custom routing class for PHP
 This class allows you to create static or dynamic routes. This class was inspired by [PHP Slim framework](https://www.slimframework.com/)
 
+[![License](https://poser.pugx.org/gac/routing/license)](//packagist.org/packages/gac/routing) [![Total Downloads](https://poser.pugx.org/gac/routing/downloads)](//packagist.org/packages/gac/routing)
+
+# Install via composer
+
+`
+composer require gac/routing
+`
+
+# Manual install 
+Download the `Routes.php` file and include it.
+
 # Example
 
 ```php
