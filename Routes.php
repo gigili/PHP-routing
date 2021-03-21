@@ -26,8 +26,7 @@
 		 * Method used for adding new routes
 		 *
 		 * @param string $url URL of the rout
-		 * @param null|callable $callback Callback method or an anonymous function to be executed
-		 * @param array $params Parameters to be sent to the callback function
+		 * @param string|null|callable $callback Callback method or an anonymous function to be executed
 		 * @param array $method Allowed request methods (GET, POST, PUT...)
 		 *
 		 * @return Routes returns the instance of the Routes utility
