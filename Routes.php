@@ -1,8 +1,12 @@
 <?php
 
+	namespace Gac\Routing;
+
+	use Exception;
+	use Gac\Routing\Exceptions\RouteNotFoundException;
 
 	/**
-	 * Custom routing class
+	 * Custom routing utility
 	 */
 	class Routes
 	{
@@ -12,7 +16,7 @@
 		private array $routes;
 
 		/**
-		 * Constructor function used to initialize the Routes class
+		 * Constructor function used to initialize the Routes utility
 		 */
 		public function __construct() {
 			$this->routes = [];
@@ -23,17 +27,13 @@
 		 *
 		 * @param string $url URL of the rout
 		 * @param null|callable $callback Callback method or an anonymous function to be executed
-		 * @param null|array $params Parameters to be sent to the callback function
+		 * @param array $params Parameters to be sent to the callback function
 		 * @param array $method Allowed request methods (GET, POST, PUT...)
 		 *
-		 * @return Routes returns the instance of the Routes class
+		 * @return Routes returns the instance of the Routes utility
 		 * @throws Exception Throws an exception when you try to declare and already existing route
 		 */
-		public function add(string $url = "", callable $callback = NULL, array $params = [], array $method = ["GET"]): self {
-			if (is_string($method)) {
-				$method = [$method];
-			}
-
+		public function add(string $url = "", callable $callback = NULL, array $method = ["GET"]): self {
 			$tmpUrl = $url;
 
 			foreach ($method as $m) {
@@ -48,7 +48,7 @@
 				}
 
 				$nUrl = NULL;
-				if (strpos($url, ":") !== FALSE) {
+				if (strpos($url, ":") !== false) {
 					$nUrl = preg_replace("/(:[\w\-_]+)/", "([\w\-\_\:]+)", $url);
 					$nUrl = str_replace("/", "\/", $nUrl);
 				}
@@ -57,7 +57,7 @@
 					"url" => $url,
 					"callback" => $callback,
 					"allowed_method" => $m,
-					"params" => $params,
+					"params" => [],
 					"regex" => $nUrl,
 					"middleware" => []
 				];
@@ -70,7 +70,7 @@
 		 * Method which handles all the routing and mapping of dynamic routes
 		 *
 		 * @return Boolean Returns true if the route was found and called or false with a 404 status code on error
-		 * @throws Exception Throws an exception if the middleware function can't be found
+		 * @throws RouteNotFoundException|Exception Throws an exception if the middleware function can't be found
 		 */
 		public function route(): bool {
 			$url = isset($_GET['myUri']) ? $_GET['myUri'] : "";
@@ -115,9 +115,7 @@
 					}
 				}
 			}
-
-			header('HTTP/1.1 404 Not Found');
-			return false;
+			throw new RouteNotFoundException();
 		}
 
 		/**
