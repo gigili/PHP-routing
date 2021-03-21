@@ -1,7 +1,6 @@
 {
 	"name": "gac/routing",
 	"type": "class",
-	"version": "1.0.5",
 	"description": "Custom routing class",
 	"homepage": "https://github.com/gigili/PHP-routing",
 	"license": "GPL-3.0-only",
