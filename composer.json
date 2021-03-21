@@ -19,5 +19,10 @@
 	"require": {
 		"php": ">=7.4",
 		"ext-json": "*"
+	},
+	"autoload": {
+		"psr-4": {
+			"Gac\\Routing\\": "./"
+		}
 	}
 }
