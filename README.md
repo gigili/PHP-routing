@@ -15,28 +15,38 @@ Download the `Routes.php` file and include it.
 # Example
 
 ```php
-function verify_token(string $token = ""){
-	echo "Token: $token";
+use Gac\Routing\Exceptions\RouteNotFoundException;
+use Gac\Routing\Routes;
+
+function verify_token(?string $token = "") {
+    echo "Token: $token<br/>";
 }
 
-include_once("Routes.php");
-try{
-	$routes = new Routes();
-	$input = json_decode(file_get_contents("php://input"));
+# include_once "../Routes.php"; IF NOT USING composer
 
-	$routes->add("/", function(){ 
-		echo "Welcome";
-	});
+try {
+    $routes = new Routes();
 
-	$routes->add("/blog/:id", function($request){ 
-        echo "Post id: {$request['id']}"; 
-    }, $input, ["POST", "PATCH"])->middleware([
-    	["verify_token", "token123"]
-    ]); // Only allow POST or PATCH requests to this rout
-    
+    $routes->add('/', function () {
+        echo "Welcome";
+    })->middleware([
+        ["verify_token", "test"]
+    ]);
+
+    $routes->add('/test', function () {
+        echo "Welcome to test route";
+    });
+
+    $routes->add('/test_middleware', function () {
+        echo "This will call middleware function without passing the parameter";
+    })->middleware(["verify_token"]);
+
     $routes->route();
-}catch( Exception $ex){
-  echo "Error: {$ex->getMessage()}";
+} catch (RouteNotFoundException $ex) {
+    header("HTTP/1.1 404");
+    echo "Route not found";
+} catch (Exception $ex) {
+    die("API Error: {$ex->getMessage()}");
 }
 ```
 
