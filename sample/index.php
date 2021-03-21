@@ -1,9 +1,13 @@
 <?php
+
+	use Gac\Routing\Exceptions\RouteNotFoundException;
+	use Gac\Routing\Routes;
+
 	function verify_token(?string $token = "") {
 		echo "Token: $token<br/>";
 	}
 
-	include_once "../Routes.php";
+	# include_once "../Routes.php"; IF NOT USING composer
 
 	try {
 		$routes = new Routes();
@@ -23,6 +27,9 @@
 		})->middleware(["verify_token"]);
 
 		$routes->route();
+	} catch (RouteNotFoundException $ex) {
+		header("HTTP/1.1 404");
+		echo "Route not found";
 	} catch (Exception $ex) {
-
+		die("API Error: {$ex->getMessage()}");
 	}
