@@ -50,6 +50,9 @@
 				if (str_contains($url, ":")) {
 					$nUrl = preg_replace("/(:[\w\-_]+)/", "([\w\-\_\:]+)", $url);
 					$nUrl = str_replace("/", "\/", $nUrl);
+					if (!str_contains($nUrl, "-{$m}")) {
+						$nUrl .= "-{$m}";
+					}
 					$nUrl .= "$";
 				}
 
@@ -96,6 +99,8 @@
 						preg_match_all("/^{$route["regex"]}/", $route["url"], $paramNames);
 						array_shift($tmpParams);
 						array_shift($paramNames);
+
+						dd($this->routes);
 
 						$params = [];
 						for ($x = 0; $x < count($paramNames); $x++) {
