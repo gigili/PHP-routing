@@ -50,6 +50,7 @@
 				if (str_contains($url, ":")) {
 					$nUrl = preg_replace("/(:[\w\-_]+)/", "([\w\-\_\:]+)", $url);
 					$nUrl = str_replace("/", "\/", $nUrl);
+					$nUrl .= "$";
 				}
 
 				$this->routes[$url] = [
@@ -87,18 +88,18 @@
 			}
 
 			foreach ($this->routes as $route) {
-				if (is_null($route["regex"]) === FALSE) {
+				if (!is_null($route["regex"])) {
 					if (preg_match("/^{$route["regex"]}/", $url) === 1) {
 						$urlIndex = $route["url"];
 
-						preg_match_all("/^{$route["regex"]}-{$_SERVER['REQUEST_METHOD']}/", $url, $tmpParams);
-						preg_match_all("/^{$route["regex"]}-{$_SERVER['REQUEST_METHOD']}/", $route["url"], $paramNames);
+						preg_match_all("/^{$route["regex"]}/", $url, $tmpParams);
+						preg_match_all("/^{$route["regex"]}/", $route["url"], $paramNames);
 						array_shift($tmpParams);
 						array_shift($paramNames);
 
 						$params = [];
 						for ($x = 0; $x < count($paramNames); $x++) {
-							$params[str_replace(":", "", $paramNames[$x][0])] = $tmpParams[$x][0];
+							$params[str_replace(":", "", $paramNames[$x][0] ?? "")] = $tmpParams[$x][0] ?? "";
 						}
 
 						if (is_array($this->routes[$urlIndex]["params"])) {
