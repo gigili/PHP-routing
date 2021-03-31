@@ -47,7 +47,7 @@
 				}
 
 				$nUrl = NULL;
-				if (strpos($url, ":") !== false) {
+				if (str_contains($url, ":")) {
 					$nUrl = preg_replace("/(:[\w\-_]+)/", "([\w\-\_\:]+)", $url);
 					$nUrl = str_replace("/", "\/", $nUrl);
 				}
@@ -88,7 +88,7 @@
 
 			foreach ($this->routes as $route) {
 				if (is_null($route["regex"]) === FALSE) {
-					if (preg_match("/^{$route["regex"]}-{$_SERVER['REQUEST_METHOD']}/", $url) === 1) {
+					if (preg_match("/^{$route["regex"]}/", $url) === 1) {
 						$urlIndex = $route["url"];
 
 						preg_match_all("/^{$route["regex"]}-{$_SERVER['REQUEST_METHOD']}/", $url, $tmpParams);
