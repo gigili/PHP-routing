@@ -1,10 +1,10 @@
 <?php
 	/**
-	 * Custom routing utility
+	 * Custom routing library
 	 *
 	 * @author Igor Ilić <github@igorilic.net>
 	 * @package \Gac\Routing
-	 * @copyright 2021 Igor Ilić
+	 * @copyright 2020-2021 Igor Ilić
 	 * @license GNU General Public License v3.0
 	 *
 	 */
