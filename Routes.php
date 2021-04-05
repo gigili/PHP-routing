@@ -1,68 +1,73 @@
 <?php
+	/**
+	 * Custom routing utility
+	 *
+	 * @author Igor Ilić <github@igorilic.net>
+	 * @package \Gac\Routing
+	 * @copyright 2021 Igor Ilić
+	 * @license GNU General Public License v3.0
+	 *
+	 */
 
 	namespace Gac\Routing;
 
-	use Exception;
+	use Gac\Routing\Exceptions\CallbackNotFound;
 	use Gac\Routing\Exceptions\RouteNotFoundException;
+	use JetBrains\PhpStorm\Pure;
 
-	/**
-	 * Custom routing utility
-	 */
+
 	class Routes
 	{
+		public const GET = "GET";
+		public const POST = "POST";
+		public const PUT = "PUT";
+		public const PATCH = "PATCH";
+		public const DELETE = "DELETE";
+
+		/**
+		 * @var Request $request Instance of a Request class to be passed as an argument to routes callback
+		 */
+		public Request $request;
+
 		/**
 		 * @var array $routes List of available routs
 		 */
-		private array $routes;
+		private array $routes = [];
 
 		/**
-		 * Constructor function used to initialize the Routes utility
+		 * @var string $prefix Prefix to be added to routes being created
 		 */
+		private string $prefix = "";
+
+		/**
+		 * @var array $middlewares List of middlewares to be executed before accessing a route
+		 */
+		private array $middlewares = [];
+
 		public function __construct() {
-			$this->routes = [];
+			$this->request = new Request();
 		}
 
 		/**
 		 * Method used for adding new routes
 		 *
-		 * @param string $url URL of the rout
-		 * @param string|null|callable $callback Callback method or an anonymous function to be executed
-		 * @param array $method Allowed request methods (GET, POST, PUT...)
+		 * @param string $path Path for the route
+		 * @param callable|array|string $callback Callback method or an anonymous function to be executed
+		 * @param string|array $methods Allowed request method(s) (GET, POST, PUT...)
 		 *
 		 * @return Routes returns the instance of the Routes utility
-		 * @throws Exception Throws an exception when you try to declare and already existing route
 		 */
-		public function add(string $url = "", callable|string|null $callback = NULL, array $method = ["GET"]): self {
-			$tmpUrl = $url;
+		public function add(string $path, callable|array|string $callback, string|array $methods = ["GET"]): self {
+			if (is_string($methods)) $methods = [$methods];
 
-			foreach ($method as $m) {
-				$url = $tmpUrl;
-				$url = trim($url, "/");
-				$url = preg_replace("/\s/", "-", $url);
-				$url .= "-$m";
-				$url = ltrim($url, "-");
+			if (!empty($this->prefix)) $path = "{$this->prefix}{$path}"; // Prepend prefix to routes
 
-				if (isset($this->routes[$url]) && $this->routes[$url]['allowed_method'] == $method) {
-					throw new Exception("The specified path: ( $tmpUrl | $method ) already exists!", 50001);
-				}
+			if ($path !== "/") $path = rtrim($path, "/");
 
-				$nUrl = NULL;
-				if (str_contains($url, ":")) {
-					$nUrl = preg_replace("/(:[\w\-_]+)/", "([\w\-\_\:]+)", $url);
-					$nUrl = str_replace("/", "\/", $nUrl);
-					if (!str_contains($nUrl, "-{$m}")) {
-						$nUrl .= "-{$m}";
-					}
-					$nUrl .= "$";
-				}
-
-				$this->routes[$url] = [
-					"url" => $url,
+			foreach ($methods as $method) {
+				$this->routes[$method][$path] = [
 					"callback" => $callback,
-					"allowed_method" => $m,
-					"params" => [],
-					"regex" => $nUrl,
-					"middleware" => []
+					"middlewares" => $this->middlewares
 				];
 			}
 
@@ -70,57 +75,36 @@
 		}
 
 		/**
-		 * Method which handles all the routing and mapping of dynamic routes
+		 * Method used to handle calling methods that will
 		 *
-		 * @return Boolean Returns true if the route was found and called or false with a 404 status code on error
-		 * @throws RouteNotFoundException|Exception Throws an exception if the middleware function can't be found
+		 * @throws RouteNotFoundException|CallbackNotFound
 		 */
-		public function route(): bool {
-			$url = isset($_GET['myUri']) ? $_GET['myUri'] : "";
-			$url = rtrim($url, "/");
-			$url .= "-{$_SERVER['REQUEST_METHOD']}";
-			$url = ltrim($url, "-");
+		public function route() {
+			$path = $this->getPath();
+			$method = $_SERVER["REQUEST_METHOD"];
 
-			if (isset($this->routes[$url]) && $this->routes[$url]["allowed_method"] == $_SERVER["REQUEST_METHOD"]) {
-				if (count($this->routes[$url]["middleware"]) > 0) {
-					$this->execute_middleware($this->routes[$url]["middleware"]);
-				}
+			$route = $this->routes[$method][$path] ?? false;
+			if ($route === false) throw new RouteNotFoundException("Route {$path} not found", 404);
 
-				$this->routes[$url]["callback"]($this->routes[$url]["params"]);
-				return true;
+			$middlewares = $route["middlewares"] ?? [];
+			$this->execute_middleware($middlewares);
+
+			$callback = $route["callback"] ?? false;
+			if ($callback === false) throw new CallbackNotFound("No callback specified for {$path}", 404);
+
+			if ((is_string($callback) && class_exists($callback)) || is_array($callback)) {
+				$controller = is_string($callback) ? new $callback : new $callback[0]; // make a new instance of a controller class
+				$fn = is_string($callback) ? "index" : $callback[1] ?? "index"; // get the method to be execute or fallback to index method
+				$callback = [$controller, $fn];
 			}
 
-			foreach ($this->routes as $route) {
-				if (!is_null($route["regex"])) {
-					if (preg_match("/^{$route["regex"]}/", $url) === 1) {
-						$urlIndex = $route["url"];
+			if (!is_callable($callback)) throw new CallbackNotFound("Unable to execute callback for {$path}", 404);
+			call_user_func($callback, $this->request);
+		}
 
-						preg_match_all("/^{$route["regex"]}/", $url, $tmpParams);
-						preg_match_all("/^{$route["regex"]}/", $route["url"], $paramNames);
-						array_shift($tmpParams);
-						array_shift($paramNames);
-
-						dd($this->routes);
-
-						$params = [];
-						for ($x = 0; $x < count($paramNames); $x++) {
-							$params[str_replace(":", "", $paramNames[$x][0] ?? "")] = $tmpParams[$x][0] ?? "";
-						}
-
-						if (is_array($this->routes[$urlIndex]["params"])) {
-							$params = array_merge($params, $this->routes[$urlIndex]["params"]);
-						}
-
-						if (count($this->routes[$urlIndex]["middleware"]) > 0) {
-							$this->execute_middleware($this->routes[$urlIndex]["middleware"]);
-						}
-
-						$this->routes[$urlIndex]["callback"]($params);
-						return true;
-					}
-				}
-			}
-			throw new RouteNotFoundException();
+		public function prefix(string $prefix = ""): self {
+			$this->prefix = $prefix;
+			return $this;
 		}
 
 		/**
@@ -129,43 +113,21 @@
 		 * @param array $data List of methods to be executed before accessing the endpoint
 		 *
 		 * @return Routes returns an instance of it self so that the next method can be chained onto it.
-		 * @throws Exception If the specified method is not found
+		 * @throws RouteNotFoundException If the specified method is not found
 		 */
 		public function middleware(array $data): self {
-			$routeKeys = array_keys($this->routes);
-			$tmpRoute = $this->routes[$routeKeys[count($routeKeys) - 1]]["url"];
-
-			foreach ($data as $function) {
-				$param = NULL;
-
-				if (!is_string($function)) {
-					$param = $function[1];
-					$function = $function[0];
-				}
-
-				if (function_exists($function)) {
-					if (!is_null($param)) {
-						array_push($this->routes[$tmpRoute]["middleware"], [$function, $param]);
-					} else {
-						array_push($this->routes[$tmpRoute]["middleware"], $function);
-					}
-				} else {
-					throw new Exception("Function $function doesn't exists");
-				}
-			}
-
+			$this->middlewares = $data;
 			return $this;
 		}
 
 		/**
-		 * Method which executes each specified middleware before the endpoint is called
+		 * Method which executes each specified middleware before the routes method is called
 		 *
 		 * @param array $data List of methods to be executed before accessing the endpoint
 		 *
-		 * @return Routes returns an instance of it self so that the next method can be chained onto it.
-		 * @throws Exception If the specified method is not found
+		 * @throws CallbackNotFound When the specified middleware method is not found
 		 */
-		private function execute_middleware(array $data): self {
+		private function execute_middleware(array $data) {
 			foreach ($data as $function) {
 				$param = NULL;
 
@@ -174,17 +136,34 @@
 					$function = $function[0];
 				}
 
-				if (function_exists($function)) {
-					if (!is_null($param)) {
-						$function(is_array($param) && count($param) === 1 ? $param[0] : $param);
-					} else {
-						$function();
-					}
-				} else {
-					throw new Exception("Function $function doesn't exists");
-				}
-			}
+				if (!is_callable($function)) throw new CallbackNotFound("Middleware method {$function} not found", 404);
 
-			return $this;
+				call_user_func($function, $param);
+			}
+		}
+
+		#[Pure] private function getPath(): string {
+			$path = $_SERVER["REQUEST_URI"];
+			$position = strpos($path, "?");
+
+			$path = ($path !== "/") ? rtrim($path, "/") : $path;
+			return ($position === false) ? $path : substr($path, 0, $position);
+		}
+	}
+
+	if (!function_exists("dump")) {
+		function dump($data = [], $asJSON = false) {
+			if ($asJSON) {
+				echo json_encode($data);
+			} else {
+				echo "<pre>";
+				print_r($data);
+			}
+		}
+	}
+	if (!function_exists("dd")) {
+		function dd($data = [], $asJSON = false) {
+			dump($data, $asJSON);
+			die(1);
 		}
 	}
