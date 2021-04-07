@@ -6,7 +6,6 @@
 	use Gac\Routing\Routes;
 	use Gac\Routing\sample\HomeController;
 	use Gac\Routing\sample\Middleware;
-	use JetBrains\PhpStorm\NoReturn;
 
 	#include_once "../Routes.php"; # IF YOU'RE NOT USING composer
 	#include_once "HomeController.php"; # IF YOU'RE NOT USING composer
@@ -70,13 +69,4 @@
 
 	function verify_token() {
 		//Do something
-	}
-
-	function dump($data) {
-		echo json_encode($data);
-	}
-
-	#[NoReturn] function dd($data) {
-		dump($data);
-		die(1);
 	}

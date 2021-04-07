@@ -27,7 +27,7 @@
 		 *
 		 * @return mixed|null Body argument value or NULL if the argument doesn't exist
 		 */
-		public function get(string $key = "") {
+		public function get(string $key = ""): mixed {
 			return $this->data[$key] ?? NULL;
 		}
 
@@ -42,7 +42,6 @@
 			$headers = getallheaders();
 			return empty($key) ? $headers : $headers[$key] ?? NULL;
 		}
-
 
 		/**
 		 * Sets the header status code for the response
