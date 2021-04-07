@@ -2,7 +2,7 @@
 
 This library allows you to create static or dynamic routes. This library was inspired by [PHP Slim framework](https://www.slimframework.com/)
 
-[![License](https://poser.pugx.org/gac/routing/license)](//packagist.org/packages/gac/routing) [![Total Downloads](https://poser.pugx.org/gac/routing/downloads)](//packagist.org/packages/gac/routing)
+[![License](https://poser.pugx.org/gac/routing/license)](https://packagist.org/packages/gac/routing) [![Total Downloads](https://poser.pugx.org/gac/routing/downloads)](https://packagist.org/packages/gac/routing)
 
 ## Install via composer
 
@@ -62,6 +62,8 @@ try {
             ->status(200, "OK")
             ->send(["message" => "Welcome"]);
     });
+    
+    $routes->route();
 } catch (RouteNotFoundException $ex) {
     $routes->request->status(404, "Route not found")->send(["error" => ["message" => $ex->getMessage()]]);
 } catch (CallbackNotFound $ex) {
