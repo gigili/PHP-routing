@@ -3,7 +3,7 @@
 This library allows you to create static or dynamic routes. This library was inspired by [PHP Slim framework](https://www.slimframework.com/)
 
 [![License](https://poser.pugx.org/gac/routing/license)](https://packagist.org/packages/gac/routing) [![Total Downloads](https://poser.pugx.org/gac/routing/downloads)](https://packagist.org/packages/gac/routing)
-
+[![Codeship Status for gigili/PHP-routing](https://app.codeship.com/projects/b15c6d6a-cc6c-43fd-b378-88cc29e25692/status?branch=master)](https://app.codeship.com/projects/441403)
 ## Install via composer
 
 ```shell
