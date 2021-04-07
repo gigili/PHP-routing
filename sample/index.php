@@ -40,6 +40,8 @@
 			echo "Dynamic route here";
 		});
 
+		// $routes->add("/test/{int:userID}-{username}/{float:amount}/{bool:valid}", [HomeController::class, "test"]); # It works like this also
+
 		$routes->route();
 	} catch (RouteNotFoundException $ex) {
 		$routes->request->status(404, "Route not found")->send(["error" => ["message" => $ex->getMessage()]]);

@@ -43,9 +43,38 @@ RewriteRule ^(.+)$ index.php [QSA,L]
 
 If you've named your main file differently, replace `index.php` in the `.htaccess` file with that ever your main application file is.
 
-# Features
+## Quick start
+
+Sample code to allow you to quickly start with your development.
+
+```php
+use Gac\Routing\Exceptions\CallbackNotFound;
+use Gac\Routing\Exceptions\RouteNotFoundException;
+use Gac\Routing\Request;
+use Gac\Routing\Routes;
+
+include_once "vendor/autoload.php"; # IF YOU'RE USING composer
+
+$routes = new Routes();
+try {
+    $routes->add('/', function (Request $request) {
+        $request
+            ->status(200, "OK")
+            ->send(["message" => "Welcome"]);
+    });
+} catch (RouteNotFoundException $ex) {
+    $routes->request->status(404, "Route not found")->send(["error" => ["message" => $ex->getMessage()]]);
+} catch (CallbackNotFound $ex) {
+    $routes->request->status(404, "Callback method not found")->send(["error" => ["message" => $ex->getMessage()]]);
+} catch (Exception $ex) {
+    $code = $ex->getCode() ?? 500;
+    $routes->request->status($code)->send(["error" => ["message" => $ex->getMessage()]]);
+}
+```
+
+## Features
 
 * [x] Static routes
 * [x] Dynamic routes
-* [x] Middleware
+* [x] Middlewares
 * [x] Prefixing routes 

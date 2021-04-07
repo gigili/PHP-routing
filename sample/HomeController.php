@@ -33,4 +33,8 @@
 		public function deleteUser(Request $request) {
 			$request->send(["message" => "Hello from controller::home"]);
 		}
+
+		public function test(Request $request, int $userID, string $username, float $amount, bool $valid) {
+			echo "Dynamic route here";
+		}
 	}
