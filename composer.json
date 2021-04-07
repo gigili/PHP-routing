@@ -1,18 +1,35 @@
 {
 	"name": "gac/routing",
-	"type": "class",
-	"description": "Custom routing library",
+	"type": "library",
+	"description": "Custom routing library especially useful for API development",
 	"homepage": "https://github.com/gigili/PHP-routing",
 	"license": "GPL-3.0-only",
 	"keywords": [
 		"route",
-		"routing"
+		"routing",
+		"libray",
+		"middleware",
+		"api"
 	],
 	"authors": [
 		{
 			"name": "Igor Ilić",
 			"email": "github@igorilic.net",
 			"role": "Developer"
+		}
+	],
+	"support": {
+		"email": "github@igorilic.net",
+		"issues": "https://github.com/gigili/PHP-routing"
+	},
+	"funding": [
+		{
+			"type": "paypal",
+			"url": "https://paypal.me/igorili"
+		},
+		{
+			"type": "ko-fi",
+			"url": "https://ko-fi.com/igorilic"
 		}
 	],
 	"require": {

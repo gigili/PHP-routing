@@ -19,7 +19,7 @@
 				->send(["message" => "Welcome"]);
 		});
 
-		$routes->add('/test', "test_route_function");
+		$routes->add('/test', "test_route_function", [Routes::GET, Routes::POST]);
 
 		$routes->prefix("/user")
 			->middleware(["verify_token"])
@@ -28,6 +28,17 @@
 			->add("/", [HomeController::class, "updateUser"], Routes::PATCH)
 			->add("/", [HomeController::class, "replaceUser"], Routes::PUT)
 			->add("/", [HomeController::class, "deleteUser"], Routes::DELETE);
+
+
+		$routes->add("/test/{int:userID}-{username}/{float:amount}/{bool:valid}", function (
+			Request $request,
+			int $userID,
+			string $username,
+			float $amount,
+			bool $valid
+		) {
+			echo "Dynamic route here";
+		});
 
 		$routes->route();
 	} catch (RouteNotFoundException $ex) {
