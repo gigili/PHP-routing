@@ -27,4 +27,11 @@
 			$this->routes->middleware(["test"])->add("/middleware", []);
 			$this->assertTrue($this->routes->getRoutes()["GET"]["/middleware"]["middlewares"][0] == "test", "Unable to add middleware");
 		}
+
+		public function testCannAddPrefix() {
+			$this->routes->prefix("/testing")->add("/test", []);
+			$routes = $this->routes->getRoutes();
+
+			$this->assertTrue(isset($routes["GET"]["/testing/test"]), "Unable to add prefix to routes");
+		}
 	}
