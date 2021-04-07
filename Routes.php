@@ -215,16 +215,14 @@
 		 */
 		private function execute_middleware(array $data) {
 			foreach ($data as $function) {
-				$param = NULL;
 
-				if (!is_string($function)) {
-					$param = $function[1];
-					$function = $function[0];
+				if (is_array($function)) {
+					$function = [new $function[0], $function[1]];
 				}
 
 				if (!is_callable($function)) throw new CallbackNotFound("Middleware method {$function} not found", 404);
 
-				call_user_func($function, $param);
+				call_user_func($function, $this->request);
 			}
 		}
 

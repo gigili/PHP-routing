@@ -5,6 +5,8 @@
 	use Gac\Routing\Request;
 	use Gac\Routing\Routes;
 	use Gac\Routing\sample\HomeController;
+	use Gac\Routing\sample\Middleware;
+	use JetBrains\PhpStorm\NoReturn;
 
 	#include_once "../Routes.php"; # IF YOU'RE NOT USING composer
 	#include_once "HomeController.php"; # IF YOU'RE NOT USING composer
@@ -29,7 +31,6 @@
 			->add("/", [HomeController::class, "replaceUser"], Routes::PUT)
 			->add("/", [HomeController::class, "deleteUser"], Routes::DELETE);
 
-
 		$routes->add("/test/{int:userID}-{username}/{float:amount}/{bool:valid}", function (
 			Request $request,
 			int $userID,
@@ -41,6 +42,17 @@
 		});
 
 		// $routes->add("/test/{int:userID}-{username}/{float:amount}/{bool:valid}", [HomeController::class, "test"]); # It works like this also
+
+		$routes
+			->middleware([
+				[Middleware::class, "verify_token"],
+				[Middleware::class, "test"],
+				"verify_token"
+			])
+			->add("/test", function (Request $request) {
+				$request->send(["message" => "Hello"]);
+			});
+
 
 		$routes->route();
 	} catch (RouteNotFoundException $ex) {
@@ -57,5 +69,14 @@
 	}
 
 	function verify_token() {
-		// verify tokens here
+		//Do something
+	}
+
+	function dump($data) {
+		echo json_encode($data);
+	}
+
+	#[NoReturn] function dd($data) {
+		dump($data);
+		die(1);
 	}
