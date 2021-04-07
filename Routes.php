@@ -55,6 +55,15 @@
 		private array $routes = [];
 
 		/**
+		 * Return the list of defined routed
+		 *
+		 * @return array
+		 */
+		public function getRoutes(): array {
+			return $this->routes;
+		}
+
+		/**
 		 * @var string $prefix Prefix to be added to routes being created
 		 */
 		private string $prefix = "";
@@ -124,7 +133,7 @@
 		 */
 		public function route() {
 			$path = $this->getPath();
-			$method = $_SERVER["REQUEST_METHOD"];
+			$method = $_SERVER["REQUEST_METHOD"] ?? "GET";
 
 			$route = $this->routes[$method][$path] ?? false;
 
@@ -134,7 +143,6 @@
 				foreach ($dynamic_routes as $route_path => $dynamic_route) {
 					if (preg_match("/{$dynamic_route["regex"]}/", $path)) {
 						$route = $dynamic_route;
-						#dd($route, true);
 						preg_match_all("/{$dynamic_route["regex"]}/", $path, $matches);
 						if (count($matches) > 1) array_shift($matches);
 						$matches = array_map(fn($m) => $m[0], $matches);
@@ -232,7 +240,7 @@
 		 * @return string Returns the current path
 		 */
 		#[Pure] private function getPath(): string {
-			$path = $_SERVER["REQUEST_URI"];
+			$path = $_SERVER["REQUEST_URI"] ?? "/";
 			$position = strpos($path, "?");
 
 			$path = ($path !== "/") ? rtrim($path, "/") : $path;

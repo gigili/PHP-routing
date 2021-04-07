@@ -41,5 +41,8 @@
 			"Gac\\Routing\\": "./",
 			"Gac\\Routing\\Exceptions\\": "./"
 		}
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^9.5"
 	}
 }
