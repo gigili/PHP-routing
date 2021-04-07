@@ -32,6 +32,9 @@
 			"url": "https://ko-fi.com/igorilic"
 		}
 	],
+	"scripts": {
+		"test": "vendor/bin/phpunit"
+	},
 	"require": {
 		"php": ">=8.0",
 		"ext-json": "*"
