@@ -6,7 +6,7 @@ This library allows you to create static or dynamic routes. This library was ins
 [![License](https://poser.pugx.org/gac/routing/license)](https://packagist.org/packages/gac/routing) 
 [![Total Downloads](https://poser.pugx.org/gac/routing/downloads)](https://packagist.org/packages/gac/routing)
 
-
+ 
 ## Install via composer
 
 ```shell
