@@ -1,4 +1,7 @@
 <?php
+	/** @noinspection PhpUnused */
+
+	/** @noinspection PhpUnusedParameterInspection */
 
 	use Gac\Routing\Exceptions\CallbackNotFound;
 	use Gac\Routing\Exceptions\RouteNotFoundException;
@@ -14,21 +17,28 @@
 
 	$routes = new Routes();
 	try {
-		$routes->add('/', function (Request $request) {
+
+		$routes->add('/', function () {
+			echo json_encode(["message" => "Hello World"]);
+		});
+
+		$routes
+			->prefix("/user")
+			->middleware(["verify_token"])
+			->route("/", [HomeController::class, "getUsers"], Routes::GET)
+			->route("/", [HomeController::class, "addUser"], Routes::POST)
+			->route("/", [HomeController::class, "updateUser"], Routes::PATCH)
+			->route("/", [HomeController::class, "replaceUser"], Routes::PUT)
+			->add("/", [HomeController::class, "deleteUser"], Routes::DELETE);
+
+		$routes->add('/test', function (Request $request) {
 			$request
 				->status(200, "OK")
 				->send(["message" => "Welcome"]);
 		});
 
-		$routes->add('/test', "test_route_function", [Routes::GET, Routes::POST]);
-
-		$routes->prefix("/user")
-			->middleware(["verify_token"])
-			->add('/', [HomeController::class, "getUsers"], Routes::GET)
-			->add("/", [HomeController::class, "addUser"], Routes::POST)
-			->add("/", [HomeController::class, "updateUser"], Routes::PATCH)
-			->add("/", [HomeController::class, "replaceUser"], Routes::PUT)
-			->add("/", [HomeController::class, "deleteUser"], Routes::DELETE);
+		$routes->add("/test", function () {
+		}, [Routes::PATCH, Routes::POST]);
 
 		$routes->add("/test/{int:userID}-{username}/{float:amount}/{bool:valid}", function (
 			Request $request,
@@ -40,7 +50,7 @@
 			echo "Dynamic route here";
 		});
 
-		// $routes->add("/test/{int:userID}-{username}/{float:amount}/{bool:valid}", [HomeController::class, "test"]); # It works like this also
+		$routes->add("/test/{int:userID}-{username}/{float:amount}/{bool:valid}", [HomeController::class, "test"]); # It works like this also
 
 		$routes
 			->middleware([
@@ -51,9 +61,7 @@
 			->add("/test", function (Request $request) {
 				$request->send(["message" => "Hello"]);
 			});
-
-
-		$routes->route();
+		$routes->handle();
 	} catch (RouteNotFoundException $ex) {
 		$routes->request->status(404, "Route not found")->send(["error" => ["message" => $ex->getMessage()]]);
 	} catch (CallbackNotFound $ex) {
