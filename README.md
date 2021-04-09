@@ -3,6 +3,7 @@
 This library allows you to create static or dynamic routes. This library was inspired by [PHP Slim framework](https://www.slimframework.com/)
 
 [![License](https://poser.pugx.org/gac/routing/license)](https://packagist.org/packages/gac/routing) [![Total Downloads](https://poser.pugx.org/gac/routing/downloads)](https://packagist.org/packages/gac/routing)
+[![PHP Tests](https://github.com/gigili/PHP-routing/actions/workflows/php.yml/badge.svg?branch=main)](https://github.com/gigili/PHP-routing/actions/workflows/php.yml)
 
 ## Install via composer
 
