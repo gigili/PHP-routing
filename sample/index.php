@@ -18,7 +18,7 @@
 	$routes = new Routes();
 	try {
 
-		$routes->add('/', function (int $itemID, string $username, Request $request) {
+		$routes->add('/', function (Request $request) {
 			echo json_encode([ 'message' => 'Hello World' ]);
 		});
 
