@@ -14,8 +14,9 @@
 		/**
 		 * Request constructor.
 		 */
-		public function __construct() {
-			$input = json_decode(file_get_contents("php://input")) ?? [];
+		public function __construct()
+		{
+			$input = json_decode(file_get_contents('php://input')) ?? [];
 			$_REQUEST = array_merge($_REQUEST, (array)$input);
 			$this->data = $_REQUEST;
 		}
@@ -25,9 +26,10 @@
 		 *
 		 * @param string $key Which request body argument to be returned
 		 *
-		 * @return mixed|null Body argument value or NULL if the argument doesn't exist
+		 * @return mixed Body argument value or NULL if the argument doesn't exist
 		 */
-		public function get(string $key = ""): mixed {
+		public function get(string $key = ''): mixed
+		{
 			return $this->data[$key] ?? NULL;
 		}
 
@@ -38,7 +40,8 @@
 		 *
 		 * @return array|string|null List of header values or a value of a single item
 		 */
-		public function headers(string $key = ""): array|string|null {
+		public function headers(string $key = ''): array|string|null
+		{
 			$headers = getallheaders();
 			return empty($key) ? $headers : $headers[$key] ?? NULL;
 		}
@@ -51,8 +54,9 @@
 		 *
 		 * @return Request Returns an instance of the Request class so that it can be chained on
 		 */
-		public function status(int $statusCode = 200, string $message = ""): self {
-			header("HTTP/1.1 {$statusCode} {$message}");
+		public function status(int $statusCode = 200, string $message = ''): self
+		{
+			header("HTTP/1.1 $statusCode $message");
 			return $this;
 		}
 
@@ -61,7 +65,8 @@
 		 *
 		 * @param string|array|object $output Value to be outputted as part of the response
 		 */
-		public function send(string|array|object $output) {
+		public function send(string|array|object $output)
+		{
 			echo json_encode($output);
 		}
 	}

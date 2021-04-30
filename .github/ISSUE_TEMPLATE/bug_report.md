@@ -1,7 +1,5 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-title: "[BUG]"
+name: Bug report about: Create a report to help us improve title: "[BUG]"
 labels: ''
 assignees: ''
 
@@ -20,10 +18,11 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Server setup (please complete the following information):**
- - Server OS: [e.g. window, linux]
- - WebServer [e.g. apache, nginx]
- - Version [e.g. 22]
- - PHP version [e.g. 8.0]
+
+- Server OS: [e.g. window, linux]
+- WebServer [e.g. apache, nginx]
+- Version [e.g. 22]
+- PHP version [e.g. 8.0]
 
 **Additional context**
 Add any other context about the problem here.

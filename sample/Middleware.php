@@ -9,11 +9,13 @@
 	class Middleware
 	{
 
-		public function verify_token(Request $request) {
+		public function verify_token(Request $request)
+		{
 			//Do something
 		}
 
-		public static function test(Request $request) {
+		public static function test(Request $request)
+		{
 			//Do something
 		}
 	}

@@ -1,12 +1,12 @@
 # Routing library for PHP
 
-This library allows you to create static or dynamic routes. This library was inspired by [PHP Slim framework](https://www.slimframework.com/)
+This library allows you to create static or dynamic routes. This library was inspired
+by [PHP Slim framework](https://www.slimframework.com/)
 
 [![PHP Tests](https://github.com/gigili/PHP-routing/actions/workflows/php.yml/badge.svg?branch=main)](https://github.com/gigili/PHP-routing/actions/workflows/php.yml)
-[![License](https://poser.pugx.org/gac/routing/license)](https://packagist.org/packages/gac/routing) 
+[![License](https://poser.pugx.org/gac/routing/license)](https://packagist.org/packages/gac/routing)
 [![Total Downloads](https://poser.pugx.org/gac/routing/downloads)](https://packagist.org/packages/gac/routing)
 
- 
 ## Install via composer
 
 ```shell
@@ -44,7 +44,8 @@ RewriteRule ^(.+)$ index.php [QSA,L]
 
 ### Note
 
-If you've named your main file differently, replace `index.php` in the `.htaccess` file with that ever your main application file is.
+If you've named your main file differently, replace `index.php` in the `.htaccess` file with that ever your main
+application file is.
 
 ## Quick start
 
