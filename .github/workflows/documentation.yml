@@ -30,7 +30,8 @@ jobs:
         run: |
           mkdir bin
           cd bin/
-          wget https://phpdoc.org/phpDocumentor.phar phpDoc
+          wget https://phpdoc.org/phpDocumentor.phar 
+          cp phpDocumentor.phar phpDoc
           chmod +x phpDoc
           cd ..
           mkdir -p ./docs/documentation
