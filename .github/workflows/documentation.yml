@@ -30,11 +30,8 @@ jobs:
           mkdir bin
           cd bin/
           wget https://phpdoc.org/phpDocumentor.phar 
-          cp phpDocumentor.phar phpDoc
-          chmod +x phpDoc
           cd ..
           mkdir -p ./docs/documentation
-          php -v
-          ./bin/phpDoc run -d ./ -t ./docs/documentation --ignore vendor/ --setting="guides.enabled=true" --force -v
+          php bin/phpDocumentor.phar run -d ./ -t ./docs/documentation --ignore vendor/ --setting="guides.enabled=true" --force -v
           rm -rf tmp/
 
