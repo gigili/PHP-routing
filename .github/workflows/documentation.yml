@@ -32,6 +32,7 @@ jobs:
           git clone https://github.com/phpDocumentor/phpDocumentor.git
           
       - name: Generate Documentation
+        if: success()
         run: |
           ./tmp/bin/phpdoc run -d ./ -t /docs/documentation --setting="guides.enabled=true" --force -v
           rm -rf tmp/
