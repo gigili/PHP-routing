@@ -4,16 +4,28 @@ on:
   push:
     branches:
       - main
-
+env:
+  extensions: json
+  defaultPHPVersion: '8.0'
+  
 jobs:
-  update_wiki:
+  generate_docs:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkouting project code...
-        uses: actions/checkout@v2
-      - name: Updating wiki...
-        uses: impresscms-dev/phpdocs-wiki-update-action@v1.0.0
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@master
         with:
-          wiki_github_update_token: ${{ secrets.WIKI_GITHUB_UPDATE_TOKEN }}
-          wiki_github_update_user: ${{ secrets.WIKI_GITHUB_UPDATE_USER }}
-          engine: evert/phpdoc-md
+          php-version: ${{ env.defaultPHPVersion }}
+          extensions: ${{ env.extensions }}
+          ini-values: memory_limit=2G, display_errors=On, error_reporting=-1
+          tools: pecl
+
+      - name: Install Composer dependencies
+        run: |
+          composer install --no-progress --prefer-dist --optimize-autoloader
+      - name: Generate Documentation
+        run: |
+          ./bin/phpdoc run -d . -t /docs/documentation --setting="guides.enabled=true" --force -v
+
