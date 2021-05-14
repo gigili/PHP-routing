@@ -19,4 +19,4 @@ jobs:
           engine: clean/phpdoc-md
           class_root_namespace: Gac
           include: |
-            Gac\Routing\**
+            Gac\**
