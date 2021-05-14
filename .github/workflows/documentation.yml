@@ -6,14 +6,14 @@ on:
       - main
 env:
   extensions: json
-  defaultPHPVersion: '8.0'
+  defaultPHPVersion: '8.0.3'
   
 jobs:
   generate_docs:
     runs-on: ubuntu-latest
+    
     steps:
       - uses: actions/checkout@v2
-
       - name: Setup PHP
         uses: shivammathur/setup-php@master
         with:
@@ -25,8 +25,7 @@ jobs:
       - name: Install Composer dependencies
         run: |
           composer install --no-progress --prefer-dist --optimize-autoloader          
-      - name: Generate Documentation
-        if: success()
+      - name: Generate Documentatio
         run: |
           mkdir bin
           cd bin/
@@ -35,6 +34,8 @@ jobs:
           chmod +x phpDoc
           cd ..
           mkdir -p ./docs/documentation
-          ./bin/phpDoc run -d ./ -t ./docs/documentation --setting="guides.enabled=true" --force -v
+          php -v
+          ./bin/phpDoc run -d ./ -t ./docs/documentation 
+          # --setting="guides.enabled=true" --force -v
           rm -rf tmp/
 
