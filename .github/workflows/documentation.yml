@@ -35,7 +35,6 @@ jobs:
           cd ..
           mkdir -p ./docs/documentation
           php -v
-          ./bin/phpDoc run -d ./ -t ./docs/documentation 
-          # --setting="guides.enabled=true" --force -v
+          ./bin/phpDoc run -d ./ -t ./docs/documentation --ignore vendor/ --setting="guides.enabled=true" --force -v
           rm -rf tmp/
 
