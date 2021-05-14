@@ -27,8 +27,8 @@ jobs:
           composer install --no-progress --prefer-dist --optimize-autoloader
       - name: Download phpDocumentor
         run: | 
-          mkdir /tmp 
-          cd /tmp
+          mkdir tmp
+          cd tmp/
           git clone https://github.com/phpDocumentor/phpDocumentor.git
           
       - name: Generate Documentation
