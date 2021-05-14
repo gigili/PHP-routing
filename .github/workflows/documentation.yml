@@ -25,7 +25,14 @@ jobs:
       - name: Install Composer dependencies
         run: |
           composer install --no-progress --prefer-dist --optimize-autoloader
+      - name: Download phpDocumentor
+        run: | 
+          mkdir /tmp 
+          cd /tmp
+          git clone https://github.com/phpDocumentor/phpDocumentor.git
+          
       - name: Generate Documentation
         run: |
-          ./bin/phpdoc run -d . -t /docs/documentation --setting="guides.enabled=true" --force -v
+          ./tmp/bin/phpdoc run -d ./ -t /docs/documentation --setting="guides.enabled=true" --force -v
+          rm -rf tmp/
 
