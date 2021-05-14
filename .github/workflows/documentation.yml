@@ -28,11 +28,12 @@ jobs:
       - name: Generate Documentation
         if: success()
         run: |
-          mkdir tmp
-          cd tmp/
-          git clone https://github.com/phpDocumentor/phpDocumentor.git
-          mkdir -p ./docs/documentation
+          mkdir bin
+          cd bin/
+          wget https://phpdoc.org/phpDocumentor.phar phpDoc
+          chmod +x phpDoc
           cd ..
-          ./tmp/phpDocumentor/bin/phpdoc run -d ./ -t ./docs/documentation --setting="guides.enabled=true" --force -v
+          mkdir -p ./docs/documentation
+          ./bin/phpDoc run -d ./ -t ./docs/documentation --setting="guides.enabled=true" --force -v
           rm -rf tmp/
 
