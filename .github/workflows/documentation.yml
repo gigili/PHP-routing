@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - main
-env:
-  extensions: json
-  defaultPHPVersion: '8.0.3'
-  
+  #env:
+  #  extensions: json
+  #  defaultPHPVersion: '8.0.3'
+
 jobs:
 #  generate_docs:
 #    runs-on: ubuntu-latest
@@ -44,4 +44,7 @@ jobs:
         with:
           wiki_github_update_token: ${{ secrets.WIKI_GITHUB_UPDATE_TOKEN }}
           wiki_github_update_user: ${{ secrets.WIKI_GITHUB_UPDATE_USER }}
-          engine: evert/phpdoc-md
+          engine: clean/phpdoc-md
+          class_root_namespace: Gac\Routing
+          include: |
+            Gac\Routing\**
