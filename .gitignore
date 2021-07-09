@@ -4,3 +4,4 @@ vendor/
 *.lock
 docs/
 .phpunit.result.cache
+.phpdoc/
