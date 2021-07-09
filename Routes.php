@@ -198,9 +198,16 @@
 			$arguments = [];
 			if ( $route === false ) {
 				$dynamic_routes = array_filter($this->routes[$method], fn($route) => !is_null($route['regex'] ?? NULL));
-				foreach ( $dynamic_routes as $dynamic_route ) {
+				foreach ( $dynamic_routes as $routePath => $dynamic_route ) {
+					$countRouteSlashes = count(explode("/", $routePath));
+					$countPathSlashes = count(explode('/', $path));
+
+					//TODO: Find a way to not check the number of / as it seems a bit hacky
+					if ( $countPathSlashes !== $countRouteSlashes ) continue;
+
 					if ( preg_match("/{$dynamic_route['regex']}/", $path) ) {
 						$route = $dynamic_route;
+
 						preg_match_all("/{$dynamic_route['regex']}/", $path, $matches);
 						if ( count($matches) > 1 ) array_shift($matches);
 						$matches = array_map(fn($m) => $m[0], $matches);
