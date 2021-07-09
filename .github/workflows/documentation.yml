@@ -9,31 +9,31 @@ env:
   defaultPHPVersion: '8.0.3'
   
 jobs:
-  generate_docs:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup PHP
-        uses: shivammathur/setup-php@master
-        with:
-          php-version: ${{ env.defaultPHPVersion }}
-          extensions: ${{ env.extensions }}
-          ini-values: memory_limit=2G, display_errors=On, error_reporting=-1
-          tools: pecl
-
-      - name: Install Composer dependencies
-        run: |
-          composer install --no-progress --prefer-dist --optimize-autoloader          
-      - name: Generate Documentatio
-        run: |
-          mkdir bin
-          cd bin/
-          wget https://phpdoc.org/phpDocumentor.phar 
-          cd ..
-          mkdir -p ./docs/documentation
-          php bin/phpDocumentor.phar run -d ./ -t ./docs/documentation --ignore vendor/ --setting="guides.enabled=true" --force -v
-          rm -rf tmp/
+#  generate_docs:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Setup PHP
+#        uses: shivammathur/setup-php@master
+#        with:
+#          php-version: ${{ env.defaultPHPVersion }}
+#          extensions: ${{ env.extensions }}
+#          ini-values: memory_limit=2G, display_errors=On, error_reporting=-1
+#          tools: pecl
+#
+#      - name: Install Composer dependencies
+#        run: |
+#          composer install --no-progress --prefer-dist --optimize-autoloader
+#      - name: Generate Documentatio
+#        run: |
+#          mkdir bin
+#          cd bin/
+#          wget https://phpdoc.org/phpDocumentor.phar
+#          cd ..
+#          mkdir -p ./docs/documentation
+#          php bin/phpDocumentor.phar run -d ./ -t ./docs/documentation --ignore vendor/ --setting="guides.enabled=true" --force -v
+#          rm -rf tmp/
   update_wiki:
     runs-on: ubuntu-latest
     steps:
@@ -45,6 +45,6 @@ jobs:
           wiki_github_update_token: ${{ secrets.WIKI_GITHUB_UPDATE_TOKEN }}
           wiki_github_update_user: ${{ secrets.WIKI_GITHUB_UPDATE_USER }}
           engine: clean/phpdoc-md
-          class_root_namespace: Gac\Routing\
+          class_root_namespace: Gac\
           include: |
-            Gac\Routing\**
+            Gac\**
