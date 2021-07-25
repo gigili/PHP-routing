@@ -17,7 +17,7 @@
 		public function __construct()
 		{
 			$input = json_decode(file_get_contents('php://input')) ?? [];
-			if ( $_SERVER['REQUEST_METHOD'] == 'PATCH' ) {
+			if ( isset($_SERVER["REQUEST_METHOD"]) && $_SERVER['REQUEST_METHOD'] == 'PATCH' ) {
 				if ( isset($_REQUEST["parameters"]) ) {
 					$_REQUEST = array_merge($_REQUEST, $_REQUEST['parameters']);
 				}
