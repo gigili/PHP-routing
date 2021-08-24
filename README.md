@@ -78,6 +78,37 @@ try {
 }
 ```
 
+## Examples
+
+Using chained method to wrap multiple routes with a same middleware or a route prefix
+
+```php 
+$routes
+    ->prefix('/user') // all the routes add will have the /user prefix 
+    ->middleware([ 'verify_token' ]) // all the routes added will have the verify_token middelware applied 
+    ->route('/', [ HomeController::class, 'getUsers' ], Routes::GET)
+    ->route('/', [ HomeController::class, 'addUser' ], Routes::POST)
+    ->route('/', [ HomeController::class, 'updateUser' ], Routes::PATCH)
+    ->route('/', [ HomeController::class, 'replaceUser' ], Routes::PUT)
+    ->add('/test', [ HomeController::class, 'deleteUser' ], Routes::DELETE);
+```
+
+Dynamic routes example:
+
+```php
+$routes->add('/test/{int:userID}-{username}/{float:amount}/{bool:valid}', function (
+    Request $request,
+    int $userID,
+    string $username,
+    float $amount,
+    bool $valid
+) {
+    echo 'Dynamic route content here';
+});
+```
+
+For more example look in the [sample folder](/sample).
+
 ## Features
 
 * [x] Static routes

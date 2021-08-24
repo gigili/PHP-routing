@@ -29,7 +29,7 @@
 			->route('/', [ HomeController::class, 'addUser' ], Routes::POST)
 			->route('/', [ HomeController::class, 'updateUser' ], Routes::PATCH)
 			->route('/', [ HomeController::class, 'replaceUser' ], Routes::PUT)
-			->add('/', [ HomeController::class, 'deleteUser' ], Routes::DELETE);
+			->add('/test', [ HomeController::class, 'deleteUser' ], Routes::DELETE);
 
 		$routes->add('/test', function (Request $request) {
 			$request

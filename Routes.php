@@ -156,9 +156,7 @@
 		 */
 		public function add(string $path = '', callable|array|string|null $callback = NULL, string|array|null $methods = self::GET)
 		{
-			if ( empty($this->tmpRoutes) ) {
-				$this->route($path, $callback, $methods);
-			}
+			$this->route($path, $callback, $methods);
 
 			foreach ( $this->tmpRoutes as $method => $route ) {
 				if ( !isset($this->routes[$method]) ) $this->routes[$method] = [];
