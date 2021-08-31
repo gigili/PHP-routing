@@ -26,16 +26,17 @@ jobs:
           composer install --no-progress --prefer-dist --optimize-autoloader
       - name: Generate Documentation
         run: |
+          git config --global user.email "${{ secrets.DOCS_GITHUB_EMAIL }}"
+          git config --global user.name "${{ secrets.DOCS_GITHUB_USER }}"
+          git remote set-url origin https://gigili:${{ secrets.WIKI_GITHUB_UPDATE_TOKEN }}@github.com/gigili/PHP-routing.git
           mkdir bin
           cd bin/
           wget https://phpdoc.org/phpDocumentor.phar
           cd ..
-          git checkout docs/auto-generation
+          git checkout -b documentation/generation
           mkdir -p ./docs
           php bin/phpDocumentor.phar run -d ./ -t ./docs --ignore vendor/ --ignore sample/ --ignore tests/ --setting="guides.enabled=true" --force -v
-          git config --global user.email "${{ secrets.DOCS_GITHUB_EMAIL }}"
-          git config --global user.name "${{ secrets.DOCS_GITHUB_USER }}"
-          git remote set-url origin https://gigili:${{ secrets.WIKI_GITHUB_UPDATE_TOKEN }}@github.com/gigili/PHP-routing.git
+          rm -r bin/
           git add .
           git commit -m "[AUTO] Update documentation"
-          git push origin docs/auto-generation
+          git push origin documentation/generation
