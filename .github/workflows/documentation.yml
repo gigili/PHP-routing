@@ -32,6 +32,8 @@ jobs:
           cd ..
           mkdir -p ./docs
           php bin/phpDocumentor.phar run -d ./ -t ./docs --ignore vendor/ --ignore sample/ --ignore tests/ --setting="guides.enabled=true" --force -v
+          git config --global user.email "${{ secrets.DOCS_GITHUB_EMAIL }}"
+          git config --global user.name "${{ secrets.DOCS_GITHUB_USER }}"
           git remote set-url origin https://gigili:${{ secrets.WIKI_GITHUB_UPDATE_TOKEN }}@github.com/gigili/PHP-routing.git
           git commit -m "[AUTO] Update documentation"
           git push origin main
