@@ -34,11 +34,12 @@ jobs:
           mkdir -p ./docs/documentation
           php bin/phpDocumentor.phar run -d ./ -t ./docs/documentation --ignore vendor/ --setting="guides.enabled=true" --force -v
           rm -rf tmp/
-  update_wiki:
-    runs-on: ubuntu-latest
-    steps:
+          cd ./docs/documentation
+  #update_wiki:
+  #  runs-on: ubuntu-latest
+  #  steps:
       - name: Checkouting project code...
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2          
       - name: Updating wiki...
         uses: impresscms-dev/phpdocs-wiki-update-action@master
         with:
