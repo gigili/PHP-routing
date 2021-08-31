@@ -39,3 +39,4 @@ jobs:
           git add .
           git commit -m "[AUTO] Update documentation"
           git push origin main
+          exit 0
