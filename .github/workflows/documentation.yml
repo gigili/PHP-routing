@@ -37,6 +37,6 @@ jobs:
           php bin/phpDocumentor.phar run -d ./ -t ./docs --ignore vendor/ --ignore sample/ --ignore tests/ --setting="guides.enabled=true" --force -v
           rm -r bin/
           git add .
-          git commit -m "[AUTO] Update documentation"
+          git commit -mq "[AUTO] Update documentation"
           git push origin main
           ls -Alh
