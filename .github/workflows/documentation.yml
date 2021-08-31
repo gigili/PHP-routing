@@ -1,0 +1,37 @@
+name: Automatically update project documentation
+
+on:
+  push:
+    branches:
+      - main
+env:
+   extensions: json
+   defaultPHPVersion: '8.0.3'
+
+jobs:
+  generate_docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: ${{ env.defaultPHPVersion }}
+          extensions: ${{ env.extensions }}
+          ini-values: memory_limit=2G, display_errors=On, error_reporting=-1
+          tools: pecl
+      - name: Install Composer dependencies
+        run: |
+          composer install --no-progress --prefer-dist --optimize-autoloader
+      - name: Generate Documentation
+        run: |
+          mkdir bin
+          cd bin/
+          wget https://phpdoc.org/phpDocumentor.phar
+          cd ..
+          mkdir -p ./docs
+          php bin/phpDocumentor.phar run -d ./ -t ./docs --ignore vendor/ --ignore sample/ --ignore tests/ --setting="guides.enabled=true" --force -v
+          git remote set-url origin https://gigili:${{ secrets.WIKI_GITHUB_UPDATE_TOKEN }}@github.com/gigili/PHP-routing.git
+          git commit -m "[AUTO] Update documentation"
+          git push origin main
