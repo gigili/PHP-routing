@@ -216,41 +216,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Gac-Routing-sample-Middleware.html#method_test"
         },                {
-            "fqsen": "\\RoutesTest",
-            "name": "RoutesTest",
-            "summary": "",
-            "url": "classes/RoutesTest.html"
-        },                {
-            "fqsen": "\\RoutesTest\u003A\u003AsetUp\u0028\u0029",
-            "name": "setUp",
-            "summary": "",
-            "url": "classes/RoutesTest.html#method_setUp"
-        },                {
-            "fqsen": "\\RoutesTest\u003A\u003AtestCanAddNewRoute\u0028\u0029",
-            "name": "testCanAddNewRoute",
-            "summary": "",
-            "url": "classes/RoutesTest.html#method_testCanAddNewRoute"
-        },                {
-            "fqsen": "\\RoutesTest\u003A\u003AtestCanAddMultipleRequestMethodRoutes\u0028\u0029",
-            "name": "testCanAddMultipleRequestMethodRoutes",
-            "summary": "",
-            "url": "classes/RoutesTest.html#method_testCanAddMultipleRequestMethodRoutes"
-        },                {
-            "fqsen": "\\RoutesTest\u003A\u003AtestCannAddMiddleware\u0028\u0029",
-            "name": "testCannAddMiddleware",
-            "summary": "",
-            "url": "classes/RoutesTest.html#method_testCannAddMiddleware"
-        },                {
-            "fqsen": "\\RoutesTest\u003A\u003AtestCannAddPrefix\u0028\u0029",
-            "name": "testCannAddPrefix",
-            "summary": "",
-            "url": "classes/RoutesTest.html#method_testCannAddPrefix"
-        },                {
-            "fqsen": "\\RoutesTest\u003A\u003A\u0024routes",
-            "name": "routes",
-            "summary": "",
-            "url": "classes/RoutesTest.html#property_routes"
-        },                {
             "fqsen": "\\",
             "name": "\\",
             "summary": "",
