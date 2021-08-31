@@ -37,4 +37,4 @@ jobs:
           git remote set-url origin https://gigili:${{ secrets.WIKI_GITHUB_UPDATE_TOKEN }}@github.com/gigili/PHP-routing.git
           git add docs/
           git commit -m "[AUTO] Update documentation"
-          git push origin main
+          git push origin docs/auto-generion
