@@ -39,5 +39,8 @@ jobs:
           git add .
           res = $(git commit -m "[AUTO] Update documentation")
           if [[ $res != *"Nothing to commit"* ]]; then
-              git push origin main
+            git push origin main
+          else
+            echo "::debug::Nothing to commit and skipping push"
+            echo "Nothing to commit and skipping push"
           fi
