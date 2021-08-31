@@ -66,7 +66,7 @@ try {
             ->status(200, "OK")
             ->send(["message" => "Welcome"]);
     });
-    
+
     $routes->route();
 } catch (RouteNotFoundException $ex) {
     $routes->request->status(404, "Route not found")->send(["error" => ["message" => $ex->getMessage()]]);
@@ -82,10 +82,10 @@ try {
 
 Using chained method to wrap multiple routes with a same middleware or a route prefix
 
-```php 
+```php
 $routes
-    ->prefix('/user') // all the routes add will have the /user prefix 
-    ->middleware([ 'verify_token' ]) // all the routes added will have the verify_token middelware applied 
+    ->prefix('/user') // all the routes add will have the /user prefix
+    ->middleware([ 'verify_token' ]) // all the routes added will have the verify_token middelware applied
     ->route('/', [ HomeController::class, 'getUsers' ], Routes::GET)
     ->route('/', [ HomeController::class, 'addUser' ], Routes::POST)
     ->route('/', [ HomeController::class, 'updateUser' ], Routes::PATCH)
@@ -109,9 +109,13 @@ $routes->add('/test/{int:userID}-{username}/{float:amount}/{bool:valid}', functi
 
 For more example look in the [sample folder](/sample).
 
+## Documentation
+
+Source code documentation can be found at [PHP Routing documentation](https://gigili.github.io/PHP-routing/) page
+
 ## Features
 
 * [x] Static routes
 * [x] Dynamic routes
 * [x] Middlewares
-* [x] Prefixing routes 
+* [x] Prefixing routes
