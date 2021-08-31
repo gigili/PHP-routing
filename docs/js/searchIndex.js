@@ -146,76 +146,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Gac-Routing-Routes.html#property_request"
         },                {
-            "fqsen": "\\Gac\\Routing\\sample\\HomeController",
-            "name": "HomeController",
-            "summary": "",
-            "url": "classes/Gac-Routing-sample-HomeController.html"
-        },                {
-            "fqsen": "\\Gac\\Routing\\sample\\HomeController\u003A\u003Aindex\u0028\u0029",
-            "name": "index",
-            "summary": "",
-            "url": "classes/Gac-Routing-sample-HomeController.html#method_index"
-        },                {
-            "fqsen": "\\Gac\\Routing\\sample\\HomeController\u003A\u003Ahome\u0028\u0029",
-            "name": "home",
-            "summary": "",
-            "url": "classes/Gac-Routing-sample-HomeController.html#method_home"
-        },                {
-            "fqsen": "\\Gac\\Routing\\sample\\HomeController\u003A\u003AgetUsers\u0028\u0029",
-            "name": "getUsers",
-            "summary": "",
-            "url": "classes/Gac-Routing-sample-HomeController.html#method_getUsers"
-        },                {
-            "fqsen": "\\Gac\\Routing\\sample\\HomeController\u003A\u003AaddUser\u0028\u0029",
-            "name": "addUser",
-            "summary": "",
-            "url": "classes/Gac-Routing-sample-HomeController.html#method_addUser"
-        },                {
-            "fqsen": "\\Gac\\Routing\\sample\\HomeController\u003A\u003AupdateUser\u0028\u0029",
-            "name": "updateUser",
-            "summary": "",
-            "url": "classes/Gac-Routing-sample-HomeController.html#method_updateUser"
-        },                {
-            "fqsen": "\\Gac\\Routing\\sample\\HomeController\u003A\u003AreplaceUser\u0028\u0029",
-            "name": "replaceUser",
-            "summary": "",
-            "url": "classes/Gac-Routing-sample-HomeController.html#method_replaceUser"
-        },                {
-            "fqsen": "\\Gac\\Routing\\sample\\HomeController\u003A\u003AdeleteUser\u0028\u0029",
-            "name": "deleteUser",
-            "summary": "",
-            "url": "classes/Gac-Routing-sample-HomeController.html#method_deleteUser"
-        },                {
-            "fqsen": "\\Gac\\Routing\\sample\\HomeController\u003A\u003Atest\u0028\u0029",
-            "name": "test",
-            "summary": "",
-            "url": "classes/Gac-Routing-sample-HomeController.html#method_test"
-        },                {
-            "fqsen": "\\test_route_function\u0028\u0029",
-            "name": "test_route_function",
-            "summary": "",
-            "url": "namespaces/default.html#function_test_route_function"
-        },                {
-            "fqsen": "\\verify_token\u0028\u0029",
-            "name": "verify_token",
-            "summary": "",
-            "url": "namespaces/default.html#function_verify_token"
-        },                {
-            "fqsen": "\\Gac\\Routing\\sample\\Middleware",
-            "name": "Middleware",
-            "summary": "",
-            "url": "classes/Gac-Routing-sample-Middleware.html"
-        },                {
-            "fqsen": "\\Gac\\Routing\\sample\\Middleware\u003A\u003Averify_token\u0028\u0029",
-            "name": "verify_token",
-            "summary": "",
-            "url": "classes/Gac-Routing-sample-Middleware.html#method_verify_token"
-        },                {
-            "fqsen": "\\Gac\\Routing\\sample\\Middleware\u003A\u003Atest\u0028\u0029",
-            "name": "test",
-            "summary": "",
-            "url": "classes/Gac-Routing-sample-Middleware.html#method_test"
-        },                {
             "fqsen": "\\",
             "name": "\\",
             "summary": "",
@@ -235,10 +165,5 @@ Search.appendIndex(
             "name": "Gac",
             "summary": "",
             "url": "namespaces/gac.html"
-        },                {
-            "fqsen": "\\Gac\\Routing\\sample",
-            "name": "sample",
-            "summary": "",
-            "url": "namespaces/gac-routing-sample.html"
         }            ]
 );
