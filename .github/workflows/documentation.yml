@@ -37,7 +37,7 @@ jobs:
           php bin/phpDocumentor.phar run -d ./ -t ./docs --ignore vendor/ --ignore sample/ --ignore tests/ --setting="guides.enabled=true" --force -v
           rm -r bin/
           git add .
-          if $(git commit -am "[AUTO] Update documentation")  ; then
+          if [[ $(git commit -am "[AUTO] Update documentation") != *"Nothing to commit"* ]]; then
             echo "::debug::Pushing new documentation changes"
             git push origin main
           else
