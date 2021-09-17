@@ -14,25 +14,20 @@
 		/**
 		 * Request constructor.
 		 */
-		public function __construct()
-		{
-			$rawInput = file_get_contents('php://input');
+		public function __construct() {
+			$requestMethod = mb_strtoupper(( $_SERVER['REQUEST_METHOD'] ?? "" ));
+			if ( isset($_SERVER['REQUEST_METHOD']) && in_array($requestMethod, [ Routes::PATCH, Routes::PUT ]) ) {
+				$input = $this->parse_patch_and_put_request_data();
+			} else {
+				$rawInput = file_get_contents('php://input');
 
-			$input = json_decode($rawInput) ?? [];
-			if ( count($input) == 0 ) {
-				mb_parse_str($rawInput, $input);
-			}
-			
-			if ( isset($_SERVER["REQUEST_METHOD"]) && $_SERVER['REQUEST_METHOD'] == 'PATCH' ) {
-				if ( isset($_REQUEST["parameters"]) ) {
-					$_REQUEST = array_merge($_REQUEST, $_REQUEST['parameters']);
-				}
-
-				if ( isset($_REQUEST["files"]) ) {
-					$_REQUEST = array_merge($_REQUEST, $_REQUEST['files']);
+				$input = json_decode($rawInput) ?? [];
+				if ( count($input) == 0 ) {
+					mb_parse_str($rawInput, $input);
 				}
 			}
-			$_REQUEST = array_merge($_REQUEST, (array)$input);
+
+			$_REQUEST = array_merge($_REQUEST, (array) $input);
 			$this->data = $_REQUEST;
 		}
 
@@ -43,8 +38,7 @@
 		 *
 		 * @return mixed Body argument value or NULL if the argument doesn't exist
 		 */
-		public function get(string $key = ''): mixed
-		{
+		public function get(string $key = '') : mixed {
 			return $this->data[$key] ?? NULL;
 		}
 
@@ -55,8 +49,7 @@
 		 *
 		 * @return array|string|null List of header values or a value of a single item
 		 */
-		public function headers(string $key = ''): array|string|null
-		{
+		public function headers(string $key = '') : array|string|null {
 			$headers = getallheaders();
 			return empty($key) ? $headers : $headers[$key] ?? NULL;
 		}
@@ -69,8 +62,7 @@
 		 *
 		 * @return Request Returns an instance of the Request class so that it can be chained on
 		 */
-		public function status(int $statusCode = 200, string $message = ''): self
-		{
+		public function status(int $statusCode = 200, string $message = '') : self {
 			header("HTTP/1.1 $statusCode $message");
 			return $this;
 		}
@@ -80,8 +72,94 @@
 		 *
 		 * @param string|array|object $output Value to be outputted as part of the response
 		 */
-		public function send(string|array|object $output)
-		{
+		public function send(string|array|object $output) {
 			echo json_encode($output);
+		}
+
+
+		private function parse_patch_and_put_request_data() : array {
+
+			/* PUT data comes in on the stdin stream */
+			$putdata = fopen('php://input', 'r');
+
+			$raw_data = '';
+
+			/* Read the data 1 KB at a time and write to the file */
+			while ( $chunk = fread($putdata, 1024) )
+				$raw_data .= $chunk;
+
+			/* Close the streams */
+			fclose($putdata);
+
+			// Fetch content and determine boundary
+			$boundary = substr($raw_data, 0, strpos($raw_data, "\r\n"));
+
+			if ( empty($boundary) ) {
+				parse_str($raw_data, $data);
+				return $data ?? [];
+			}
+
+			// Fetch each part
+			$parts = array_slice(explode($boundary, $raw_data), 1);
+			$data = [];
+
+			foreach ( $parts as $part ) {
+				// If this is the last part, break
+				if ( $part == "--\r\n" ) break;
+
+				// Separate content from headers
+				$part = ltrim($part, "\r\n");
+				[ $raw_headers, $body ] = explode("\r\n\r\n", $part, 2);
+
+				// Parse the headers list
+				$raw_headers = explode("\r\n", $raw_headers);
+				$headers = [];
+				foreach ( $raw_headers as $header ) {
+					[ $name, $value ] = explode(':', $header);
+					$headers[strtolower($name)] = ltrim($value, ' ');
+				}
+
+				// Parse the Content-Disposition to get the field name, etc.
+				if ( isset($headers['content-disposition']) ) {
+					$filename = NULL;
+					$tmp_name = NULL;
+					preg_match(
+						'/^(.+); *name="([^"]+)"(; *filename="([^"]+)")?/',
+						$headers['content-disposition'],
+						$matches
+					);
+					[ , $type, $name ] = $matches;
+
+					//Parse File
+					if ( isset($matches[4]) ) {
+						//if labeled the same as previous, skip
+						if ( isset($_FILES[$matches[2]]) ) {
+							continue;
+						}
+
+						//get filename
+						$filename = $matches[4];
+
+						//get tmp name
+						$filename_parts = pathinfo($filename);
+						$tmp_name = tempnam(ini_get('upload_tmp_dir'), $filename_parts['filename']);
+
+						//populate $_FILES with information, size may be off in multibyte situation
+						$_FILES[$matches[2]] = [
+							'error' => 0,
+							'name' => $filename,
+							'tmp_name' => $tmp_name,
+							'size' => strlen($body),
+							'type' => $value,
+						];
+
+						//place in temporary directory
+						file_put_contents($tmp_name, $body);
+					} else { //Parse Field
+						$data[$name] = substr($body, 0, strlen($body) - 2);
+					}
+				}
+			}
+			return $data ?? [];
 		}
 	}

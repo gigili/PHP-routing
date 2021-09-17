@@ -61,6 +61,18 @@
 			->add('/test', function (Request $request) {
 				$request->send([ 'message' => 'Hello' ]);
 			});
+
+
+		$routes->add('/', function(Request $request){
+			echo "<pre>";
+			print_r([$_REQUEST, $_FILES]);
+		}, [Routes::PATCH]);
+
+		$routes->add('/', function(Request $request){
+			echo "<pre>";
+			print_r([$_REQUEST, $_FILES]);
+		}, [Routes::PUT]);
+
 		$routes->handle();
 	} catch ( RouteNotFoundException $ex ) {
 		$routes->request->status(404, 'Route not found')->send([ 'error' => [ 'message' => $ex->getMessage() ] ]);
