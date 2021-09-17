@@ -22,7 +22,7 @@
 				$rawInput = file_get_contents('php://input');
 
 				$input = json_decode($rawInput) ?? [];
-				if ( count($input) == 0 ) {
+				if ( is_array($input) && count($input) == 0 ) {
 					mb_parse_str($rawInput, $input);
 				}
 			}
