@@ -41,6 +41,11 @@ Search.appendIndex(
             "summary": "Send\u0020response\u0020back",
             "url": "classes/Gac-Routing-Request.html#method_send"
         },                {
+            "fqsen": "\\Gac\\Routing\\Request\u003A\u003Aparse_patch_and_put_request_data\u0028\u0029",
+            "name": "parse_patch_and_put_request_data",
+            "summary": "",
+            "url": "classes/Gac-Routing-Request.html#method_parse_patch_and_put_request_data"
+        },                {
             "fqsen": "\\Gac\\Routing\\Request\u003A\u003A\u0024data",
             "name": "data",
             "summary": "",
