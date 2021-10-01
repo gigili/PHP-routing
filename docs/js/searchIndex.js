@@ -83,7 +83,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Asave\u0028\u0029",
             "name": "save",
-            "summary": "",
+            "summary": "Method\u0020used\u0020for\u0020saving\u0020routing\u0020information\u0020into\u0020the\u0020global\u0020\u0024routes\u0020array",
             "url": "classes/Gac-Routing-Routes.html#method_save"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Ahandle\u0028\u0029",
