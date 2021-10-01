@@ -171,6 +171,12 @@
 			$this->save();
 		}
 
+
+		/**
+		 * Method used for saving routing information into the global $routes array
+		 *
+		 * @param bool $cleanData should the data from the tmpRoutes be cleared on not when this method runs
+		 */
 		public function save(bool $cleanData = true) {
 			foreach ( $this->tmpRoutes as $method => $route ) {
 				if ( !isset($this->routes[$method]) ) $this->routes[$method] = [];
