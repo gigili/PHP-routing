@@ -86,7 +86,7 @@
 		 *
 		 * @param string $prefix Prefix to be added to all the routes in that chain.
 		 *
-		 * @return Routes Returns an instance of it self so that other methods could be chained onto it
+		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
 		 */
 		public function prefix(string $prefix = ''): self
 		{
@@ -99,7 +99,7 @@
 		 *
 		 * @param array $data List of middlewares to be executed before the routes
 		 *
-		 * @return Routes Returns an instance of it self so that other methods could be chained onto it
+		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
 		 */
 		public function middleware(array $data): self
 		{
@@ -110,9 +110,16 @@
 		/**
 		 * Method used to handle execution of routes and middlewares
 		 *
+		 * @param string $path Path for the route
+		 * @param callable|array|string|null $callback Callback method, an anonymous function or a class and method name to be executed
+		 * @param string|array $methods Allowed request method(s) (GET, POST, PUT...)
+		 *
+		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
 		 */
-		public function route(string $path, callable|array|string $callback, string|array $methods = self::GET): self
-		{
+		public function route(string                     $path,
+							  callable|array|string|null $callback,
+							  string|array               $methods = self::GET
+		) : self {
 			if ( is_string($methods) ) $methods = [ $methods ];
 
 			if ( !empty($this->prefix) ) $path = $this->prefix . $path; // Prepend prefix to routes
@@ -143,6 +150,7 @@
 				}
 			}
 
+			$this->save(false);
 			return $this;
 		}
 
@@ -154,10 +162,16 @@
 		 * @param string|array|null $methods Allowed request method(s) (GET, POST, PUT...)
 		 *
 		 */
-		public function add(string $path = '', callable|array|string|null $callback = NULL, string|array|null $methods = self::GET)
-		{
+		public function add(
+			string                     $path = '',
+			callable|array|string|null $callback = NULL,
+			string|array|null          $methods = self::GET
+		) {
 			$this->route($path, $callback, $methods);
+			$this->save();
+		}
 
+		public function save(bool $cleanData = true) {
 			foreach ( $this->tmpRoutes as $method => $route ) {
 				if ( !isset($this->routes[$method]) ) $this->routes[$method] = [];
 				$path = array_key_first($route);
@@ -175,9 +189,11 @@
 				$this->routes[$method] = array_merge($this->routes[$method], $route);
 			}
 
-			$this->prefix = '';
-			$this->middlewares = [];
-			$this->tmpRoutes = [];
+			if ( $cleanData ) {
+				$this->prefix = '';
+				$this->middlewares = [];
+				$this->tmpRoutes = [];
+			}
 		}
 
 		/**
@@ -186,8 +202,7 @@
 		 * @throws RouteNotFoundException When the route was not found
 		 * @throws CallbackNotFound When the callback for the route was not found
 		 */
-		public function handle()
-		{
+		public function handle() {
 			$path = $this->getPath();
 			$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
@@ -245,7 +260,7 @@
 
 			if ( ( is_string($callback) && class_exists($callback) ) || is_array($callback) ) {
 				$controller = is_string($callback) ? new $callback : new $callback[0]; // make a new instance of a controller class
-				$fn = is_string($callback) ? 'index' : $callback[1] ?? 'index'; // get the method to be execute or fallback to index method
+				$fn = is_string($callback) ? 'index' : $callback[1] ?? 'index';        // get the method to be executed or fallback to index method
 				$callback = [ $controller, $fn ];
 			}
 
@@ -266,9 +281,10 @@
 		}
 
 		/**
-		 * Private method used to fetch the arguments of the routs callback methods
+		 * Private method used to fetch the arguments of the route's callback methods
 		 *
 		 * @param object|array|string $func
+		 *
 		 * @return array|null Returns a list of arguments for a method or null on error
 		 */
 		private function get_all_arguments(object|array|string $func): array|null
@@ -302,7 +318,7 @@
 		}
 
 		/**
-		 * Method which executes each specified middleware before the routes callback is executed
+		 * Method which executes each specified middleware before the route's callback is executed
 		 *
 		 * @param array $data List of middlewares to be executed before accessing the endpoint
 		 *
@@ -341,8 +357,72 @@
 		 *
 		 * @return array
 		 */
-		public function getRoutes(): array
-		{
+		public function getRoutes() : array {
 			return $this->routes;
+		}
+
+		/**
+		 * Wrapper method used for adding new GET routes
+		 *
+		 * @param string $path Path for the route
+		 * @param callable|array|string|null $callback Callback method, an anonymous function or a class and method name to be executed
+		 *
+		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
+		 */
+		public function get(string $path, callable|array|string|null $callback = NULL) : self {
+			$this->route($path, $callback, [ self::GET ]);
+			return $this;
+		}
+
+		/**
+		 * Wrapper method used for adding new POST routes
+		 *
+		 * @param string $path Path for the route
+		 * @param callable|array|string|null $callback Callback method, an anonymous function or a class and method name to be executed
+		 *
+		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
+		 */
+		public function post(string $path, callable|array|string|null $callback = NULL) : self {
+			$this->route($path, $callback, [ self::POST ]);
+			return $this;
+		}
+
+		/**
+		 * Wrapper method used for adding new POST routes
+		 *
+		 * @param string $path Path for the route
+		 * @param callable|array|string|null $callback Callback method, an anonymous function or a class and method name to be executed
+		 *
+		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
+		 */
+		public function put(string $path, callable|array|string|null $callback = NULL) : self {
+			$this->route($path, $callback, [ self::PUT ]);
+			return $this;
+		}
+
+		/**
+		 * Wrapper method used for adding new POS routes
+		 *
+		 * @param string $path Path for the route
+		 * @param callable|array|string|null $callback Callback method, an anonymous function or a class and method name to be executed
+		 *
+		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
+		 */
+		public function patch(string $path, callable|array|string|null $callback = NULL) : self {
+			$this->route($path, $callback, [ self::PATCH ]);
+			return $this;
+		}
+
+		/**
+		 * Wrapper method used for adding new POST routes
+		 *
+		 * @param string $path Path for the route
+		 * @param callable|array|string|null $callback Callback method, an anonymous function or a class and method name to be executed
+		 *
+		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
+		 */
+		public function delete(string $path, callable|array|string|null $callback = NULL) : self {
+			$this->route($path, $callback, [ self::DELETE ]);
+			return $this;
 		}
 	}

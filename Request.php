@@ -76,7 +76,11 @@
 			echo json_encode($output);
 		}
 
-
+		/**
+		 * Private method used for parsing request body data for PUT and PATCH requests
+		 *
+		 * @return array Return an array of request body data
+		 */
 		private function parse_patch_and_put_request_data() : array {
 
 			/* PUT data comes in on the stdin stream */
