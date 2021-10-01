@@ -59,12 +59,12 @@
 		private array $middlewares = [];
 
 		/**
-		 * @var array $routes List of available routs
+		 * @var array $routes List of available routes
 		 */
 		private array $routes = [];
 
 		/**
-		 * @var array $routes Temporary holder of list until the all get stored in the primary $routes array
+		 * @var array $routes Temporary holder of route information until it all gets stored in the primary $routes array
 		 */
 		private array $tmpRoutes = [];
 
@@ -84,7 +84,7 @@
 		/**
 		 * Method used to set the prefix for routes
 		 *
-		 * @param string $prefix Prefix to be added to all the routes in that chain.
+		 * @param string $prefix Prefix to be added to all the routes in the chain.
 		 *
 		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
 		 */
@@ -108,11 +108,11 @@
 		}
 
 		/**
-		 * Method used to handle execution of routes and middlewares
+		 * Method used for adding new routes into the temporary list when using chained method approach
 		 *
 		 * @param string $path Path for the route
 		 * @param callable|array|string|null $callback Callback method, an anonymous function or a class and method name to be executed
-		 * @param string|array $methods Allowed request method(s) (GET, POST, PUT...)
+		 * @param string|array $methods Allowed request method(s) (GET, POST, PUT, PATCH, DELETE)
 		 *
 		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
 		 */
@@ -159,7 +159,7 @@
 		 *
 		 * @param string $path Path for the route
 		 * @param callable|array|string|null $callback Callback method, an anonymous function or a class and method name to be executed
-		 * @param string|array|null $methods Allowed request method(s) (GET, POST, PUT...)
+		 * @param string|array|null $methods Allowed request method(s) (GET, POST, PUT, PATCH, DELETE)
 		 *
 		 */
 		public function add(
@@ -175,7 +175,7 @@
 		/**
 		 * Method used for saving routing information into the global $routes array
 		 *
-		 * @param bool $cleanData should the data from the tmpRoutes be cleared on not when this method runs
+		 * @param bool $cleanData should the data from the tmpRoutes be cleared or not when this method runs
 		 */
 		public function save(bool $cleanData = true) {
 			foreach ( $this->tmpRoutes as $method => $route ) {
@@ -359,9 +359,9 @@
 		}
 
 		/**
-		 * Return the list of defined routed
+		 * Method used for fetching a list of all the created routes
 		 *
-		 * @return array
+		 * @return array Return the list of defined routes
 		 */
 		public function getRoutes() : array {
 			return $this->routes;
