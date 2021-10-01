@@ -73,7 +73,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aroute\u0028\u0029",
             "name": "route",
-            "summary": "Method\u0020used\u0020to\u0020handle\u0020execution\u0020of\u0020routes\u0020and\u0020middlewares",
+            "summary": "Method\u0020used\u0020for\u0020adding\u0020new\u0020routes\u0020into\u0020the\u0020temporary\u0020list\u0020when\u0020using\u0020chained\u0020method\u0020approach",
             "url": "classes/Gac-Routing-Routes.html#method_route"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aadd\u0028\u0029",
@@ -108,7 +108,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003AgetRoutes\u0028\u0029",
             "name": "getRoutes",
-            "summary": "Return\u0020the\u0020list\u0020of\u0020defined\u0020routed",
+            "summary": "Method\u0020used\u0020for\u0020fetching\u0020a\u0020list\u0020of\u0020all\u0020the\u0020created\u0020routes",
             "url": "classes/Gac-Routing-Routes.html#method_getRoutes"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aget\u0028\u0029",

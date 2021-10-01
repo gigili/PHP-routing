@@ -229,7 +229,7 @@
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
-<dd>Return the list of defined routed</dd>
+<dd>Method used for fetching a list of all the created routes</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Gac-Routing-Routes.html#method_handle">handle()</a>
@@ -278,7 +278,7 @@
     <span>
                         &nbsp;: <a href="classes/Gac-Routing-Routes.html"><abbr title="\Gac\Routing\Routes">Routes</abbr></a>    </span>
 </dt>
-<dd>Method used to handle execution of routes and middlewares</dd>
+<dd>Method used for adding new routes into the temporary list when using chained method approach</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Gac-Routing-Routes.html#method_save">save()</a>
@@ -601,7 +601,7 @@
      = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
     
-        <section class="phpdocumentor-description"><p>List of available routs</p>
+        <section class="phpdocumentor-description"><p>List of available routes</p>
 </section>
 
     
@@ -635,7 +635,7 @@
      = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
     
-        <section class="phpdocumentor-description"><p>Temporary holder of list until the all get stored in the primary $routes array</p>
+        <section class="phpdocumentor-description"><p>Temporary holder of route information until it all gets stored in the primary $routes array</p>
 </section>
 
     
@@ -730,7 +730,7 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string|array&lt;string|int, mixed&gt;|null</span>
                  = <span class="phpdocumentor-signature__argument__default-value">self::GET</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Allowed request method(s) (GET, POST, PUT...)</p>
+                    <section class="phpdocumentor-description"><p>Allowed request method(s) (GET, POST, PUT, PATCH, DELETE)</p>
 </section>
 
             </dd>
@@ -873,7 +873,7 @@
 
     </aside>
 
-        <p class="phpdocumentor-summary">Return the list of defined routed</p>
+        <p class="phpdocumentor-summary">Method used for fetching a list of all the created routes</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -886,7 +886,9 @@
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
             &mdash;
-        
+            <section class="phpdocumentor-description"><p>Return the list of defined routes</p>
+</section>
+
     
 </article>
                     <article
@@ -1138,7 +1140,7 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                  = <span class="phpdocumentor-signature__argument__default-value">&#039;&#039;</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Prefix to be added to all the routes in that chain.</p>
+                    <section class="phpdocumentor-description"><p>Prefix to be added to all the routes in the chain.</p>
 </section>
 
             </dd>
@@ -1227,7 +1229,7 @@
 
     </aside>
 
-        <p class="phpdocumentor-summary">Method used to handle execution of routes and middlewares</p>
+        <p class="phpdocumentor-summary">Method used for adding new routes into the temporary list when using chained method approach</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1259,7 +1261,7 @@
                 : <span class="phpdocumentor-signature__argument__return-type">string|array&lt;string|int, mixed&gt;</span>
                  = <span class="phpdocumentor-signature__argument__default-value">self::GET</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Allowed request method(s) (GET, POST, PUT...)</p>
+                    <section class="phpdocumentor-description"><p>Allowed request method(s) (GET, POST, PUT, PATCH, DELETE)</p>
 </section>
 
             </dd>
@@ -1306,7 +1308,7 @@
                 : <span class="phpdocumentor-signature__argument__return-type">bool</span>
                  = <span class="phpdocumentor-signature__argument__default-value">true</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>should the data from the tmpRoutes be cleared on not when this method runs</p>
+                    <section class="phpdocumentor-description"><p>should the data from the tmpRoutes be cleared or not when this method runs</p>
 </section>
 
             </dd>
