@@ -112,7 +112,10 @@
 		 *
 		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
 		 */
-		public function route(string $path, callable|array|string|null $callback, string|array $methods = self::GET) : self {
+		public function route(string                     $path,
+							  callable|array|string|null $callback,
+							  string|array               $methods = self::GET
+		) : self {
 			if ( is_string($methods) ) $methods = [ $methods ];
 
 			if ( !empty($this->prefix) ) $path = $this->prefix . $path; // Prepend prefix to routes
@@ -291,7 +294,7 @@
 				if ( ( is_string($func) && function_exists($func) ) || $func instanceof Closure ) {
 					$ref = new ReflectionFunction($func);
 				} elseif ( is_string($func) && !call_user_func_array('method_exists', explode('::', $func)) ) {
-						return $func_get_args;
+					return $func_get_args;
 				} else {
 					$ref = new ReflectionMethod($func[0], $func[1]);
 				}
