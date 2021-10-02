@@ -66,6 +66,12 @@ try {
             ->status(200, "OK")
             ->send(["message" => "Welcome"]);
     });
+    
+    $routes->route('/', function (Request $request) {
+        $request
+            ->status(200, "OK")
+            ->send(["message" => "Welcome"]);
+    })->save();
 
     $routes->route();
 } catch (RouteNotFoundException $ex) {
@@ -80,12 +86,18 @@ try {
 
 ## Examples
 
-Using chained method to wrap multiple routes with a same middleware or a route prefix
+### Chained routes
+
+Using chained method to wrap multiple routes with a same middleware or a route prefix When using chained method either
+use `save()` or `add()` as the last method to indicate the end of a chain;
+
+**NOTE**
+Both the `save` and `add` methods **CAN'T** be chained on, so they need to be the last one in the chain.
 
 ```php
 $routes
     ->prefix('/user') // all the routes add will have the /user prefix
-    ->middleware([ 'verify_token' ]) // all the routes added will have the verify_token middelware applied
+    ->middleware([ 'verify_token' ]) // all the routes added will have the verify_token middleware applied
     ->route('/', [ HomeController::class, 'getUsers' ], Routes::GET)
     ->route('/', [ HomeController::class, 'addUser' ], Routes::POST)
     ->route('/', [ HomeController::class, 'updateUser' ], Routes::PATCH)
@@ -93,7 +105,20 @@ $routes
     ->add('/test', [ HomeController::class, 'deleteUser' ], Routes::DELETE);
 ```
 
-Dynamic routes example:
+```php
+$routes
+    ->prefix("/test")
+    ->middleware(['decode_token'])
+    ->route("/t0", function(Request $request){})
+    ->get("/t1", function (){})
+    ->post("/t2", function (){})
+    ->put("/t3", function (){})
+    ->patch("/t4", function (){})
+    ->delete("/t5", function (){})
+    ->save();
+```
+
+### Dynamic routes example
 
 ```php
 $routes->add('/test/{int:userID}-{username}/{float:amount}/{bool:valid}', function (
@@ -107,6 +132,7 @@ $routes->add('/test/{int:userID}-{username}/{float:amount}/{bool:valid}', functi
 });
 ```
 
+### Passing arguments to middleware methods 
 When working with middlewares you can also pass them arguments if you need to
 
 ```php
@@ -124,7 +150,7 @@ $routes
 
 Every middleware function can also accept an argument of type `Gac\Request` at any position as long as it has the proper type specified.
 
-For more example look in the [sample folder](/sample).
+For more example look in the [sample folder](/sample) `index.php` file
 
 ## Documentation
 

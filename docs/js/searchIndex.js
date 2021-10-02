@@ -43,7 +43,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Gac\\Routing\\Request\u003A\u003Aparse_patch_and_put_request_data\u0028\u0029",
             "name": "parse_patch_and_put_request_data",
-            "summary": "",
+            "summary": "Private\u0020method\u0020used\u0020for\u0020parsing\u0020request\u0020body\u0020data\u0020for\u0020PUT\u0020and\u0020PATCH\u0020requests",
             "url": "classes/Gac-Routing-Request.html#method_parse_patch_and_put_request_data"
         },                {
             "fqsen": "\\Gac\\Routing\\Request\u003A\u003A\u0024data",
@@ -73,13 +73,18 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aroute\u0028\u0029",
             "name": "route",
-            "summary": "Method\u0020used\u0020to\u0020handle\u0020execution\u0020of\u0020routes\u0020and\u0020middlewares",
+            "summary": "Method\u0020used\u0020for\u0020adding\u0020new\u0020routes\u0020into\u0020the\u0020temporary\u0020list\u0020when\u0020using\u0020chained\u0020method\u0020approach",
             "url": "classes/Gac-Routing-Routes.html#method_route"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aadd\u0028\u0029",
             "name": "add",
             "summary": "Method\u0020used\u0020for\u0020adding\u0020new\u0020routes",
             "url": "classes/Gac-Routing-Routes.html#method_add"
+        },                {
+            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Asave\u0028\u0029",
+            "name": "save",
+            "summary": "Method\u0020used\u0020for\u0020saving\u0020routing\u0020information\u0020into\u0020the\u0020global\u0020\u0024routes\u0020array",
+            "url": "classes/Gac-Routing-Routes.html#method_save"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Ahandle\u0028\u0029",
             "name": "handle",
@@ -88,12 +93,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aget_all_arguments\u0028\u0029",
             "name": "get_all_arguments",
-            "summary": "Private\u0020method\u0020used\u0020to\u0020fetch\u0020the\u0020arguments\u0020of\u0020the\u0020routs\u0020callback\u0020methods",
+            "summary": "Private\u0020method\u0020used\u0020to\u0020fetch\u0020the\u0020arguments\u0020of\u0020the\u0020route\u0027s\u0020callback\u0020methods",
             "url": "classes/Gac-Routing-Routes.html#method_get_all_arguments"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aexecute_middleware\u0028\u0029",
             "name": "execute_middleware",
-            "summary": "Method\u0020which\u0020executes\u0020each\u0020specified\u0020middleware\u0020before\u0020the\u0020routes\u0020callback\u0020is\u0020executed",
+            "summary": "Method\u0020which\u0020executes\u0020each\u0020specified\u0020middleware\u0020before\u0020the\u0020route\u0027s\u0020callback\u0020is\u0020executed",
             "url": "classes/Gac-Routing-Routes.html#method_execute_middleware"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003AgetPath\u0028\u0029",
@@ -103,8 +108,33 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003AgetRoutes\u0028\u0029",
             "name": "getRoutes",
-            "summary": "Return\u0020the\u0020list\u0020of\u0020defined\u0020routed",
+            "summary": "Method\u0020used\u0020for\u0020fetching\u0020a\u0020list\u0020of\u0020all\u0020the\u0020created\u0020routes",
             "url": "classes/Gac-Routing-Routes.html#method_getRoutes"
+        },                {
+            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "Wrapper\u0020method\u0020used\u0020for\u0020adding\u0020new\u0020GET\u0020routes",
+            "url": "classes/Gac-Routing-Routes.html#method_get"
+        },                {
+            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Apost\u0028\u0029",
+            "name": "post",
+            "summary": "Wrapper\u0020method\u0020used\u0020for\u0020adding\u0020new\u0020POST\u0020routes",
+            "url": "classes/Gac-Routing-Routes.html#method_post"
+        },                {
+            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aput\u0028\u0029",
+            "name": "put",
+            "summary": "Wrapper\u0020method\u0020used\u0020for\u0020adding\u0020new\u0020POST\u0020routes",
+            "url": "classes/Gac-Routing-Routes.html#method_put"
+        },                {
+            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Apatch\u0028\u0029",
+            "name": "patch",
+            "summary": "Wrapper\u0020method\u0020used\u0020for\u0020adding\u0020new\u0020POS\u0020routes",
+            "url": "classes/Gac-Routing-Routes.html#method_patch"
+        },                {
+            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "Wrapper\u0020method\u0020used\u0020for\u0020adding\u0020new\u0020POST\u0020routes",
+            "url": "classes/Gac-Routing-Routes.html#method_delete"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003AGET",
             "name": "GET",

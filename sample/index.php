@@ -18,8 +18,23 @@
 	$routes = new Routes();
 	try {
 
+		// When using chained method either use `save()` or `add()` method at the end to indicate an end of chain
+		$routes
+			->prefix("/test")
+			->middleware([ 'decode_token' ])
+			->get("/t1", function () { })
+			->get("/t2", function () { })
+			->get("/t3", function () { })
+			->save();
+
 		$routes->add('/', function (Request $request) {
 			echo json_encode([ 'message' => 'Hello World' ]);
+		});
+
+		$routes->add('/test', function (Request $request) {
+			$request
+				->status(200, 'OK')
+				->send([ 'message' => 'Welcome' ]);
 		});
 
 		$routes
@@ -31,14 +46,29 @@
 			->route('/', [ HomeController::class, 'replaceUser' ], Routes::PUT)
 			->add('/test', [ HomeController::class, 'deleteUser' ], Routes::DELETE);
 
-		$routes->add('/test', function (Request $request) {
-			$request
-				->status(200, 'OK')
-				->send([ 'message' => 'Welcome' ]);
-		});
 
 		$routes->add('/test', function () {
 		}, [ Routes::PATCH, Routes::POST ]);
+
+		$routes->get("/test-get", function () {
+			echo "Hello from test-get";
+		});
+
+		$routes->post("/test-post", function () {
+			echo "Hello from test-post";
+		});
+
+		$routes->put("/test-put", function () {
+			echo "Hello from test-put";
+		});
+
+		$routes->patch("/test-patch", function () {
+			echo "Hello from test-patch";
+		});
+
+		$routes->delete("/test-delete", function () {
+			echo "Hello from test-delete";
+		});
 
 		$routes->add('/test/{int:userID}-{username}/{float:amount}/{bool:valid}', function (
 			Request $request,
