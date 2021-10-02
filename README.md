@@ -148,7 +148,7 @@ $routes
     });
 ```
 
-Every middleware function can also accept an argument of type `Gac\Request` at any position as long as it has the proper type specified.
+Every middleware function can also accept an argument of type `Gac\Routing\Request` at any position as long as it has the proper type specified.
 
 For more example look in the [sample folder](/sample) `index.php` file
 
