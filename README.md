@@ -107,6 +107,23 @@ $routes->add('/test/{int:userID}-{username}/{float:amount}/{bool:valid}', functi
 });
 ```
 
+When working with middlewares you can also pass them arguments if you need to
+
+```php
+$routes
+    ->middleware([
+        'test_middleware',
+        'has_roles' => 'admin,user',
+        [ Middleware::class, 'test_method' ],
+        [ Middleware::class, 'has_role', 'Admin', 'Moderator', [ 'User', 'Bot' ] ],
+    ])
+    ->add('/test', function (Request $request) {
+        $request->send([ 'msg' => 'testing' ]);
+    });
+```
+
+Every middleware function can also accept an argument of type `Gac\Request` at any position as long as it has the proper type specified.
+
 For more example look in the [sample folder](/sample).
 
 ## Documentation

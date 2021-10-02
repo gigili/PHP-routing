@@ -2,10 +2,9 @@
 	/**
 	 * Custom routing library
 	 *
-	 * @author Igor Ilić <github@igorilic.net>
+	 * @author    Igor Ilić <github@igorilic.net>
+	 * @license   GNU General Public License v3.0
 	 * @copyright 2020-2021 Igor Ilić
-	 * @license GNU General Public License v3.0
-	 *
 	 */
 
 	declare( strict_types=1 );
@@ -76,8 +75,7 @@
 		/**
 		 * Routes constructor
 		 */
-		public function __construct()
-		{
+		public function __construct() {
 			$this->request = new Request;
 		}
 
@@ -86,10 +84,9 @@
 		 *
 		 * @param string $prefix Prefix to be added to all the routes in that chain.
 		 *
-		 * @return Routes Returns an instance of it self so that other methods could be chained onto it
+		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
 		 */
-		public function prefix(string $prefix = ''): self
-		{
+		public function prefix(string $prefix = '') : self {
 			$this->prefix = $prefix;
 			return $this;
 		}
@@ -99,20 +96,17 @@
 		 *
 		 * @param array $data List of middlewares to be executed before the routes
 		 *
-		 * @return Routes Returns an instance of it self so that other methods could be chained onto it
+		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
 		 */
-		public function middleware(array $data): self
-		{
+		public function middleware(array $data) : self {
 			$this->middlewares = $data;
 			return $this;
 		}
 
 		/**
 		 * Method used to handle execution of routes and middlewares
-		 *
 		 */
-		public function route(string $path, callable|array|string $callback, string|array $methods = self::GET): self
-		{
+		public function route(string $path, callable|array|string $callback, string|array $methods = self::GET) : self {
 			if ( is_string($methods) ) $methods = [ $methods ];
 
 			if ( !empty($this->prefix) ) $path = $this->prefix . $path; // Prepend prefix to routes
@@ -152,10 +146,12 @@
 		 * @param string $path Path for the route
 		 * @param callable|array|string|null $callback Callback method, an anonymous function or a class and method name to be executed
 		 * @param string|array|null $methods Allowed request method(s) (GET, POST, PUT...)
-		 *
 		 */
-		public function add(string $path = '', callable|array|string|null $callback = NULL, string|array|null $methods = self::GET)
-		{
+		public function add(
+			string                     $path = '',
+			callable|array|string|null $callback = NULL,
+			string|array|null          $methods = self::GET
+		) {
 			$this->route($path, $callback, $methods);
 
 			foreach ( $this->tmpRoutes as $method => $route ) {
@@ -186,8 +182,7 @@
 		 * @throws RouteNotFoundException When the route was not found
 		 * @throws CallbackNotFound When the callback for the route was not found
 		 */
-		public function handle()
-		{
+		public function handle() {
 			$path = $this->getPath();
 			$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
@@ -225,7 +220,7 @@
 								'float' => floatval($value),
 								'double' => doubleval($value),
 								'bool' => is_numeric($value) ? boolval($value) : ( $value === 'true' ),
-								default => (string)$value,
+								default => (string) $value,
 							};
 
 							$arguments[$argumentName] = $value;
@@ -245,7 +240,7 @@
 
 			if ( ( is_string($callback) && class_exists($callback) ) || is_array($callback) ) {
 				$controller = is_string($callback) ? new $callback : new $callback[0]; // make a new instance of a controller class
-				$fn = is_string($callback) ? 'index' : $callback[1] ?? 'index'; // get the method to be execute or fallback to index method
+				$fn = is_string($callback) ? 'index' : $callback[1] ?? 'index';        // get the method to be executed or fallback to index method
 				$callback = [ $controller, $fn ];
 			}
 
@@ -266,21 +261,23 @@
 		}
 
 		/**
-		 * Private method used to fetch the arguments of the routs callback methods
+		 * Private method used to fetch the arguments of the route's callback methods
 		 *
 		 * @param object|array|string $func
+		 *
 		 * @return array|null Returns a list of arguments for a method or null on error
 		 */
-		private function get_all_arguments(object|array|string $func): array|null
-		{
-			$func_get_args = array();
+		private function get_all_arguments(object|array|string $func) : array|null {
+			$func_get_args = [];
 			try {
 				if ( ( is_string($func) && function_exists($func) ) || $func instanceof Closure ) {
 					$ref = new ReflectionFunction($func);
-				} else if ( is_string($func) && !call_user_func_array('method_exists', explode('::', $func)) ) {
-					return $func_get_args;
 				} else {
-					$ref = new ReflectionMethod($func[0], $func[1]);
+					if ( is_string($func) && !call_user_func_array('method_exists', explode('::', $func)) ) {
+						return $func_get_args;
+					} else {
+						$ref = new ReflectionMethod($func[0], $func[1]);
+					}
 				}
 
 				foreach ( $ref->getParameters() as $param ) {
@@ -302,23 +299,45 @@
 		}
 
 		/**
-		 * Method which executes each specified middleware before the routes callback is executed
+		 * Method which executes each specified middleware before the route's callback is executed
 		 *
 		 * @param array $data List of middlewares to be executed before accessing the endpoint
 		 *
 		 * @throws CallbackNotFound When the specified middleware method is not found
 		 */
-		private function execute_middleware(array $data)
-		{
-			foreach ( $data as $function ) {
+		private function execute_middleware(array $data) {
+			foreach ( $data as $key => $function ) {
+				$arguments = [];
+				$tmpArguments = [];
 
-				if ( is_array($function) ) {
-					$function = [ new $function[0], $function[1] ];
+				if ( is_integer($key) && is_array($function) ) {
+					$class = $function[0];
+					$method = $function[1];
+					array_shift($function);
+					array_shift($function);
+					$tmpArguments = $function;
+					$function = [ new $class, $method ];
+				}
+
+				if ( is_string($key) ) {
+					$tmpArguments = [ $function ];
+					$function = $key;
+				}
+
+				$parameters = $this->get_all_arguments($function);
+				$requestClassIndex = array_search(Request::class, array_values($parameters));
+
+				$tmpParameters = array_filter($parameters, fn($item) => $item !== Request::class);
+				for ( $index = 0; $index < count($tmpParameters); $index++ ) {
+					if ( $index === $requestClassIndex ) {
+						array_push($arguments, $this->request);
+					}
+					array_push($arguments, $tmpArguments[$index] ?? NULL);
 				}
 
 				if ( !is_callable($function) ) throw new CallbackNotFound("Middleware method $function not found", 404);
 
-				call_user_func($function, $this->request);
+				call_user_func($function, ...$arguments);
 			}
 		}
 
@@ -327,8 +346,7 @@
 		 *
 		 * @return string Returns the current path
 		 */
-		private function getPath(): string
-		{
+		private function getPath() : string {
 			$path = $_SERVER['REQUEST_URI'] ?? '/';
 			$position = strpos($path, '?');
 
@@ -341,8 +359,7 @@
 		 *
 		 * @return array
 		 */
-		public function getRoutes(): array
-		{
+		public function getRoutes() : array {
 			return $this->routes;
 		}
 	}
