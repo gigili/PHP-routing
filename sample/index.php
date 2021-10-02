@@ -94,32 +94,47 @@
 			});
 
 
-		$routes->add('/', function(Request $request){
-			echo "<pre>";
-			print_r([$_REQUEST, $_FILES]);
-		}, [Routes::PATCH]);
+		$routes
+			->middleware([
+				'test_middleware',
+				'has_roles' => 'admin,user',
+				[ Middleware::class, 'test_method' ],
+				[ Middleware::class, 'has_role', 'Admin', 'Moderator', [ 'User', 'Bot' ] ],
+			])
+			->add('/test', function (Request $request) {
+				$request->send([ 'msg' => 'testing' ]);
+			});
 
-		$routes->add('/', function(Request $request){
+
+		$routes->add('/', function (Request $request) {
 			echo "<pre>";
-			print_r([$_REQUEST, $_FILES]);
-		}, [Routes::PUT]);
+			print_r([ $_REQUEST, $_FILES ]);
+		}, [ Routes::PATCH ]);
+
+		$routes->add('/', function (Request $request) {
+			echo "<pre>";
+			print_r([ $_REQUEST, $_FILES ]);
+		}, [ Routes::PUT ]);
 
 		$routes->handle();
 	} catch ( RouteNotFoundException $ex ) {
 		$routes->request->status(404, 'Route not found')->send([ 'error' => [ 'message' => $ex->getMessage() ] ]);
 	} catch ( CallbackNotFound $ex ) {
-		$routes->request->status(404, 'Callback method not found')->send([ 'error' => [ 'message' => $ex->getMessage() ] ]);
+		$routes->request->status(404, 'Callback method not found')
+						->send([ 'error' => [ 'message' => $ex->getMessage() ] ]);
 	} catch ( Exception $ex ) {
 		$code = $ex->getCode() ?? 500;
 		$routes->request->status($code)->send([ 'error' => [ 'message' => $ex->getMessage() ] ]);
 	}
 
-	function test_route_function()
-	{
+	function test_route_function() {
 		echo json_encode([ 'message' => 'Welcome from test route' ]);
 	}
 
-	function verify_token()
-	{
+	function verify_token() {
+		//Do something
+	}
+
+	function has_roles(string $allowedRoles) {
 		//Do something
 	}

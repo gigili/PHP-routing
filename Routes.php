@@ -2,10 +2,9 @@
 	/**
 	 * Custom routing library
 	 *
-	 * @author Igor Ilić <github@igorilic.net>
+	 * @author    Igor Ilić <github@igorilic.net>
+	 * @license   GNU General Public License v3.0
 	 * @copyright 2020-2021 Igor Ilić
-	 * @license GNU General Public License v3.0
-	 *
 	 */
 
 	declare( strict_types=1 );
@@ -76,8 +75,7 @@
 		/**
 		 * Routes constructor
 		 */
-		public function __construct()
-		{
+		public function __construct() {
 			$this->request = new Request;
 		}
 
@@ -88,8 +86,7 @@
 		 *
 		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
 		 */
-		public function prefix(string $prefix = ''): self
-		{
+		public function prefix(string $prefix = '') : self {
 			$this->prefix = $prefix;
 			return $this;
 		}
@@ -101,8 +98,7 @@
 		 *
 		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
 		 */
-		public function middleware(array $data): self
-		{
+		public function middleware(array $data) : self {
 			$this->middlewares = $data;
 			return $this;
 		}
@@ -170,7 +166,6 @@
 			$this->route($path, $callback, $methods);
 			$this->save();
 		}
-
 
 		/**
 		 * Method used for saving routing information into the global $routes array
@@ -246,7 +241,7 @@
 								'float' => floatval($value),
 								'double' => doubleval($value),
 								'bool' => is_numeric($value) ? boolval($value) : ( $value === 'true' ),
-								default => (string)$value,
+								default => (string) $value,
 							};
 
 							$arguments[$argumentName] = $value;
@@ -293,13 +288,12 @@
 		 *
 		 * @return array|null Returns a list of arguments for a method or null on error
 		 */
-		private function get_all_arguments(object|array|string $func): array|null
-		{
-			$func_get_args = array();
+		private function get_all_arguments(object|array|string $func) : array|null {
+			$func_get_args = [];
 			try {
 				if ( ( is_string($func) && function_exists($func) ) || $func instanceof Closure ) {
 					$ref = new ReflectionFunction($func);
-				} else if ( is_string($func) && !call_user_func_array('method_exists', explode('::', $func)) ) {
+				} elseif ( is_string($func) && !call_user_func_array('method_exists', explode('::', $func)) ) {
 					return $func_get_args;
 				} else {
 					$ref = new ReflectionMethod($func[0], $func[1]);
@@ -330,17 +324,39 @@
 		 *
 		 * @throws CallbackNotFound When the specified middleware method is not found
 		 */
-		private function execute_middleware(array $data)
-		{
-			foreach ( $data as $function ) {
+		private function execute_middleware(array $data) {
+			foreach ( $data as $key => $function ) {
+				$arguments = [];
+				$tmpArguments = [];
 
-				if ( is_array($function) ) {
-					$function = [ new $function[0], $function[1] ];
+				if ( is_integer($key) && is_array($function) ) {
+					$class = $function[0];
+					$method = $function[1];
+					array_shift($function);
+					array_shift($function);
+					$tmpArguments = $function;
+					$function = [ new $class, $method ];
+				}
+
+				if ( is_string($key) ) {
+					$tmpArguments = [ $function ];
+					$function = $key;
+				}
+
+				$parameters = $this->get_all_arguments($function);
+				$requestClassIndex = array_search(Request::class, array_values($parameters));
+
+				$tmpParameters = array_filter($parameters, fn($item) => $item !== Request::class);
+				for ( $index = 0; $index < count($tmpParameters); $index++ ) {
+					if ( $index === $requestClassIndex ) {
+						array_push($arguments, $this->request);
+					}
+					array_push($arguments, $tmpArguments[$index] ?? NULL);
 				}
 
 				if ( !is_callable($function) ) throw new CallbackNotFound("Middleware method $function not found", 404);
 
-				call_user_func($function, $this->request);
+				call_user_func($function, ...$arguments);
 			}
 		}
 
@@ -349,8 +365,7 @@
 		 *
 		 * @return string Returns the current path
 		 */
-		private function getPath(): string
-		{
+		private function getPath() : string {
 			$path = $_SERVER['REQUEST_URI'] ?? '/';
 			$position = strpos($path, '?');
 
