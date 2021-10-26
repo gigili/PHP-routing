@@ -30,19 +30,19 @@
 			->get("/t1", function () { })
 			->get("/t2", function () { })
 			->get("/t3", function () { })
-			->save(false) // by passing the false argument here, we keep all the previous shared data from the chain
-			->prefix("/test2") // by passing the true argument we are appending this prefix to an existing one
-			->middleware([ "verify_token" ]) // by passing the true argument we are appending a list of middlewares to an existing list
+			->save(false) // by passing the false argument here, we keep all the previous shared data from the chain (previous prefix(es) and middlewares)
+			->prefix("/test2")
+			->middleware([ "verify_token" ])
 			->get("/t4", function () { })
 			->get("/t5", function () { })
 			->get("/t6", function () { })
-			->save() // by not passing the false argument here, we are removing all shared data from the previous chains
-			->prefix("/test3") // by not passing the true argument we are overriding the prefix value
-			->middleware([ "verify_token" ]) // by not passing the true argument we are overriding list of middlewares
+			->save() // by not passing the false argument here, we are removing all shared data from the previous chains (previous prefix(es) and middlewares)
+			->prefix("/test3")
+			->middleware([ "verify_token" ])
 			->get("/t7", function () { })
 			->get("/t8", function () { })
 			->get("/t9", function () { })
-			->add(); //using save or add at the end makes the chaining stop and allows for other routes to be added
+			->add(); //using save or add at the end makes the chaining stop and allows for other independent routes to be added
 
 		$routes->add("/routes", function (Request $request) {
 			global $routes;

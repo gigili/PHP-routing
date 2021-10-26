@@ -26,7 +26,7 @@ include_once "./Request.php";
 include_once "./Routes.php";
 ```
 
-## After install
+## Post install
 
 To use this library properly you will need to create a `.htaccess` file at the root of the project.
 
@@ -69,9 +69,9 @@ try {
     
     $routes->route('/', function (Request $request) {
         $request
-            ->status(200, "OK")
+            ->status(201, "OK")
             ->send(["message" => "Welcome"]);
-    })->save();
+    }, [Routes::POST])->save();
 
     $routes->route();
 } catch (RouteNotFoundException $ex) {
@@ -85,38 +85,6 @@ try {
 ```
 
 ## Examples
-
-### Chained routes
-
-Using chained method to wrap multiple routes with a same middleware or a route prefix When using chained method either
-use `save()` or `add()` as the last method to indicate the end of a chain;
-
-**NOTE**
-Both the `save` and `add` methods **CAN'T** be chained on, so they need to be the last one in the chain.
-
-```php
-$routes
-    ->prefix('/user') // all the routes add will have the /user prefix
-    ->middleware([ 'verify_token' ]) // all the routes added will have the verify_token middleware applied
-    ->route('/', [ HomeController::class, 'getUsers' ], Routes::GET)
-    ->route('/', [ HomeController::class, 'addUser' ], Routes::POST)
-    ->route('/', [ HomeController::class, 'updateUser' ], Routes::PATCH)
-    ->route('/', [ HomeController::class, 'replaceUser' ], Routes::PUT)
-    ->add('/test', [ HomeController::class, 'deleteUser' ], Routes::DELETE);
-```
-
-```php
-$routes
-    ->prefix("/test")
-    ->middleware(['decode_token'])
-    ->route("/t0", function(Request $request){})
-    ->get("/t1", function (){})
-    ->post("/t2", function (){})
-    ->put("/t3", function (){})
-    ->patch("/t4", function (){})
-    ->delete("/t5", function (){})
-    ->save();
-```
 
 ### Dynamic routes example
 
@@ -132,7 +100,70 @@ $routes->add('/test/{int:userID}-{username}/{float:amount}/{bool:valid}', functi
 });
 ```
 
-### Passing arguments to middleware methods 
+### Chained routes
+
+Using chained method to wrap multiple routes with a same middleware or a route prefix When using chained method either
+use `save()` or `add()` as the last method to indicate the end of a chain;
+
+**NOTE**
+
+`save()`  method can still be chained on to if needed, but `add()` method **CAN'T** be chained on, so it needs to be the
+last one in the chain.
+
+#### Chained routes with add at the end
+
+```php
+$routes
+    ->prefix('/user') // all the routes added will have the /user prefix
+    ->middleware([ 'verify_token' ]) // all the routes added will have the verify_token middleware applied
+    ->route('/', [ HomeController::class, 'getUsers' ], Routes::GET)
+    ->route('/', [ HomeController::class, 'addUser' ], Routes::POST)
+    ->route('/', [ HomeController::class, 'updateUser' ], Routes::PATCH)
+    ->route('/', [ HomeController::class, 'replaceUser' ], Routes::PUT)
+    ->add('/test', [ HomeController::class, 'deleteUser' ], Routes::DELETE);
+```
+
+#### Chained routes with save at the end
+
+```php
+$routes
+    ->prefix("/test")
+    ->middleware(['decode_token'])
+    ->route("/t0", function(Request $request){})
+    ->get("/t1", function (){})
+    ->post("/t2", function (){})
+    ->put("/t3", function (){})
+    ->patch("/t4", function (){})
+    ->delete("/t5", function (){})
+    ->save();
+```
+
+#### Chained routes with multiple chains in one call
+
+```php 
+$routes
+    ->prefix("/test")
+    ->middleware([ 'decode_token' ])
+    ->get("/t1", function () { }) // route would be: /test/t1
+    ->get("/t2", function () { }) // route would be: /test/t2
+    ->get("/t3", function () { }) // route would be: /test/t3
+    ->save(false) // by passing the false argument here, we keep all the previous shared data from the chain (previous prefix(es) and middlewares)
+    ->prefix("/test2")
+    ->middleware([ "verify_token" ])
+    ->get("/t4", function () { }) // route would be: /test/test2/t4
+    ->get("/t5", function () { }) // route would be: /test/test2/t5
+    ->get("/t6", function () { }) // route would be: /test/test2/t6
+    ->save() // by not passing the false argument here, we are removing all shared data from the previous chains (previous prefix(es) and middlewares)
+    ->prefix("/test3")
+    ->middleware([ "verify_token" ])
+    ->get("/t7", function () { }) // route would be: /test3/t7
+    ->get("/t8", function () { }) // route would be: /test3/t8
+    ->get("/t9", function () { }) // route would be: /test3/t9
+    ->add(); //using save or add at the end makes the chaining stop and allows for other independent routes to be added
+```
+
+### Passing arguments to middleware methods
+
 When working with middlewares you can also pass them arguments if you need to
 
 ```php
@@ -148,9 +179,10 @@ $routes
     });
 ```
 
-Every middleware function can also accept an argument of type `Gac\Routing\Request` at any position as long as it has the proper type specified.
+Every middleware function can also accept an argument of type `Gac\Routing\Request` at any position as long as it has
+the proper type specified.
 
-For more example look in the [sample folder](/sample) `index.php` file
+For more examples look in the [sample folder](/sample) `index.php` file
 
 ## Documentation
 
