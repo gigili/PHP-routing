@@ -61,25 +61,15 @@ Search.appendIndex(
             "summary": "Routes\u0020constructor",
             "url": "classes/Gac-Routing-Routes.html#method___construct"
         },                {
-            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003A\u0024prefix",
-            "name": "prefix",
-            "summary": "",
-            "url": "classes/Gac-Routing-Routes.html#property_prefix"
-        },                {
-            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Amiddleware\u0028\u0029",
-            "name": "middleware",
-            "summary": "Method\u0020used\u0020to\u0020set\u0020the\u0020middlewares\u0020for\u0020routes",
-            "url": "classes/Gac-Routing-Routes.html#method_middleware"
+            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aadd\u0028\u0029",
+            "name": "add",
+            "summary": "Method\u0020used\u0020for\u0020adding\u0020new\u0020routes",
+            "url": "classes/Gac-Routing-Routes.html#method_add"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aroute\u0028\u0029",
             "name": "route",
             "summary": "Method\u0020used\u0020for\u0020adding\u0020new\u0020routes\u0020into\u0020the\u0020temporary\u0020list\u0020when\u0020using\u0020chained\u0020method\u0020approach",
             "url": "classes/Gac-Routing-Routes.html#method_route"
-        },                {
-            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aadd\u0028\u0029",
-            "name": "add",
-            "summary": "Method\u0020used\u0020for\u0020adding\u0020new\u0020routes",
-            "url": "classes/Gac-Routing-Routes.html#method_add"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Asave\u0028\u0029",
             "name": "save",
@@ -91,25 +81,25 @@ Search.appendIndex(
             "summary": "Method\u0020used\u0020to\u0020handle\u0020execution\u0020of\u0020routes\u0020and\u0020middlewares",
             "url": "classes/Gac-Routing-Routes.html#method_handle"
         },                {
-            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aget_all_arguments\u0028\u0029",
-            "name": "get_all_arguments",
-            "summary": "Private\u0020method\u0020used\u0020to\u0020fetch\u0020the\u0020arguments\u0020of\u0020the\u0020route\u0027s\u0020callback\u0020methods",
-            "url": "classes/Gac-Routing-Routes.html#method_get_all_arguments"
+            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aget_path\u0028\u0029",
+            "name": "get_path",
+            "summary": "Method\u0020which\u0020returns\u0020the\u0020current\u0020path\u0020the\u0020user\u0020is\u0020trying\u0020to\u0020access",
+            "url": "classes/Gac-Routing-Routes.html#method_get_path"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aexecute_middleware\u0028\u0029",
             "name": "execute_middleware",
             "summary": "Method\u0020which\u0020executes\u0020each\u0020specified\u0020middleware\u0020before\u0020the\u0020route\u0027s\u0020callback\u0020is\u0020executed",
             "url": "classes/Gac-Routing-Routes.html#method_execute_middleware"
         },                {
-            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003AgetPath\u0028\u0029",
-            "name": "getPath",
-            "summary": "Method\u0020which\u0020returns\u0020the\u0020current\u0020path\u0020the\u0020user\u0020is\u0020trying\u0020to\u0020access",
-            "url": "classes/Gac-Routing-Routes.html#method_getPath"
+            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aget_all_arguments\u0028\u0029",
+            "name": "get_all_arguments",
+            "summary": "Private\u0020method\u0020used\u0020to\u0020fetch\u0020the\u0020arguments\u0020of\u0020the\u0020route\u0027s\u0020callback\u0020methods",
+            "url": "classes/Gac-Routing-Routes.html#method_get_all_arguments"
         },                {
-            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003AgetRoutes\u0028\u0029",
-            "name": "getRoutes",
+            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aget_routes\u0028\u0029",
+            "name": "get_routes",
             "summary": "Method\u0020used\u0020for\u0020fetching\u0020a\u0020list\u0020of\u0020all\u0020the\u0020created\u0020routes",
-            "url": "classes/Gac-Routing-Routes.html#method_getRoutes"
+            "url": "classes/Gac-Routing-Routes.html#method_get_routes"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aget\u0028\u0029",
             "name": "get",
@@ -136,6 +126,16 @@ Search.appendIndex(
             "summary": "Wrapper\u0020method\u0020used\u0020for\u0020adding\u0020new\u0020POST\u0020routes",
             "url": "classes/Gac-Routing-Routes.html#method_delete"
         },                {
+            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003A\u0024prefix",
+            "name": "prefix",
+            "summary": "",
+            "url": "classes/Gac-Routing-Routes.html#property_prefix"
+        },                {
+            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Amiddleware\u0028\u0029",
+            "name": "middleware",
+            "summary": "Method\u0020used\u0020to\u0020set\u0020the\u0020middlewares\u0020for\u0020routes",
+            "url": "classes/Gac-Routing-Routes.html#method_middleware"
+        },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003AGET",
             "name": "GET",
             "summary": "",
@@ -161,6 +161,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Gac-Routing-Routes.html#constant_DELETE"
         },                {
+            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003A\u0024request",
+            "name": "request",
+            "summary": "",
+            "url": "classes/Gac-Routing-Routes.html#property_request"
+        },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003A\u0024middlewares",
             "name": "middlewares",
             "summary": "",
@@ -175,11 +180,6 @@ Search.appendIndex(
             "name": "tmpRoutes",
             "summary": "",
             "url": "classes/Gac-Routing-Routes.html#property_tmpRoutes"
-        },                {
-            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003A\u0024request",
-            "name": "request",
-            "summary": "",
-            "url": "classes/Gac-Routing-Routes.html#property_request"
         },                {
             "fqsen": "\\",
             "name": "\\",
