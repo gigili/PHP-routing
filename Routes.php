@@ -46,31 +46,26 @@
 		 * @var string DELETE Constant representing a DELETE request method
 		 */
 		public const DELETE = 'DELETE';
-
-		/**
-		 * @var string $prefix Routes prefix
-		 */
-		private string $prefix = '';
-
-		/**
-		 * @var array $middlewares List of middlewares to be executed before the routes
-		 */
-		private array $middlewares = [];
-
-		/**
-		 * @var array $routes List of available routes
-		 */
-		private array $routes = [];
-
-		/**
-		 * @var array $routes Temporary holder of route information until it all gets stored in the primary $routes array
-		 */
-		private array $tmpRoutes = [];
-
 		/**
 		 * @var Request $request Instance of a Request class to be passed as an argument to routes callback
 		 */
 		public Request $request;
+		/**
+		 * @var string $prefix Routes prefix
+		 */
+		private string $prefix = '';
+		/**
+		 * @var array $middlewares List of middlewares to be executed before the routes
+		 */
+		private array $middlewares = [];
+		/**
+		 * @var array $routes List of available routes
+		 */
+		private array $routes = [];
+		/**
+		 * @var array $routes Temporary holder of route information until it all gets stored in the primary $routes array
+		 */
+		private array $tmpRoutes = [];
 
 		/**
 		 * Routes constructor
@@ -80,27 +75,20 @@
 		}
 
 		/**
-		 * Method used to set the prefix for routes
+		 * Method used for adding new routes
 		 *
-		 * @param string $prefix Prefix to be added to all the routes in the chain.
+		 * @param string $path Path for the route
+		 * @param callable|array|string|null $callback Callback method, an anonymous function or a class and method name to be executed
+		 * @param string|array|null $methods Allowed request method(s) (GET, POST, PUT, PATCH, DELETE)
 		 *
-		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
 		 */
-		public function prefix(string $prefix = '') : self {
-			$this->prefix = $prefix;
-			return $this;
-		}
-
-		/**
-		 * Method used to set the middlewares for routes
-		 *
-		 * @param array $data List of middlewares to be executed before the routes
-		 *
-		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
-		 */
-		public function middleware(array $data) : self {
-			$this->middlewares = $data;
-			return $this;
+		public function add(
+			string                     $path = '',
+			callable|array|string|null $callback = NULL,
+			string|array|null          $methods = self::GET
+		) {
+			$this->route($path, $callback, $methods);
+			$this->save();
 		}
 
 		/**
@@ -112,9 +100,10 @@
 		 *
 		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
 		 */
-		public function route(string                     $path,
-							  callable|array|string|null $callback,
-							  string|array               $methods = self::GET
+		public function route(
+			string                     $path,
+			callable|array|string|null $callback,
+			string|array               $methods = self::GET
 		) : self {
 			if ( is_string($methods) ) $methods = [ $methods ];
 
@@ -151,28 +140,11 @@
 		}
 
 		/**
-		 * Method used for adding new routes
-		 *
-		 * @param string $path Path for the route
-		 * @param callable|array|string|null $callback Callback method, an anonymous function or a class and method name to be executed
-		 * @param string|array|null $methods Allowed request method(s) (GET, POST, PUT, PATCH, DELETE)
-		 *
-		 */
-		public function add(
-			string                     $path = '',
-			callable|array|string|null $callback = NULL,
-			string|array|null          $methods = self::GET
-		) {
-			$this->route($path, $callback, $methods);
-			$this->save();
-		}
-
-		/**
 		 * Method used for saving routing information into the global $routes array
 		 *
 		 * @param bool $cleanData should the data from the tmpRoutes be cleared or not when this method runs
 		 */
-		public function save(bool $cleanData = true) {
+		public function save(bool $cleanData = true) : self {
 			foreach ( $this->tmpRoutes as $method => $route ) {
 				if ( !isset($this->routes[$method]) ) $this->routes[$method] = [];
 				$path = array_key_first($route);
@@ -193,8 +165,10 @@
 			if ( $cleanData ) {
 				$this->prefix = '';
 				$this->middlewares = [];
-				$this->tmpRoutes = [];
 			}
+
+			$this->tmpRoutes = [];
+			return $this;
 		}
 
 		/**
@@ -204,7 +178,7 @@
 		 * @throws CallbackNotFound When the callback for the route was not found
 		 */
 		public function handle() {
-			$path = $this->getPath();
+			$path = $this->get_path();
 			$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
 			$route = $this->routes[$method][$path] ?? false;
@@ -282,39 +256,16 @@
 		}
 
 		/**
-		 * Private method used to fetch the arguments of the route's callback methods
+		 * Method which returns the current path the user is trying to access
 		 *
-		 * @param object|array|string $func
-		 *
-		 * @return array|null Returns a list of arguments for a method or null on error
+		 * @return string Returns the current path
 		 */
-		private function get_all_arguments(object|array|string $func) : array|null {
-			$func_get_args = [];
-			try {
-				if ( ( is_string($func) && function_exists($func) ) || $func instanceof Closure ) {
-					$ref = new ReflectionFunction($func);
-				} elseif ( is_string($func) && !call_user_func_array('method_exists', explode('::', $func)) ) {
-					return $func_get_args;
-				} else {
-					$ref = new ReflectionMethod($func[0], $func[1]);
-				}
+		private function get_path() : string {
+			$path = $_SERVER['REQUEST_URI'] ?? '/';
+			$position = strpos($path, '?');
 
-				foreach ( $ref->getParameters() as $param ) {
-					if ( !isset($func_get_args[$param->name]) ) {
-						$type = $param->getType();
-						if ( is_null($type) ) {
-							$func_get_args[$param->name] = 'nothing';
-						} else {
-							assert($type instanceof ReflectionNamedType);
-							$func_get_args[$param->name] = $type->getName() ?? 'string';
-						}
-					}
-				}
-				return $func_get_args;
-			} catch ( ReflectionException $ex ) {
-				error_log($ex->getMessage());
-				return NULL;
-			}
+			$path = ( $path !== '/' ) ? rtrim($path, '/') : $path;
+			return ( $position === false ) ? $path : substr($path, 0, $position);
 		}
 
 		/**
@@ -361,16 +312,39 @@
 		}
 
 		/**
-		 * Method which returns the current path the user is trying to access
+		 * Private method used to fetch the arguments of the route's callback methods
 		 *
-		 * @return string Returns the current path
+		 * @param object|array|string $func
+		 *
+		 * @return array|null Returns a list of arguments for a method or null on error
 		 */
-		private function getPath() : string {
-			$path = $_SERVER['REQUEST_URI'] ?? '/';
-			$position = strpos($path, '?');
+		private function get_all_arguments(object|array|string $func) : array|null {
+			$func_get_args = [];
+			try {
+				if ( ( is_string($func) && function_exists($func) ) || $func instanceof Closure ) {
+					$ref = new ReflectionFunction($func);
+				} elseif ( is_string($func) && !call_user_func_array('method_exists', explode('::', $func)) ) {
+					return $func_get_args;
+				} else {
+					$ref = new ReflectionMethod($func[0], $func[1]);
+				}
 
-			$path = ( $path !== '/' ) ? rtrim($path, '/') : $path;
-			return ( $position === false ) ? $path : substr($path, 0, $position);
+				foreach ( $ref->getParameters() as $param ) {
+					if ( !isset($func_get_args[$param->name]) ) {
+						$type = $param->getType();
+						if ( is_null($type) ) {
+							$func_get_args[$param->name] = 'nothing';
+						} else {
+							assert($type instanceof ReflectionNamedType);
+							$func_get_args[$param->name] = $type->getName() ?? 'string';
+						}
+					}
+				}
+				return $func_get_args;
+			} catch ( ReflectionException $ex ) {
+				error_log($ex->getMessage());
+				return NULL;
+			}
 		}
 
 		/**
@@ -378,7 +352,7 @@
 		 *
 		 * @return array Return the list of defined routes
 		 */
-		public function getRoutes() : array {
+		public function get_routes() : array {
 			return $this->routes;
 		}
 
@@ -444,6 +418,30 @@
 		 */
 		public function delete(string $path, callable|array|string|null $callback = NULL) : self {
 			$this->route($path, $callback, [ self::DELETE ]);
+			return $this;
+		}
+
+		/**
+		 * Method used to set the prefix for routes
+		 *
+		 * @param string $prefix Prefix to be added to all the routes in the chain.
+		 *
+		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
+		 */
+		public function prefix(string $prefix = '') : self {
+			$this->prefix .= $prefix;
+			return $this;
+		}
+
+		/**
+		 * Method used to set the middlewares for routes
+		 *
+		 * @param array $data List of middlewares to be executed before the routes
+		 *
+		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
+		 */
+		public function middleware(array $data) : self {
+			$this->middlewares = array_merge($this->middlewares, $data);
 			return $this;
 		}
 	}

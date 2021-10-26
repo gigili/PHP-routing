@@ -16,19 +16,37 @@
 	include_once '../vendor/autoload.php'; # IF YOU'RE USING composer
 
 	$routes = new Routes();
-	try {
 
-		// When using chained method either use `save()` or `add()` method at the end to indicate an end of chain
+	try {
+		$routes->add('/', function (Request $request) {
+			echo json_encode([ 'message' => 'Hello World' ]);
+		});
+
+		// When using chained method calls either use `save()` or `add()` method at the end to indicate an end of a chain
+		// save() method can still be chained on to if needed, but add() can not
 		$routes
 			->prefix("/test")
 			->middleware([ 'decode_token' ])
 			->get("/t1", function () { })
 			->get("/t2", function () { })
 			->get("/t3", function () { })
-			->save();
+			->save(false) // by passing the false argument here, we keep all the previous shared data from the chain
+			->prefix("/test2") // by passing the true argument we are appending this prefix to an existing one
+			->middleware([ "verify_token" ]) // by passing the true argument we are appending a list of middlewares to an existing list
+			->get("/t4", function () { })
+			->get("/t5", function () { })
+			->get("/t6", function () { })
+			->save() // by not passing the false argument here, we are removing all shared data from the previous chains
+			->prefix("/test3") // by not passing the true argument we are overriding the prefix value
+			->middleware([ "verify_token" ]) // by not passing the true argument we are overriding list of middlewares
+			->get("/t7", function () { })
+			->get("/t8", function () { })
+			->get("/t9", function () { })
+			->add(); //using save or add at the end makes the chaining stop and allows for other routes to be added
 
-		$routes->add('/', function (Request $request) {
-			echo json_encode([ 'message' => 'Hello World' ]);
+		$routes->add("/routes", function (Request $request) {
+			global $routes;
+			$request->send($routes->get_routes());
 		});
 
 		$routes->add('/test', function (Request $request) {
@@ -45,7 +63,6 @@
 			->route('/', [ HomeController::class, 'updateUser' ], Routes::PATCH)
 			->route('/', [ HomeController::class, 'replaceUser' ], Routes::PUT)
 			->add('/test', [ HomeController::class, 'deleteUser' ], Routes::DELETE);
-
 
 		$routes->add('/test', function () {
 		}, [ Routes::PATCH, Routes::POST ]);
@@ -81,7 +98,7 @@
 		});
 
 		$routes->add('/test/{int:userID}-{username}/{float:amount}/{bool:valid}',
-			[ HomeController::class, 'test' ]); # It works like this also
+			[ HomeController::class, 'test' ], [ Routes::PUT ]); # It works like this also
 
 		$routes
 			->middleware([
@@ -89,7 +106,7 @@
 				[ Middleware::class, 'test' ],
 				'verify_token',
 			])
-			->add('/test', function (Request $request) {
+			->add('/test-hello', function (Request $request) {
 				$request->send([ 'message' => 'Hello' ]);
 			});
 
@@ -101,7 +118,7 @@
 				[ Middleware::class, 'test_method' ],
 				[ Middleware::class, 'has_role', 'Admin', 'Moderator', [ 'User', 'Bot' ] ],
 			])
-			->add('/test', function (Request $request) {
+			->add('/testing', function (Request $request) {
 				$request->send([ 'msg' => 'testing' ]);
 			});
 
