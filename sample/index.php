@@ -18,7 +18,8 @@
 	$routes = new Routes();
 	try {
 
-		// When using chained method either use `save()` or `add()` method at the end to indicate an end of chain
+		// When using chained method calls either use `save()` or `add()` method at the end to indicate an end of a chain
+		// save() method can still be chained onto if needed, but add() can not
 		$routes
 			->prefix("/test")
 			->middleware([ 'decode_token' ])

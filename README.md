@@ -44,7 +44,7 @@ RewriteRule ^(.+)$ index.php [QSA,L]
 
 ### Note
 
-If you've named your main file differently, replace `index.php` in the `.htaccess` file with that ever your main
+If you've named your main file differently, replace `index.php` in the `.htaccess` file with whatever your main
 application file is.
 
 ## Quick start
@@ -88,11 +88,12 @@ try {
 
 ### Chained routes
 
-Using chained method to wrap multiple routes with a same middleware or a route prefix When using chained method either
-use `save()` or `add()` as the last method to indicate the end of a chain;
+When using chained methods either use `->save()` or `->add()` as the last method to indicate the end of a chain
 
 **NOTE**
-Both the `save` and `add` methods **CAN'T** be chained on, so they need to be the last one in the chain.
+
+* `->save(true|false)` method can still be chained onto if needed
+* `->add()` **CAN NOT** be chained onto and should be the last call in chain
 
 ```php
 $routes
@@ -161,4 +162,6 @@ Source code documentation can be found at [PHP Routing documentation](https://gi
 * [x] Static routes
 * [x] Dynamic routes
 * [x] Middlewares
-* [x] Prefixing routes
+  * [x] Pass arguments to middlewares
+* [x] Route prefixes
+* [x] Method chaining
