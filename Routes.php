@@ -444,4 +444,16 @@
 			$this->middlewares = array_merge($this->middlewares, $data);
 			return $this;
 		}
+
+		/**
+		 * Method used to append more routes to the main route handler
+		 *
+		 * @param array $routes List of routes from other route classes
+		 *
+		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
+		 */
+		public function append(array $routes): self {
+			$this->routes = array_merge_recursive($routes, $this->routes);
+			return $this;
+		}
 	}

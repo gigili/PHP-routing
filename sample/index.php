@@ -133,6 +133,16 @@
 			print_r([ $_REQUEST, $_FILES ]);
 		}, [ Routes::PUT ]);
 
+
+		//This $otherRoutes variable could be defined in a different file and included here only via require or include
+		$otherRoutes = new Routes();
+		$otherRoutes->prefix("/sample")
+					->get("/", function (Request $request){})
+					->get("/sample1", function (Request $request){})
+					->get("/sample2", function (Request $request){})
+					->save();
+
+		$routes->append($otherRoutes->get_routes());
 		$routes->handle();
 	} catch ( RouteNotFoundException $ex ) {
 		$routes->request->status(404, 'Route not found')->send([ 'error' => [ 'message' => $ex->getMessage() ] ]);

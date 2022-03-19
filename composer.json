@@ -40,7 +40,7 @@
   "autoload": {
     "psr-4": {
       "Gac\\Routing\\": "./",
-      "Gac\\Routing\\Exceptions\\": "./"
+      "Gac\\Routing\\Exceptions\\": "./Exceptions"
     }
   },
   "require-dev": {
