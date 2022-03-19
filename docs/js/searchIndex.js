@@ -136,6 +136,11 @@ Search.appendIndex(
             "summary": "Method\u0020used\u0020to\u0020set\u0020the\u0020middlewares\u0020for\u0020routes",
             "url": "classes/Gac-Routing-Routes.html#method_middleware"
         },                {
+            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aappend\u0028\u0029",
+            "name": "append",
+            "summary": "Method\u0020used\u0020to\u0020append\u0020more\u0020routes\u0020to\u0020the\u0020main\u0020route\u0020handler",
+            "url": "classes/Gac-Routing-Routes.html#method_append"
+        },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003AGET",
             "name": "GET",
             "summary": "",
