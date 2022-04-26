@@ -36,6 +36,11 @@ Search.appendIndex(
             "summary": "Sets\u0020the\u0020header\u0020status\u0020code\u0020for\u0020the\u0020response",
             "url": "classes/Gac-Routing-Request.html#method_status"
         },                {
+            "fqsen": "\\Gac\\Routing\\Request\u003A\u003Aheader\u0028\u0029",
+            "name": "header",
+            "summary": "Method\u0020used\u0020for\u0020setting\u0020custom\u0020header\u0020properties",
+            "url": "classes/Gac-Routing-Request.html#method_header"
+        },                {
             "fqsen": "\\Gac\\Routing\\Request\u003A\u003Asend\u0028\u0029",
             "name": "send",
             "summary": "Send\u0020response\u0020back",
