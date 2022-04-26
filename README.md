@@ -52,10 +52,7 @@ application file is.
 Sample code to allow you to quickly start with your development.
 
 ```php
-use Gac\Routing\Exceptions\CallbackNotFound;
-use Gac\Routing\Exceptions\RouteNotFoundException;
-use Gac\Routing\Request;
-use Gac\Routing\Routes;
+use Gac\Routing\Exceptions\CallbackNotFound;use Gac\Routing\Exceptions\RouteNotFoundException;use Gac\Routing\Request;use Gac\Routing\Routes;
 
 include_once "vendor/autoload.php"; # IF YOU'RE USING composer
 

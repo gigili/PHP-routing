@@ -24,13 +24,13 @@
 				"Unable to add new route");
 		}
 
-		public function testCannAddMiddleware() {
+		public function testCanAddMiddleware() {
 			$this->routes->middleware([ "test" ])->add("/middleware", []);
 			$this->assertTrue($this->routes->get_routes()["GET"]["/middleware"]["middlewares"][0] == "test",
 				"Unable to add middleware");
 		}
 
-		public function testCannAddPrefix() {
+		public function testCanAddPrefix() {
 			$this->routes->prefix("/testing")->add("/test", []);
 			$routes = $this->routes->get_routes();
 

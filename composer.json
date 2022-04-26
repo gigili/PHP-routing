@@ -1,7 +1,7 @@
 {
   "name": "gac/routing",
   "type": "library",
-  "description": "Custom routing library especially useful for API development",
+  "description": "Custom routing library especially useful for fast API development",
   "homepage": "https://github.com/gigili/PHP-routing",
   "license": "GPL-3.0-only",
   "keywords": [
@@ -39,8 +39,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Gac\\Routing\\": "./",
-      "Gac\\Routing\\Exceptions\\": "./Exceptions"
+      "Gac\\Routing\\": "./src",
+      "Gac\\Routing\\Exceptions\\": "./src/Exceptions"
     }
   },
   "require-dev": {

@@ -4,7 +4,7 @@
          backupGlobals="false" backupStaticAttributes="false" beStrictAboutTestsThatDoNotTestAnything="true"
          beStrictAboutChangesToGlobalState="true"
          beStrictAboutOutputDuringTests="true" colors="true" convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
+         convertNoticesToExceptions="true" cacheResult="false"
          convertWarningsToExceptions="true" processIsolation="false" stopOnFailure="false"
          bootstrap="vendor/autoload.php" executionOrder="random">
     <coverage processUncoveredFiles="true">

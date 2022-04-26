@@ -1,5 +1,5 @@
 <?php
-
+	declare( strict_types=1 );
 
 	namespace Gac\Routing;
 
@@ -58,7 +58,7 @@
 		 * Sets the header status code for the response
 		 *
 		 * @param int $statusCode Status code to be set for the response
-		 * @param string $message Message to be returned in the header alongside the status code
+		 * @param string $message Message to be sent int the header alongside the status code
 		 *
 		 * @return Request Returns an instance of the Request class so that it can be chained on
 		 */
@@ -68,11 +68,35 @@
 		}
 
 		/**
+		 * Method used for setting custom header properties
+		 *
+		 * @param string|array|object $key Header key value
+		 * @param mixed $value Header value
+		 *
+		 * @return Request Returns an instance of the Request class so that it can be chained on
+		 */
+		public function header(string|array|object $key, mixed $value = NULL) : self {
+			if ( is_string($key) ) {
+				header("$key: $value");
+			} elseif ( is_array($key) || is_object($key) ) {
+				$keys = $key;
+				foreach ( $keys as $key => $value ) {
+					header("$key: $value");
+				}
+			}
+			return $this;
+		}
+
+		/**
 		 * Send response back
 		 *
 		 * @param string|array|object $output Value to be outputted as part of the response
+		 * @param array|object|null $headers Optional list of custom header properties to be sent with the response
 		 */
-		public function send(string|array|object $output) {
+		public function send(string|array|object $output, array|object|null $headers = null) {
+			if(!is_null($headers)){
+				$this->header($headers);
+			}
 			echo json_encode($output);
 		}
 
@@ -84,16 +108,16 @@
 		private function parse_patch_and_put_request_data() : array {
 
 			/* PUT data comes in on the stdin stream */
-			$putdata = fopen('php://input', 'r');
+			$putData = fopen('php://input', 'r');
 
 			$raw_data = '';
 
 			/* Read the data 1 KB at a time and write to the file */
-			while ( $chunk = fread($putdata, 1024) )
+			while ( $chunk = fread($putData, 1024) )
 				$raw_data .= $chunk;
 
 			/* Close the streams */
-			fclose($putdata);
+			fclose($putData);
 
 			// Fetch content and determine boundary
 			$boundary = substr($raw_data, 0, strpos($raw_data, "\r\n"));
@@ -126,7 +150,6 @@
 				// Parse the Content-Disposition to get the field name, etc.
 				if ( isset($headers['content-disposition']) ) {
 					$filename = NULL;
-					$tmp_name = NULL;
 					preg_match(
 						'/^(.+); *name="([^"]+)"(; *filename="([^"]+)")?/',
 						$headers['content-disposition'],
@@ -154,7 +177,7 @@
 							'name' => $filename,
 							'tmp_name' => $tmp_name,
 							'size' => strlen($body),
-							'type' => $value,
+							'type' => $type,
 						];
 
 						//place in temporary directory

@@ -137,12 +137,22 @@
 		//This $otherRoutes variable could be defined in a different file and included here only via require or include
 		$otherRoutes = new Routes();
 		$otherRoutes->prefix("/sample")
-					->get("/", function (Request $request){})
-					->get("/sample1", function (Request $request){})
-					->get("/sample2", function (Request $request){})
+					->get("/", function (Request $request) { })
+					->get("/sample1", function (Request $request) { })
+					->get("/sample2", function (Request $request) { })
 					->save();
 
 		$routes->append($otherRoutes->get_routes());
+
+
+		$routes->add("/headers", function (Request $request) {
+			$request->header("Content-type", "text/plain")
+					->header([ "foo" => "bar", "best" => "test" ])
+					->header((object) [ "X-Auth" => "Token {token-123}" ])
+					->status(201)
+					->send([ "message" => "hello" ]);
+		}, Routes::GET);
+
 		$routes->handle();
 	} catch ( RouteNotFoundException $ex ) {
 		$routes->request->status(404, 'Route not found')->send([ 'error' => [ 'message' => $ex->getMessage() ] ]);
