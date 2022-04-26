@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
-         backupGlobals="false" backupStaticAttributes="false" beStrictAboutTestsThatDoNotTestAnything="true"
          beStrictAboutChangesToGlobalState="true"
-         beStrictAboutOutputDuringTests="true" colors="true" convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true" cacheResult="false"
-         convertWarningsToExceptions="true" processIsolation="false" stopOnFailure="false"
-         bootstrap="vendor/autoload.php" executionOrder="random">
+         beStrictAboutOutputDuringTests="true" colors="true"
+         cacheResult="false" executionOrder="random"
+         bootstrap="vendor/autoload.php">
     <coverage processUncoveredFiles="true">
         <report>
             <html outputDirectory="./coverage" lowUpperBound="20" highLowerBound="50"/>

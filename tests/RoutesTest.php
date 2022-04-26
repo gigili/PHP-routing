@@ -1,68 +1,59 @@
 <?php
 
 	use Gac\Routing\Routes;
-	use PHPUnit\Framework\TestCase;
 
-	class RoutesTest extends TestCase
-	{
-		private Routes $routes;
 
-		public function setUp() : void {
-			parent::setUp();
-			$this->routes = new Routes();
-		}
+	it("can add a new route", function(){
+		$routes = new Routes;
+		$routes->add('/', []);
+		expect($routes->get_routes()["GET"]["/"])->toBeArray();
+	});
 
-		public function testCanAddNewRoute() {
-			$this->routes->add("/", []);
-			$this->assertTrue(isset($this->routes->get_routes()["GET"]["/"]), "Unable to add new route");
-		}
+	it("can add multiple request type routes", function(){
+		$routes = new Routes;
 
-		public function testCanAddMultipleRequestMethodRoutes() {
-			$this->routes->add("/test", [], [ Routes::GET, Routes::POST ]);
-			$routes = $this->routes->get_routes();
-			$this->assertTrue(isset($routes["GET"]["/test"]) && isset($routes["POST"]["/test"]),
-				"Unable to add new route");
-		}
+		$routes->add('/test', [], [ Routes::GET, Routes::POST ]);
 
-		public function testCanAddMiddleware() {
-			$this->routes->middleware([ "test" ])->add("/middleware", []);
-			$this->assertTrue($this->routes->get_routes()["GET"]["/middleware"]["middlewares"][0] == "test",
-				"Unable to add middleware");
-		}
+		expect(isset($routes->get_routes()["GET"]["/test"]))->toBeTrue();
+		expect(isset($routes->get_routes()["POST"]["/test"]))->toBeTrue();
+	});
 
-		public function testCanAddPrefix() {
-			$this->routes->prefix("/testing")->add("/test", []);
-			$routes = $this->routes->get_routes();
+	it("can add middleware", function(){
+		$routes = new Routes;
+		$routes->middleware(["test"])->add("/middleware", []);
+		expect($routes->get_routes()['GET']['/middleware']['middlewares'][0])->toBe("test");
+	});
 
-			$this->assertTrue(isset($routes["GET"]["/testing/test"]), "Unable to add prefix to routes");
-		}
+	it("can add prefix to routes", function(){
+		$routes = new Routes;
+		$routes->prefix('/testing')->add('/test', []);
+		expect(isset($routes->get_routes()['GET']['/testing/test']))->toBeTrue();
+	});
 
-		public function testSave() {
-			$this->routes->prefix('/testing')->add('/test', []);
-			$routes = $this->routes->get_routes();
+	it("can use the save method to add a new route", function(){
+		$routes = new Routes;
+		$routes->prefix('/testing')->get('/test', [])->save();
+		expect($routes->get_routes()["GET"])->toHaveCount(1);
+	});
 
-			$this->assertCount(1, $routes["GET"]);
-		}
+	it('can use the add method to add a new route', function () {
+		$routes = new Routes;
+		$routes->prefix('/testing')->add('/test', []);
+		expect($routes->get_routes()['GET'])->toHaveCount(1);
+	});
 
-		public function testAdd() {
-			$this->routes->prefix('/testing')->add('/test', []);
-			$routes = $this->routes->get_routes();
+	it("can append new routes", function(){
+		$routes = new Routes;
+		$routes->add('/', []);
 
-			$this->assertCount(1, $routes['GET']);
-		}
+		$appendedRoutes = new Routes;
+		$appendedRoutes->prefix('/test')
+					   ->get('/appended', function () { })
+					   ->get('/appended_sample', function () { })
+					   ->save();
 
-		public function testAppendNewRoutes() {
-			$this->routes->add('/', []);
+		$newRoutes = $appendedRoutes->get_routes();
+		$routes->append($newRoutes);
 
-			$appendedRoutes = new Routes();
-			$appendedRoutes->prefix("/test")
-						   ->get("/appended", function () { })
-						   ->get("/appended_sample", function () { })
-						   ->save();
-
-			$newRoutes = $appendedRoutes->get_routes();
-			$this->routes->append($newRoutes);
-
-			$this->assertCount(3, $this->routes->get_routes()["GET"]);
-		}
-	}
+		expect($routes->get_routes()["GET"])->toHaveCount(3);
+	});
