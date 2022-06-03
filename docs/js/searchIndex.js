@@ -86,6 +86,16 @@ Search.appendIndex(
             "summary": "Method\u0020used\u0020to\u0020handle\u0020execution\u0020of\u0020routes\u0020and\u0020middlewares",
             "url": "classes/Gac-Routing-Routes.html#method_handle"
         },                {
+            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Asetup_callback\u0028\u0029",
+            "name": "setup_callback",
+            "summary": "Method\u0020used\u0020to\u0020set\u0020up\u0020callback\u0020properties\u0020for\u0020routes",
+            "url": "classes/Gac-Routing-Routes.html#method_setup_callback"
+        },                {
+            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Adependency_injection\u0028\u0029",
+            "name": "dependency_injection",
+            "summary": "",
+            "url": "classes/Gac-Routing-Routes.html#method_dependency_injection"
+        },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aget_path\u0028\u0029",
             "name": "get_path",
             "summary": "Method\u0020which\u0020returns\u0020the\u0020current\u0020path\u0020the\u0020user\u0020is\u0020trying\u0020to\u0020access",
