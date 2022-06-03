@@ -93,7 +93,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Adependency_injection\u0028\u0029",
             "name": "dependency_injection",
-            "summary": "",
+            "summary": "Method\u0020used\u0020for\u0020handling\u0020dependency\u0020injection",
             "url": "classes/Gac-Routing-Routes.html#method_dependency_injection"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aget_path\u0028\u0029",
