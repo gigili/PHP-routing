@@ -293,6 +293,14 @@
 			return $callback;
 		}
 
+		/**
+		 * Method used for handling dependency injection
+		 *
+		 * @param string $class Name of the class for which to auto-inject arguments
+		 * @param array $arguments List of arguments that will be passed alongside of auto-injected ones
+		 *
+		 * @return array Return a new list of arguments that holds manually provided and auto-injected arguments
+		 */
 		private function dependency_injection(string $class, array $arguments = []) : array {
 			try {
 				$reflection = new ReflectionClass($class);
