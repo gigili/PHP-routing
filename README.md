@@ -52,7 +52,9 @@ application file is.
 Sample code to allow you to quickly start with your development.
 
 ```php
-use Gac\Routing\Exceptions\CallbackNotFound;use Gac\Routing\Exceptions\RouteNotFoundException;use Gac\Routing\Request;use Gac\Routing\Routes;
+use Gac\Routing\Exceptions\CallbackNotFound;
+use Gac\Routing\Exceptions\RouteNotFoundException;
+use Gac\Routing\Request;use Gac\Routing\Routes;
 
 include_once "vendor/autoload.php"; # IF YOU'RE USING composer
 
@@ -177,6 +179,76 @@ $routes
 Every middleware function can also accept an argument of type `Gac\Routing\Request` at any position as long as it has
 the proper type specified.
 
+### Dependency injection on route classes
+
+When using classes to handle your route callback, and those classes have some dependencies that need to be injected
+through a constructor, you can specify them as an array of arguments to be injected or
+let the library try to auto-inject classes.
+
+```php
+$routes->add(
+    '/demo',
+    [ 
+        HomeController::class, 
+        'dependency_injection_test', 
+        [ new InjectedClass() ] 
+    ],
+    Routes::GET
+);
+```
+
+You can also use named arguments or mix and match them
+
+```php
+$routes->add(
+    '/demo',
+    [ 
+        HomeController::class, 
+        'dependency_injection_test', 
+        [ "injected_var" => new InjectedClass(), new Middleware ] 
+    ],
+    Routes::GET
+);
+```
+
+Letting the library auto-inject classes into the constructor
+
+```php
+$routes->add(
+    '/demo',
+    [ InjectController::class ],
+    Routes::GET
+);
+```
+
+**NOTE**
+
+The library will always try to auto-inject classes (***will skip ones with null as default value***) if non are
+provided, and you're using a class for callbacks.
+
+### Use `__invoke` instead for single method classes
+
+```php
+$routes->add(
+    '/invoke',
+    [ HomeController::class ],
+    Routes::GET
+);
+```
+
+You can also use `__invoke` with dependency injection as well:
+
+```php
+$routes->add(
+    '/invoke',
+    [ 
+        HomeController::class, 
+        [ new InjectedClass() ] 
+    ],
+    Routes::GET
+);
+```
+
 For more examples look in the [sample folder](/sample) `index.php` file
 
 ## Documentation
@@ -191,3 +263,6 @@ Source code documentation can be found at [PHP Routing documentation](https://gi
   * [x] Pass arguments to middlewares
 * [x] Route prefixes
 * [x] Method chaining
+* [x] Dependency injection on classes
+    * [x] Manual injection
+    * [x] Auto-injection

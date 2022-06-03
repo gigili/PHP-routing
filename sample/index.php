@@ -8,12 +8,30 @@
 	use Gac\Routing\Request;
 	use Gac\Routing\Routes;
 	use Gac\Routing\sample\HomeController;
+	use Gac\Routing\sample\InjectController;
+	use Gac\Routing\sample\InjectedClass;
 	use Gac\Routing\sample\Middleware;
 
 	#include_once "../Routes.php"; # IF YOU'RE NOT USING composer
 	#include_once "HomeController.php"; # IF YOU'RE NOT USING composer
 
 	include_once '../vendor/autoload.php'; # IF YOU'RE USING composer
+
+	if ( !class_exists('InjectedClass') ) {
+		require_once './InjectedClass.php';
+	}
+
+	if ( !class_exists('InjectController') ) {
+		require_once './InjectController.php';
+	}
+
+	if ( !class_exists('Middleware') ) {
+		require_once './Middleware.php';
+	}
+
+	if ( !class_exists('HomeController') ) {
+		require_once './HomeController.php';
+	}
 
 	$routes = new Routes();
 
@@ -97,8 +115,11 @@
 			echo 'Dynamic route here';
 		});
 
-		$routes->add('/test/{int:userID}-{username}/{float:amount}/{bool:valid}',
-			[ HomeController::class, 'test' ], [ Routes::PUT ]); # It works like this also
+		$routes->add(
+			'/test/{int:userID}-{username}/{float:amount}/{bool:valid}',
+			[ HomeController::class, 'test' ],
+			[ Routes::PUT ]
+		); # It works like this also
 
 		$routes
 			->middleware([
@@ -153,6 +174,17 @@
 					->send([ "message" => "hello" ]);
 		}, Routes::GET);
 
+		$routes->add(
+			'/demo',
+			[ HomeController::class, 'dependency_injection_test', [ new InjectedClass() ] ],
+			Routes::GET
+		);
+
+		$routes->add(
+			"/inject",
+			[ InjectController::class ]
+		);
+
 		$routes->handle();
 	} catch ( RouteNotFoundException $ex ) {
 		$routes->request->status(404, 'Route not found')->send([ 'error' => [ 'message' => $ex->getMessage() ] ]);
@@ -164,14 +196,14 @@
 		$routes->request->status($code)->send([ 'error' => [ 'message' => $ex->getMessage() ] ]);
 	}
 
-	function test_route_function() {
+	function test_route_function() : void {
 		echo json_encode([ 'message' => 'Welcome from test route' ]);
 	}
 
-	function verify_token() {
+	function verify_token() : void {
 		//Do something
 	}
 
-	function has_roles(string $allowedRoles) {
+	function has_roles(string $allowedRoles) : void {
 		//Do something
 	}

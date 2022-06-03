@@ -93,8 +93,8 @@
 		 * @param string|array|object $output Value to be outputted as part of the response
 		 * @param array|object|null $headers Optional list of custom header properties to be sent with the response
 		 */
-		public function send(string|array|object $output, array|object|null $headers = null) {
-			if(!is_null($headers)){
+		public function send(string|array|object $output, array|object|null $headers = NULL) : void {
+			if ( !is_null($headers) ) {
 				$this->header($headers);
 			}
 			echo json_encode($output);

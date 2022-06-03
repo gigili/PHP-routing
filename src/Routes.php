@@ -1,10 +1,11 @@
 <?php
+	/** @noinspection PhpUnnecessaryCurlyVarSyntaxInspection */
 	/**
 	 * Custom routing library
 	 *
 	 * @author    Igor Ilić <github@igorilic.net>
 	 * @license   GNU General Public License v3.0
-	 * @copyright 2020-2021 Igor Ilić
+	 * @copyright 2020-2022 Igor Ilić
 	 */
 
 	declare( strict_types=1 );
@@ -15,6 +16,7 @@
 	use Closure;
 	use Gac\Routing\Exceptions\CallbackNotFound;
 	use Gac\Routing\Exceptions\RouteNotFoundException;
+	use ReflectionClass;
 	use ReflectionException;
 	use ReflectionFunction;
 	use ReflectionMethod;
@@ -86,7 +88,7 @@
 			string                     $path = '',
 			callable|array|string|null $callback = NULL,
 			string|array|null          $methods = self::GET
-		) {
+		) : void {
 			$this->route($path, $callback, $methods);
 			$this->save();
 		}
@@ -177,7 +179,7 @@
 		 * @throws RouteNotFoundException When the route was not found
 		 * @throws CallbackNotFound When the callback for the route was not found
 		 */
-		public function handle() {
+		public function handle() : void {
 			$path = $this->get_path();
 			$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
@@ -233,11 +235,7 @@
 			$callback = $route['callback'] ?? false;
 			if ( $callback === false ) throw new CallbackNotFound("No callback specified for $path", 404);
 
-			if ( ( is_string($callback) && class_exists($callback) ) || is_array($callback) ) {
-				$controller = is_string($callback) ? new $callback : new $callback[0]; // make a new instance of a controller class
-				$fn = is_string($callback) ? 'index' : $callback[1] ?? 'index';        // get the method to be executed or fallback to index method
-				$callback = [ $controller, $fn ];
-			}
+			$callback = $this->setup_callback($callback);
 
 			if ( !is_callable($callback) ) throw new CallbackNotFound("Unable to execute callback for $path", 404);
 
@@ -252,7 +250,93 @@
 				$callbackArguments[$name] = $arguments[$name] ?? NULL;
 			}
 
-			call_user_func($callback, ...$callbackArguments);
+			call_user_func_array($callback, $callbackArguments);
+		}
+
+		/**
+		 * Method used to set up callback properties for routes
+		 *
+		 * @param Closure|string|array $callback Callback data of a route
+		 *
+		 * @return mixed Return data needed to execute callback
+		 */
+		private function setup_callback(Closure|string|array $callback) : mixed {
+			if ( ( is_string($callback) && class_exists($callback) ) || is_array($callback) ) {
+				if ( is_string($callback) ) {
+					return new $callback;
+				}
+
+				if ( is_array($callback) ) {
+					//There is no method provided so relay on __invoke to be used
+					if ( isset($callback[1]) && is_array($callback[1]) ) {
+						$callback[1] = $this->dependency_injection($callback[0], $callback[1]);
+						return new $callback[0](...$callback[1]);
+					}
+
+					//There is a method provided but also any other arguments
+					if ( isset($callback[1]) && is_string($callback[1]) ) {
+						//There dependencies that need to be injected
+						if ( isset($callback[2]) ) {
+							$callback[2] = $this->dependency_injection($callback[0], $callback[2]);
+							return [ new $callback[0](...$callback[2]), $callback[1] ];
+						}
+						return [ new $callback[0], $callback[1] ];
+					}
+
+					$args = $this->dependency_injection($callback[0]);
+					if ( count($args) > 0 ) {
+						return [ new $callback[0](...$args), "__invoke" ];
+					}
+				}
+			}
+
+			return $callback;
+		}
+
+		private function dependency_injection(string $class, array $arguments = []) : array {
+			try {
+				$reflection = new ReflectionClass($class);
+				$constructor = $reflection->getConstructor();
+
+				if ( is_null($constructor) ) return $arguments;
+
+				$parameters = $constructor->getParameters();
+
+				if ( is_null($parameters) || count($parameters) === 0 ) return $arguments;
+
+				foreach ( $parameters as $parameter ) {
+					if ( isset($arguments[$parameter->name]) ) {
+						continue;
+					}
+
+					$type = $parameter->getType();
+					if ( $type == NULL ) {
+						continue;
+					}
+
+					$types = $type instanceof ReflectionNamedType ? [ $type ] : $type->getTypes();
+
+					foreach ( $types as $t ) {
+						if ( !class_exists($t->getName()) ) {
+							continue;
+						}
+
+						if ( in_array(new ( $t->getName() ), $arguments) ) {
+							continue;
+						}
+
+						//Skip properties that allow null as default values
+						if ( $t->allowsNull() ) {
+							continue;
+						}
+
+						$arguments[$parameter->getName()] = new ( $t->getName() );
+					}
+				}
+			} catch ( ReflectionException ) {
+			} finally {
+				return $arguments;
+			}
 		}
 
 		/**
@@ -275,7 +359,7 @@
 		 *
 		 * @throws CallbackNotFound When the specified middleware method is not found
 		 */
-		private function execute_middleware(array $data) {
+		private function execute_middleware(array $data) : void {
 			foreach ( $data as $key => $function ) {
 				$arguments = [];
 				$tmpArguments = [];
@@ -300,9 +384,9 @@
 				$tmpParameters = array_filter($parameters, fn($item) => $item !== Request::class);
 				for ( $index = 0; $index < count($tmpParameters); $index++ ) {
 					if ( $index === $requestClassIndex ) {
-						array_push($arguments, $this->request);
+						$arguments[] = $this->request;
 					}
-					array_push($arguments, $tmpArguments[$index] ?? NULL);
+					$arguments[] = $tmpArguments[$index] ?? NULL;
 				}
 
 				if ( !is_callable($function) ) throw new CallbackNotFound("Middleware method $function not found", 404);
@@ -452,7 +536,7 @@
 		 *
 		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
 		 */
-		public function append(array $routes): self {
+		public function append(array $routes) : self {
 			$this->routes = array_merge_recursive($routes, $this->routes);
 			return $this;
 		}
