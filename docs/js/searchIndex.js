@@ -1,6 +1,16 @@
 Search.appendIndex(
     [
                 {
+            "fqsen": "\\Gac\\Routing\\DIContainer",
+            "name": "DIContainer",
+            "summary": "Class\u0020used\u0020for\u0020handling\u0020dependency\u0020injection\u0020for\u0020the\u0020library",
+            "url": "classes/Gac-Routing-DIContainer.html"
+        },                {
+            "fqsen": "\\Gac\\Routing\\DIContainer\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "Method\u0020used\u0020for\u0020handling\u0020dependency\u0020injection",
+            "url": "classes/Gac-Routing-DIContainer.html#method_get"
+        },                {
             "fqsen": "\\Gac\\Routing\\Exceptions\\CallbackNotFound",
             "name": "CallbackNotFound",
             "summary": "",
@@ -90,11 +100,6 @@ Search.appendIndex(
             "name": "setup_callback",
             "summary": "Method\u0020used\u0020to\u0020set\u0020up\u0020callback\u0020properties\u0020for\u0020routes",
             "url": "classes/Gac-Routing-Routes.html#method_setup_callback"
-        },                {
-            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Adependency_injection\u0028\u0029",
-            "name": "dependency_injection",
-            "summary": "Method\u0020used\u0020for\u0020handling\u0020dependency\u0020injection",
-            "url": "classes/Gac-Routing-Routes.html#method_dependency_injection"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aget_path\u0028\u0029",
             "name": "get_path",
@@ -206,11 +211,6 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/default.html"
         },                {
-            "fqsen": "\\Gac\\Routing\\Exceptions",
-            "name": "Exceptions",
-            "summary": "",
-            "url": "namespaces/gac-routing-exceptions.html"
-        },                {
             "fqsen": "\\Gac\\Routing",
             "name": "Routing",
             "summary": "",
@@ -220,5 +220,10 @@ Search.appendIndex(
             "name": "Gac",
             "summary": "",
             "url": "namespaces/gac.html"
+        },                {
+            "fqsen": "\\Gac\\Routing\\Exceptions",
+            "name": "Exceptions",
+            "summary": "",
+            "url": "namespaces/gac-routing-exceptions.html"
         }            ]
 );
