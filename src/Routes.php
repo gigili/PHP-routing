@@ -16,7 +16,6 @@
 	use Closure;
 	use Gac\Routing\Exceptions\CallbackNotFound;
 	use Gac\Routing\Exceptions\RouteNotFoundException;
-	use ReflectionClass;
 	use ReflectionException;
 	use ReflectionFunction;
 	use ReflectionMethod;
@@ -269,7 +268,7 @@
 				if ( is_array($callback) ) {
 					//There is no method provided so relay on __invoke to be used
 					if ( isset($callback[1]) && is_array($callback[1]) ) {
-						$callback[1] = $this->dependency_injection($callback[0], $callback[1]);
+						$callback[1] = DIContainer::get($callback[0], $callback[1]);
 						return new $callback[0](...$callback[1]);
 					}
 
@@ -277,13 +276,13 @@
 					if ( isset($callback[1]) && is_string($callback[1]) ) {
 						//There dependencies that need to be injected
 						if ( isset($callback[2]) ) {
-							$callback[2] = $this->dependency_injection($callback[0], $callback[2]);
+							$callback[2] = DIContainer::get($callback[0], $callback[2]);
 							return [ new $callback[0](...$callback[2]), $callback[1] ];
 						}
 						return [ new $callback[0], $callback[1] ];
 					}
 
-					$args = $this->dependency_injection($callback[0]);
+					$args = DIContainer::get($callback[0]);
 					if ( count($args) > 0 ) {
 						return [ new $callback[0](...$args), "__invoke" ];
 					}
@@ -291,60 +290,6 @@
 			}
 
 			return $callback;
-		}
-
-		/**
-		 * Method used for handling dependency injection
-		 *
-		 * @param string $class Name of the class for which to auto-inject arguments
-		 * @param array $arguments List of arguments that will be passed alongside of auto-injected ones
-		 *
-		 * @return array Return a new list of arguments that holds manually provided and auto-injected arguments
-		 */
-		private function dependency_injection(string $class, array $arguments = []) : array {
-			try {
-				$reflection = new ReflectionClass($class);
-				$constructor = $reflection->getConstructor();
-
-				if ( is_null($constructor) ) return $arguments;
-
-				$parameters = $constructor->getParameters();
-
-				if ( is_null($parameters) || count($parameters) === 0 ) return $arguments;
-
-				foreach ( $parameters as $parameter ) {
-					if ( isset($arguments[$parameter->name]) ) {
-						continue;
-					}
-
-					$type = $parameter->getType();
-					if ( $type == NULL ) {
-						continue;
-					}
-
-					$types = $type instanceof ReflectionNamedType ? [ $type ] : $type->getTypes();
-
-					foreach ( $types as $t ) {
-						if ( !class_exists($t->getName()) ) {
-							continue;
-						}
-
-						if ( in_array(new ( $t->getName() ), $arguments) ) {
-							continue;
-						}
-
-						//Skip properties that allow null as default values
-						if ( $t->allowsNull() ) {
-							continue;
-						}
-
-						$arguments[$parameter->getName()] = new ( $t->getName() );
-					}
-				}
-			} catch ( ReflectionException ) {
-			} finally {
-				return $arguments;
-			}
 		}
 
 		/**

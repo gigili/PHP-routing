@@ -11,7 +11,6 @@
 	{
 		public function __construct(protected InjectedClass $injectedClass) { }
 
-
 		public function __invoke() : void {
 			echo "Hello";
 		}
