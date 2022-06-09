@@ -207,3 +207,7 @@
 	function has_roles(string $allowedRoles) : void {
 		//Do something
 	}
+
+	function test_middleware() : void {
+
+	}

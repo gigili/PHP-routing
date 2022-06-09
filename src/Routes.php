@@ -1,5 +1,5 @@
 <?php
-	/** @noinspection PhpUnnecessaryCurlyVarSyntaxInspection */
+
 	/**
 	 * Custom routing library
 	 *
@@ -20,6 +20,7 @@
 	use ReflectionFunction;
 	use ReflectionMethod;
 	use ReflectionNamedType;
+	use ReflectionUnionType;
 
 	class Routes
 	{
@@ -47,6 +48,7 @@
 		 * @var string DELETE Constant representing a DELETE request method
 		 */
 		public const DELETE = 'DELETE';
+
 		/**
 		 * @var Request $request Instance of a Request class to be passed as an argument to routes callback
 		 */
@@ -117,7 +119,7 @@
 			if ( str_contains($path, '{') ) {
 				$regex = preg_replace('/{.+?}/', '(.+?)', $path);
 				$regex = str_replace('/', '\/', $regex);
-				$regex = "^{$regex}$";
+				$regex = "^$regex$";
 				preg_match_all('/{(.+?)}/', $path, $matches);
 				if ( isset($matches[1]) && count($matches) > 0 ) $arguments = $matches[1];
 			}
@@ -155,7 +157,7 @@
 				}
 
 				if ( !empty($this->prefix) && !str_starts_with($path, $this->prefix) ) {
-					$newPath = rtrim("{$this->prefix}$path", '/');
+					$newPath = rtrim("$this->prefix$path", '/');
 					$route[$newPath] = $route[$path];
 					unset($route[$path]);
 				}
@@ -181,6 +183,10 @@
 		public function handle() : void {
 			$path = $this->get_path();
 			$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+
+			if ( !isset($this->routes[$method]) ) {
+				throw new RouteNotFoundException("Route $path not found", 404);
+			}
 
 			$route = $this->routes[$method][$path] ?? false;
 
@@ -334,16 +340,15 @@
 				$parameters = $this->get_all_arguments($function);
 				$requestClassIndex = array_search(Request::class, array_values($parameters));
 
-				$tmpParameters = array_filter($parameters, fn($item) => $item !== Request::class);
-				for ( $index = 0; $index < count($tmpParameters); $index++ ) {
+				for ( $index = 0; $index < count($parameters); $index++ ) {
 					if ( $index === $requestClassIndex ) {
-						$arguments[] = $this->request;
+						$arguments[$index] = $this->request;
+						continue;
 					}
-					$arguments[] = $tmpArguments[$index] ?? NULL;
+					$arguments[$index] = $tmpArguments[$index] ?? NULL;
 				}
 
 				if ( !is_callable($function) ) throw new CallbackNotFound("Middleware method $function not found", 404);
-
 				call_user_func($function, ...$arguments);
 			}
 		}
@@ -351,33 +356,44 @@
 		/**
 		 * Private method used to fetch the arguments of the route's callback methods
 		 *
-		 * @param object|array|string $func
+		 * @param object|array|string $function
 		 *
 		 * @return array|null Returns a list of arguments for a method or null on error
 		 */
-		private function get_all_arguments(object|array|string $func) : array|null {
-			$func_get_args = [];
+		private function get_all_arguments(object|array|string $function) : array|null {
+			$function_get_args = [];
 			try {
-				if ( ( is_string($func) && function_exists($func) ) || $func instanceof Closure ) {
-					$ref = new ReflectionFunction($func);
-				} elseif ( is_string($func) && !call_user_func_array('method_exists', explode('::', $func)) ) {
-					return $func_get_args;
+				if ( ( is_string($function) && function_exists($function) ) || $function instanceof Closure ) {
+					$ref = new ReflectionFunction($function);
+				} elseif (
+					is_string($function) &&
+					( str_contains($function, "::") && !method_exists(...explode("::", $function)) )
+				) {
+					return $function_get_args;
+				} elseif ( is_object($function) || is_array($function) ) {
+					$class = ( (array) $function )[0];
+					$method = ( (array) $function )[1];
+					$ref = new ReflectionMethod($class, $method);
 				} else {
-					$ref = new ReflectionMethod($func[0], $func[1]);
+					return $function_get_args;
 				}
 
 				foreach ( $ref->getParameters() as $param ) {
-					if ( !isset($func_get_args[$param->name]) ) {
+					if ( !isset($function_get_args[$param->name]) ) {
 						$type = $param->getType();
 						if ( is_null($type) ) {
-							$func_get_args[$param->name] = 'nothing';
+							$function_get_args[$param->name] = 'nothing';
 						} else {
-							assert($type instanceof ReflectionNamedType);
-							$func_get_args[$param->name] = $type->getName() ?? 'string';
+							if ( $type instanceof ReflectionNamedType ) {
+								$function_get_args[$param->name] = $type->getName() ?? 'string';
+							} elseif ( $type instanceof ReflectionUnionType ) {
+								# $function_get_args[$param->name] = implode("|", $type->getTypes());
+								$function_get_args[$param->name] = "mixed";
+							}
 						}
 					}
 				}
-				return $func_get_args;
+				return $function_get_args;
 			} catch ( ReflectionException $ex ) {
 				error_log($ex->getMessage());
 				return NULL;
