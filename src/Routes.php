@@ -289,9 +289,7 @@
 					}
 
 					$args = DIContainer::get($callback[0]);
-					if ( count($args) > 0 ) {
-						return [ new $callback[0](...$args), "__invoke" ];
-					}
+					return [ new $callback[0](...$args), "__invoke" ];
 				}
 			}
 
