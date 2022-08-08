@@ -96,6 +96,11 @@ Search.appendIndex(
             "summary": "Method\u0020used\u0020to\u0020handle\u0020execution\u0020of\u0020routes\u0020and\u0020middlewares",
             "url": "classes/Gac-Routing-Routes.html#method_handle"
         },                {
+            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aget_route_arguments\u0028\u0029",
+            "name": "get_route_arguments",
+            "summary": "",
+            "url": "classes/Gac-Routing-Routes.html#method_get_route_arguments"
+        },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Asetup_callback\u0028\u0029",
             "name": "setup_callback",
             "summary": "Method\u0020used\u0020to\u0020set\u0020up\u0020callback\u0020properties\u0020for\u0020routes",
@@ -205,6 +210,11 @@ Search.appendIndex(
             "name": "tmpRoutes",
             "summary": "",
             "url": "classes/Gac-Routing-Routes.html#property_tmpRoutes"
+        },                {
+            "fqsen": "\\Gac\\Routing\\Routes\u003A\u003A\u0024currentRoute",
+            "name": "currentRoute",
+            "summary": "",
+            "url": "classes/Gac-Routing-Routes.html#property_currentRoute"
         },                {
             "fqsen": "\\",
             "name": "\\",
