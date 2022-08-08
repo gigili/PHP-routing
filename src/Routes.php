@@ -71,6 +71,11 @@
 		private array $tmpRoutes = [];
 
 		/**
+		 * @var array|null Array of the current route being processed for eas of access in other methods
+		 */
+		private ?array $currentRoute = NULL;
+
+		/**
 		 * Routes constructor
 		 */
 		public function __construct() {
@@ -83,7 +88,6 @@
 		 * @param string $path Path for the route
 		 * @param callable|array|string|null $callback Callback method, an anonymous function or a class and method name to be executed
 		 * @param string|array|null $methods Allowed request method(s) (GET, POST, PUT, PATCH, DELETE)
-		 *
 		 */
 		public function add(
 			string                     $path = '',
@@ -202,35 +206,12 @@
 
 					if ( preg_match("/{$dynamic_route['regex']}/", $path) ) {
 						$route = $dynamic_route;
-
-						preg_match_all("/{$dynamic_route['regex']}/", $path, $matches);
-						if ( count($matches) > 1 ) array_shift($matches);
-						$matches = array_map(fn($m) => $m[0], $matches);
-
-						$args = $route['arguments'] ?? [];
-						foreach ( $args as $index => $argumentName ) {
-							$type = 'string';
-							if ( str_contains($argumentName, ':') ) {
-								$colonIndex = strpos($argumentName, ':');
-								$type = substr($argumentName, 0, $colonIndex);
-								$argumentName = substr($argumentName, $colonIndex + 1, strlen($argumentName));
-							}
-
-							$value = $matches[$index] ?? NULL;
-							$value = match ( $type ) {
-								'int' => intval($value),
-								'float' => floatval($value),
-								'double' => doubleval($value),
-								'bool' => is_numeric($value) ? boolval($value) : ( $value === 'true' ),
-								default => (string) $value,
-							};
-
-							$arguments[$argumentName] = $value;
-						}
+						$arguments = $this->get_route_arguments($dynamic_route, $path);
 						break;
 					}
 				}
 			}
+			$this->currentRoute = $route;
 
 			if ( $route === false ) throw new RouteNotFoundException("Route $path not found", 404);
 
@@ -255,7 +236,38 @@
 				$callbackArguments[$name] = $arguments[$name] ?? NULL;
 			}
 
+			$this->currentRoute = NULL;
 			call_user_func_array($callback, $callbackArguments);
+		}
+
+		private function get_route_arguments(array $route, string $path) : array {
+			$arguments = [];
+			preg_match_all("/{$route['regex']}/", $path, $matches);
+			if ( count($matches) > 1 ) array_shift($matches);
+			$matches = array_map(fn($m) => $m[0], $matches);
+
+			$args = $route['arguments'] ?? [];
+			foreach ( $args as $index => $argumentName ) {
+				$type = 'string';
+				if ( str_contains($argumentName, ':') ) {
+					$colonIndex = strpos($argumentName, ':');
+					$type = substr($argumentName, 0, $colonIndex);
+					$argumentName = substr($argumentName, $colonIndex + 1, strlen($argumentName));
+				}
+
+				$value = $matches[$index] ?? NULL;
+				$value = match ( $type ) {
+					'int' => intval($value),
+					'float' => floatval($value),
+					'double' => doubleval($value),
+					'bool' => is_numeric($value) ? boolval($value) : ( $value === 'true' ),
+					default => (string) $value,
+				};
+
+				$arguments[$argumentName] = $value;
+			}
+
+			return $arguments;
 		}
 
 		/**
@@ -317,6 +329,11 @@
 		 * @throws CallbackNotFound When the specified middleware method is not found
 		 */
 		private function execute_middleware(array $data) : void {
+			$namedArguments = match ( is_null($this->currentRoute) ) {
+				false => $this->get_route_arguments($this->currentRoute, $this->get_path()),
+				default => []
+			};
+
 			foreach ( $data as $key => $function ) {
 				$arguments = [];
 				$tmpArguments = [];
@@ -338,12 +355,13 @@
 				$parameters = $this->get_all_arguments($function);
 				$requestClassIndex = array_search(Request::class, array_values($parameters));
 
+				$paramNames = array_keys($parameters);
 				for ( $index = 0; $index < count($parameters); $index++ ) {
 					if ( $index === $requestClassIndex ) {
 						$arguments[$index] = $this->request;
 						continue;
 					}
-					$arguments[$index] = $tmpArguments[$index] ?? NULL;
+					$arguments[$index] = $tmpArguments[$index] ?? $namedArguments[$paramNames[$index]] ?? NULL;
 				}
 
 				if ( !is_callable($function) ) throw new CallbackNotFound("Middleware method $function not found", 404);
