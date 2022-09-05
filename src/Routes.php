@@ -242,6 +242,8 @@
 
 		private function get_route_arguments(array $route, string $path) : array {
 			$arguments = [];
+			if ( !isset($route["regex"]) ) return $arguments;
+
 			preg_match_all("/{$route['regex']}/", $path, $matches);
 			if ( count($matches) > 1 ) array_shift($matches);
 			$matches = array_map(fn($m) => $m[0], $matches);
