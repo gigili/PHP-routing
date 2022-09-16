@@ -56,7 +56,7 @@
   },
   "extra" : {
     "branch-alias" : {
-      "dev-master" : "dev"
+      "dev-master" : "main-dev"
     }
   },
   "prefer-stable" : true,
