@@ -211,9 +211,9 @@
 					}
 				}
 			}
-			$this->currentRoute = $route;
 
 			if ( $route === false ) throw new RouteNotFoundException("Route $path not found", 404);
+			$this->currentRoute = $route;
 
 			$middlewares = $route['middlewares'] ?? [];
 			$this->execute_middleware($middlewares);
