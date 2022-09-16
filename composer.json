@@ -40,16 +40,25 @@
   "autoload": {
     "psr-4": {
       "Gac\\Routing\\": "./src",
-      "Gac\\Routing\\Exceptions\\": "./src/Exceptions"
+      "Gac\\Routing\\Exceptions\\" : "./src/Exceptions"
     }
   },
-  "require-dev": {
-    "pestphp/pest": "^1.21"
+  "require-dev" : {
+    "pestphp/pest" : "^1.21"
   },
-  "config": {
-    "sort-packages": true,
-    "allow-plugins": {
-      "pestphp/pest-plugin": true
+  "config" : {
+    "sort-packages" : true,
+    "allow-plugins" : {
+      "pestphp/pest-plugin" : true
+    },
+    "optimize-autoloader" : true,
+    "preferred-install" : "dist"
+  },
+  "extra" : {
+    "branch-alias" : {
+      "dev-master" : "dev"
     }
-  }
+  },
+  "prefer-stable" : true,
+  "minimum-stability" : "dev"
 }
