@@ -10,7 +10,7 @@
 
 	class A
 	{
-		public function __construct(protected B $b, protected C $c) { }
+		public function __construct(protected B $b, protected C $c, protected bool $test) { }
 	}
 
 	class B

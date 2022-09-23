@@ -33,16 +33,15 @@
 	it("can handle nested dependency injection", function () {
 		include_once __DIR__ . '/../sample/nestedClasses.php';
 
-		$data = DIContainer::get(A::class, []);
+		$data = DIContainer::get(A::class, [ "test" => true, new C ]);
 
 		expect($data)
 			->toBeArray()
-			->toHaveCount(2)
+			->toHaveCount(4)
 			->and($data['b'])
 			->toBeInstanceOf(B::class)
 			->and($data['c'])
-			->toBeInstanceOf(C::class);
+			->toBeInstanceOf(C::class)
+			->and($data["test"])
+			->toEqual(true);
 	});
-
-
-

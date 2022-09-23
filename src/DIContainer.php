@@ -75,6 +75,16 @@
 						continue;
 					}
 
+					if ( $type->isBuiltin() ) {
+						$arguments[$parameter->getName()] = $arguments[$parameter->getName()] ?? match ( $type->getName() ) {
+							'int' => 0,
+							'float', 'double' => 0.0,
+							'bool' => false,
+							default => "",
+						};
+						continue;
+					}
+
 					if ( !class_exists($type->getName()) ) {
 						continue;
 					}
@@ -83,13 +93,12 @@
 						continue;
 					}
 
-					if ( $type->isBuiltin() ) {
-						continue;
-					}
-
-					if ( count($arguments) > 0 && in_array(new ( $type->getName() ), $arguments) ) {
-						continue;
-					}
+					/*
+					 * Removed: It was causing DI to fail when mixing manually defined arguments and auto-detected ones
+					 * if ( count($arguments) > 0 && in_array(new ( $type->getName() ), $arguments) ) {
+					 * 	continue;
+					 * }
+					*/
 
 					$injectedClass = new ReflectionClass($type->getName());
 					if ( !$injectedClass->isInstantiable() ) {
