@@ -160,6 +160,14 @@
 					$route[$path]['middlewares'] = $this->middlewares;
 				}
 
+				$route[$path]["di"] = [];
+				if ( is_array($route[$path]["callback"]) && count($route[$path]["callback"]) > 2 ) {
+					//store manual entries for dependency injection
+					while ( count($route[$path]["callback"]) > 2 ) {
+						$route[$path]["di"][] = array_pop($route[$path]["callback"]);
+					}
+				}
+
 				if ( !empty($this->prefix) && !str_starts_with($path, $this->prefix) ) {
 					$newPath = rtrim("$this->prefix$path", '/');
 					$route[$newPath] = $route[$path];
@@ -234,6 +242,14 @@
 					continue;
 				}
 				$callbackArguments[$name] = $arguments[$name] ?? NULL;
+			}
+
+			foreach ( $this->currentRoute["di"] as $argument ) {
+				$name = array_key_first($argument);
+				$value = $argument[$name];
+				if ( !isset($callbackArguments[$name]) ) {
+					$callbackArguments[$name] = $value;
+				}
 			}
 
 			$this->currentRoute = NULL;

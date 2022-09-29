@@ -78,10 +78,11 @@
 		]);
 
 		$callback = $route->get_routes()["GET"]["/demo"]["callback"];
-		$setup = [ new $callback[0](...$callback[2]), $callback[1] ];
+		$di = $route->get_routes()["GET"]["/demo"]["di"];
+		$setup = [ new $callback[0](...$di[0]), $callback[1] ];
 
 		expect($callback)
-			->toHaveCount(3)
+			->toHaveCount(2)
 			->and(call_user_func($setup, $route->request))
 			->json()
 			->isInstanceOf
