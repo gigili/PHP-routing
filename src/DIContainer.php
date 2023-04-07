@@ -52,7 +52,7 @@
 
 				$parameters = $constructor->getParameters();
 
-				if ( is_null($parameters) || count($parameters) === 0 ) {
+				if ( count($parameters) === 0 ) {
 					return $arguments;
 				}
 
