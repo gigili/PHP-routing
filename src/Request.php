@@ -43,15 +43,45 @@
 		}
 
 		/**
-		 * Returns list of all the header items or a value of a specific item
+		 * Returns list of all the header items or a value of a specified key.
+		 * It will return NULL if the specified key can't be found.
 		 *
 		 * @param string $key Name of a specific item in the header list to return the value for
 		 *
 		 * @return array|string|null List of header values or a value of a single item
 		 */
 		public function headers(string $key = '') : array|string|null {
-			$headers = getallheaders();
-			return empty($key) ? $headers : $headers[$key] ?? NULL;
+			$headers = $this->get_request_headers();
+			return empty($key) ? $headers : array_filter($headers, function ($k) use ($key
+			) {
+				/**
+				 * This is to make sure we can get a match on a key as it's not guaranteed that keys will
+				 * always be in uppercase/lowercase format as some clients/sdks don't respect that specification.
+				 */
+				return strtolower($k) === strtolower($key);
+			}, ARRAY_FILTER_USE_KEY) ?? NULL;
+		}
+
+		/**
+		 * Method used for getting all request headers
+		 *
+		 * @return array It will return an array containing all the header values or an empty array
+		 */
+		private function get_request_headers() : array {
+			if ( function_exists("apache_request_headers") ) {
+				$headers = apache_request_headers() ?? NULL;
+				return $headers ?? [];
+			}
+
+			$headers = [];
+			foreach ( $_SERVER as $key => $value ) {
+				if ( str_starts_with("HTTP_", $key) ) {
+					$k = str_replace("HTTP_", "", $key);
+					$headers[$k] = $value;
+				}
+			}
+
+			return $headers;
 		}
 
 		/**
@@ -74,6 +104,7 @@
 		 * @param mixed $value Header value
 		 *
 		 * @return Request Returns an instance of the Request class so that it can be chained on
+		 *
 		 */
 		public function header(string|array|object $key, mixed $value = NULL) : self {
 			if ( is_string($key) ) {
