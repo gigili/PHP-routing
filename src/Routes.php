@@ -50,6 +50,11 @@
 		public const DELETE = 'DELETE';
 
 		/**
+		 * @var string OPTIONS Constant representing a OPTIONS request method
+		 */
+		public const OPTIONS = 'OPTIONS';
+
+		/**
 		 * @var Request $request Instance of a Request class to be passed as an argument to routes callback
 		 */
 		public Request $request;
@@ -310,7 +315,7 @@
 
 					//There is a method provided but also any other arguments
 					if ( isset($callback[1]) && is_string($callback[1]) ) {
-						//There dependencies that need to be injected
+						//There are dependencies that need to be injected
 						if ( isset($callback[2]) ) {
 							$callback[2] = DIContainer::get($callback[0], $callback[2]);
 							return [ new $callback[0](...$callback[2]), $callback[1] ];
@@ -470,7 +475,7 @@
 		}
 
 		/**
-		 * Wrapper method used for adding new POST routes
+		 * Wrapper method used for adding new PUT routes
 		 *
 		 * @param string $path Path for the route
 		 * @param callable|array|string|null $callback Callback method, an anonymous function or a class and method name to be executed
@@ -483,7 +488,7 @@
 		}
 
 		/**
-		 * Wrapper method used for adding new POS routes
+		 * Wrapper method used for adding new PATCH routes
 		 *
 		 * @param string $path Path for the route
 		 * @param callable|array|string|null $callback Callback method, an anonymous function or a class and method name to be executed
@@ -496,7 +501,7 @@
 		}
 
 		/**
-		 * Wrapper method used for adding new POST routes
+		 * Wrapper method used for adding new DELETE routes
 		 *
 		 * @param string $path Path for the route
 		 * @param callable|array|string|null $callback Callback method, an anonymous function or a class and method name to be executed
@@ -505,6 +510,19 @@
 		 */
 		public function delete(string $path, callable|array|string|null $callback = NULL) : self {
 			$this->route($path, $callback, [ self::DELETE ]);
+			return $this;
+		}
+
+		/**
+		 * Wrapper method used for adding new OPTIONS routes
+		 *
+		 * @param string $path Path for the route
+		 * @param callable|array|string|null $callback Callback method, an anonymous function or a class and method name to be executed
+		 *
+		 * @return Routes Returns an instance of itself so that other methods could be chained onto it
+		 */
+		public function options(string $path, callable|array|string|null $callback = NULL) : self {
+			$this->route($path, $callback, [ self::OPTIONS ]);
 			return $this;
 		}
 
