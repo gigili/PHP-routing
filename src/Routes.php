@@ -261,6 +261,14 @@
 			call_user_func_array($callback, $callbackArguments);
 		}
 
+		/**
+		 * Method used for getting a list of arguments for a route
+		 *
+		 * @param array $route
+		 * @param string $path
+		 *
+		 * @return array
+		 */
 		private function get_route_arguments(array $route, string $path) : array {
 			$arguments = [];
 			if ( !isset($route["regex"]) ) return $arguments;

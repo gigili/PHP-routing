@@ -149,14 +149,12 @@
 
 				// Parse the Content-Disposition to get the field name, etc.
 				if ( isset($headers['content-disposition']) ) {
-					$filename = NULL;
 					preg_match(
 						'/^(.+); *name="([^"]+)"(; *filename="([^"]+)")?/',
 						$headers['content-disposition'],
 						$matches
 					);
 					[ , $type, $name ] = $matches;
-
 					//Parse File
 					if ( isset($matches[4]) ) {
 						//if labeled the same as previous, skip
@@ -165,7 +163,7 @@
 						}
 
 						//get filename
-						$filename = $matches[4];
+						$filename = $matches[4] ?? NULL;
 
 						//get tmp name
 						$filename_parts = pathinfo($filename);

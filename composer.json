@@ -33,9 +33,9 @@
     }
   ],
   "require": {
-    "php": ">=8.0",
-    "ext-json": "*",
-    "ext-mbstring": "*"
+    "php" : ">=8.1",
+    "ext-json" : "*",
+    "ext-mbstring" : "*"
   },
   "autoload": {
     "psr-4": {
