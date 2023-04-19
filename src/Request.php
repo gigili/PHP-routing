@@ -91,6 +91,9 @@
 		 * @param string $message Message to be sent int the header alongside the status code
 		 *
 		 * @return Request Returns an instance of the Request class so that it can be chained on
+		 * @deprecated Soon this option will be removed and should be replaced with a call to the Response class
+		 * New way of using the Response class: Response::withStatus(401, 'Not Authorized');
+		 *
 		 */
 		public function status(int $statusCode = 200, string $message = '') : self {
 			header("HTTP/1.1 $statusCode $message");
@@ -99,6 +102,9 @@
 
 		/**
 		 * Method used for setting custom header properties
+		 *
+		 * @deprecated Soon this option will be removed and should be replaced with a call to the Response class
+		 * New way of using the Response class: Response::withHeader('header-key', 'header-value');
 		 *
 		 * @param string|array|object $key Header key value
 		 * @param mixed $value Header value
@@ -120,6 +126,9 @@
 
 		/**
 		 * Send response back
+		 *
+		 * @deprecated Soon this option will be removed and should be replaced with a call to the Response class
+		 * New way of using the Response class: Response::status(200, 'OK')::setBody($output);
 		 *
 		 * @param string|array|object $output Value to be outputted as part of the response
 		 * @param array|object|null $headers Optional list of custom header properties to be sent with the response
