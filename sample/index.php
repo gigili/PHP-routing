@@ -73,6 +73,8 @@
 				->send([ 'message' => 'Welcome' ]);
 		});
 
+		$routes->add("/home/test", [ HomeController::class, "home" ]);
+
 		$routes
 			->prefix('/user')
 			->middleware([ 'verify_token' ])

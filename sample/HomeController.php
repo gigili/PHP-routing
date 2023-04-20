@@ -3,6 +3,8 @@
 	namespace Gac\Routing\sample;
 
 	use Gac\Routing\Request;
+	use Gac\Routing\Response;
+	use JsonException;
 
 	class HomeController
 	{
@@ -12,8 +14,24 @@
 			echo "Hello from controller";
 		}
 
+		/**
+		 * @throws JsonException
+		 */
 		public function home(Request $request) : void {
-			$request->send([ "message" => "Hello from controller::home" ]);
+			// Old way of doing it
+			/*$request
+				->header("Access-Control-Allow-Origin", "https://demo.local")
+				->header("Content-Type", "application/json")
+				->status(401, 'Not Authorized')
+				->send([ "message" => "Hello from controller::home" ]);*/
+
+			// New way of doing it
+			Response::
+			withHeader("Access-Control-Allow-Origin", "https://demo.local")::
+			withHeader("Content-Type", "application/json")::
+			withStatus(401, 'Not authorized')::
+			withBody([ "message" => "Hello from controller::home" ])::
+			send();
 		}
 
 		public function getUsers(Request $request) : void {
