@@ -18,22 +18,20 @@
 		 * @throws JsonException
 		 */
 		public function home(Request $request) : void {
-			//$request->send([ "message" => "Hello from controller::home" ]); // Old way of doing it
-
-			$request
+			// Old way of doing it
+			/*$request
 				->header("Access-Control-Allow-Origin", "https://demo.local")
 				->header("Content-Type", "application/json")
 				->status(401, 'Not Authorized')
-				->send([]);
+				->send([ "message" => "Hello from controller::home" ]);*/
 
 			// New way of doing it
 			Response::
 			withHeader("Access-Control-Allow-Origin", "https://demo.local")::
 			withHeader("Content-Type", "application/json")::
 			withStatus(401, 'Not authorized')::
-			//withBody([])::
-			send([]);
-			//send();
+			withBody([ "message" => "Hello from controller::home" ])::
+			send();
 		}
 
 		public function getUsers(Request $request) : void {

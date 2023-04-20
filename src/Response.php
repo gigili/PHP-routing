@@ -50,7 +50,7 @@
 				"JSON" => self::json(),
 			};
 
-			return self::$instance;
+			return self::getInstance();
 		}
 
 		/**
@@ -73,7 +73,7 @@
 		 */
 		public static function withBody(array|object|string $data) : self {
 			self::$body = $data;
-			return self::$instance;
+			return self::getInstance();
 		}
 
 		/**
@@ -100,7 +100,7 @@
 			self::$statusCode = $code;
 			self::$statusMessage = $message;
 			self::setHTTPStatus();
-			return self::$instance;
+			return self::getInstance();
 		}
 
 		/**
@@ -121,7 +121,7 @@
 				}
 			}
 
-			return self::$instance;
+			return self::getInstance();
 		}
 
 		/**
@@ -131,7 +131,7 @@
 		 */
 		public static function getInstance() : Response {
 			if ( is_null(self::$instance) ) {
-				self::$instance = new Response();
+				self::$instance = new static();
 			}
 
 			return self::$instance;
@@ -147,7 +147,7 @@
 		public static function setStatusCode(int $statusCode) : self {
 			self::$statusCode = $statusCode;
 			self::setHTTPStatus(true);
-			return self::$instance;
+			return self::getInstance();
 		}
 
 		/**
@@ -160,7 +160,7 @@
 		public static function setStatusMessage(string $statusMessage) : self {
 			self::$statusMessage = $statusMessage;
 			self::setHTTPStatus(true);
-			return self::$instance;
+			return self::getInstance();
 		}
 
 		/**
@@ -172,6 +172,33 @@
 		 */
 		public static function setHttpVersion(string $httpVersion) : self {
 			self::$httpVersion = $httpVersion;
-			return self::$instance;
+			return self::getInstance();
+		}
+
+		/**
+		 * Method used for retrieving response body data
+		 *
+		 * @return mixed Returns body data to be or that was already sent back
+		 */
+		public static function getBody() : mixed {
+			return self::$body;
+		}
+
+		/**
+		 * Method used for retrieving HTTP status code for the response
+		 *
+		 * @return int Returns HTTP status code
+		 */
+		public static function getStatusCode() : int {
+			return self::$statusCode;
+		}
+
+		/**
+		 * Method used for retrieving HTTP status message for the response
+		 *
+		 * @return string Returns HTTP status message
+		 */
+		public static function getStatusMessage() : string {
+			return self::$statusMessage;
 		}
 	}
