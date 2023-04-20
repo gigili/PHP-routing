@@ -54,32 +54,63 @@ Sample code to allow you to quickly start with your development.
 ```php
 use Gac\Routing\Exceptions\CallbackNotFound;
 use Gac\Routing\Exceptions\RouteNotFoundException;
-use Gac\Routing\Request;use Gac\Routing\Routes;
+use Gac\Routing\Request;
+use Gac\Routing\Response;
+use Gac\Routing\Routes;
 
 include_once "vendor/autoload.php"; # IF YOU'RE USING composer
 
 $routes = new Routes();
 try {
     $routes->add('/', function (Request $request) {
+        // Old way of doing it, still supported until v4
         $request
             ->status(200, "OK")
             ->send(["message" => "Welcome"]);
+
+        // New way of doing it
+        Response::
+        withHeader("Content-Type", "application/json")::
+        withStatus(200, 'OK')::
+        withBody([ "message" => "Welcome" ])::
+        send();
     });
     
     $routes->route('/', function (Request $request) {
+        // Old way of doing it, still supported until v4
         $request
-            ->status(201, "OK")
+            ->status(200, "OK")
             ->send(["message" => "Welcome"]);
+
+        // New way of doing it
+        Response::
+        withHeader("Content-Type", "application/json")::
+        withStatus(200, 'OK')::
+        withBody([ "message" => "Welcome" ])::
+        send();
     }, [Routes::POST])->save();
 
     $routes->route();
 } catch (RouteNotFoundException $ex) {
+    // Old way of doing it, still supported until v4
     $routes->request->status(404, "Route not found")->send(["error" => ["message" => $ex->getMessage()]]);
+    
+    // New way of doing it
+    Response::withStatus(404, 'Route not found')::send(["error" => [ "message" => $ex->getMessage() ]]);
 } catch (CallbackNotFound $ex) {
-    $routes->request->status(404, "Callback method not found")->send(["error" => ["message" => $ex->getMessage()]]);
+    // Old way of doing it, still supported until v4
+    $routes->request->status(404, "Callback not found")->send(["error" => ["message" => $ex->getMessage()]]);
+    
+    // New way of doing it
+    Response::withStatus(404, 'Callback not found')::send(["error" => [ "message" => $ex->getMessage() ]]);
 } catch (Exception $ex) {
     $code = $ex->getCode() ?? 500;
+    
+    // Old way of doing it, still supported until v4
     $routes->request->status($code)->send(["error" => ["message" => $ex->getMessage()]]);
+    
+    // New way of doing it
+    Response::withStatus($code)::send(["error" => [ "message" => $ex->getMessage() ]]);
 }
 ```
 
@@ -164,6 +195,8 @@ $routes
 When working with middlewares you can also pass them arguments if you need to
 
 ```php
+use Gac\Routing\Response;
+
 $routes
     ->middleware([
         'test_middleware',
@@ -172,7 +205,11 @@ $routes
         [ Middleware::class, 'has_role', 'Admin', 'Moderator', [ 'User', 'Bot' ] ],
     ])
     ->add('/test', function (Request $request) {
+        // Old way of doing it, still supported until v4
         $request->send([ 'msg' => 'testing' ]);
+        
+        //New way of doing it
+        Response::send([ "msg" => "testing" ]);
     });
 ```
 

@@ -15,7 +15,7 @@
 		/**
 		 * @var string  HTTP status message to be sent in the response header
 		 */
-		private static string $statusMessage = "OK";
+		private static string $statusMessage = "";
 
 		/**
 		 * @var string HTTP version to be sent in the response header
