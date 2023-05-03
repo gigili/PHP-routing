@@ -85,62 +85,6 @@
 		}
 
 		/**
-		 * Sets the header status code for the response
-		 *
-		 * @param int $statusCode Status code to be set for the response
-		 * @param string $message Message to be sent int the header alongside the status code
-		 *
-		 * @return Request Returns an instance of the Request class so that it can be chained on
-		 * @deprecated Soon this option will be removed and should be replaced with a call to the Response class
-		 * New way of using the Response class: Response::withStatus(401, 'Not Authorized');
-		 *
-		 */
-		public function status(int $statusCode = 200, string $message = '') : self {
-			header("HTTP/1.1 $statusCode $message");
-			return $this;
-		}
-
-		/**
-		 * Method used for setting custom header properties
-		 *
-		 * @deprecated Soon this option will be removed and should be replaced with a call to the Response class
-		 * New way of using the Response class: Response::withHeader('header-key', 'header-value');
-		 *
-		 * @param string|array|object $key Header key value
-		 * @param mixed $value Header value
-		 *
-		 * @return Request Returns an instance of the Request class so that it can be chained on
-		 *
-		 */
-		public function header(string|array|object $key, mixed $value = NULL) : self {
-			if ( is_string($key) ) {
-				header("$key: $value");
-			} elseif ( is_array($key) || is_object($key) ) {
-				$keys = $key;
-				foreach ( $keys as $key => $value ) {
-					header("$key: $value");
-				}
-			}
-			return $this;
-		}
-
-		/**
-		 * Send response back
-		 *
-		 * @deprecated Soon this option will be removed and should be replaced with a call to the Response class
-		 * New way of using the Response class: Response::status(200, 'OK')::setBody($output);
-		 *
-		 * @param string|array|object $output Value to be outputted as part of the response
-		 * @param array|object|null $headers Optional list of custom header properties to be sent with the response
-		 */
-		public function send(string|array|object $output, array|object|null $headers = NULL) : void {
-			if ( !is_null($headers) ) {
-				$this->header($headers);
-			}
-			echo json_encode($output);
-		}
-
-		/**
 		 * Private method used for parsing request body data for PUT and PATCH requests
 		 *
 		 * @return array Return an array of request body data
