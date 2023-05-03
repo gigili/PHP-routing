@@ -5,7 +5,7 @@
 
 	use JsonException;
 
-	class Response
+    class Response
 	{
 		/**
 		 * @var int HTTP status code to be sent in the response header
@@ -39,19 +39,17 @@
 		 *
 		 * @throws JsonException If the response type == JSON and json_encode fails to encode the body data
 		 *
-		 * @return Response Returns an instance of itself to allow method chaining
 		 */
-		public static function send(array|object|string $data = NULL, string $type = "JSON") : self {
-			if ( !is_null($data) ) {
-				self::$body = $data;
-			}
+		public static function send(array|object|string $data = NULL, string $type = "JSON"): void
+        {
+            if (!is_null($data)) {
+                self::$body = $data;
+            }
 
-			echo match ( mb_strtoupper($type) ) {
-				"JSON" => self::json(),
-			};
-
-			return self::getInstance();
-		}
+            echo match (mb_strtoupper($type)) {
+                "JSON" => self::json(),
+            };
+        }
 
 		/**
 		 * Private method for turning response body into json encoded string
