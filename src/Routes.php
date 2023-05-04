@@ -1,12 +1,12 @@
 <?php
 
 	/**
-	 * Custom routing library
-	 *
-	 * @author    Igor Ilić <github@igorilic.net>
-	 * @license   GNU General Public License v3.0
-	 * @copyright 2020-2022 Igor Ilić
-	 */
+     * Custom routing library
+     *
+     * @author    Igor Ilić <github@igorilic.net>
+     * @license   GNU General Public License v3.0
+     * @copyright 2020-2023 Igor Ilić
+     */
 
 	declare( strict_types=1 );
 
@@ -14,15 +14,15 @@
 
 
 	use Closure;
-	use Gac\Routing\Exceptions\CallbackNotFound;
-	use Gac\Routing\Exceptions\RouteNotFoundException;
-	use ReflectionException;
-	use ReflectionFunction;
-	use ReflectionMethod;
-	use ReflectionNamedType;
-	use ReflectionUnionType;
+    use Gac\Routing\Exceptions\CallbackNotFound;
+    use Gac\Routing\Exceptions\RouteNotFoundException;
+    use ReflectionException;
+    use ReflectionFunction;
+    use ReflectionMethod;
+    use ReflectionNamedType;
+    use ReflectionUnionType;
 
-	class Routes
+    class Routes
 	{
 		/**
 		 * @var string GET Constant representing a GET request method
