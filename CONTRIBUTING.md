@@ -36,7 +36,7 @@ to [github@igorilic.net](mailto:github@igorilic.net).
 
 ## What should I know before I get started?
 
-In order to be able to build the app you will need to rename the secrets_sample.txt file into secrets.xml.
+In order to run the code localy you will need to either setup a composer and a virtual host on your own machine or use a docker to assist you with that.
 
 ## How Can I Contribute?
 
@@ -169,4 +169,4 @@ to complete additional design work, tests, or other changes before your pull req
 # Note
 
 This contributing guide has been adapted from the [Atom](https://github.com/atom/atom/blob/master/CONTRIBUTING.md)
-repository for this project.
+repository for this project. Some thing may not fully reflect the current state of the project and for any questions feel free to reach to via `Discussions` tab or other means listed on the repo owner's profile.
