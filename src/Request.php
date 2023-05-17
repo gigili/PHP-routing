@@ -77,6 +77,19 @@ class Request
     }
 
     /**
+     * Method used to check if the header of a request contains a specified key
+     * 
+     * @param String $key Name of the header key to check for
+     * 
+     * @return bool Returns TRUE if the key exists and has value or FALSE otherwise;
+     */
+    public function has_header(string $key): bool
+    {
+        $value = $this->headers($key);
+        return !is_null($value) && (is_array($value) && count($value) > 0);
+    }
+
+    /**
      * Method used for getting all request headers
      *
      * @return array It will return an array containing all the header values or an empty array
