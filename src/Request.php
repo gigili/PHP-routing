@@ -63,7 +63,7 @@ class Request
      *
      * @return array|string|null List of header values or a value of a single item
      */
-    public function headers(string $key = ''): array|string|null
+    public function header(string $key = ''): array|string|null
     {
         $headers = $this->get_request_headers();
         return empty($key) ? $headers : array_filter($headers, function ($k) use ($key
