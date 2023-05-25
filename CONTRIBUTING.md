@@ -142,6 +142,10 @@ to complete additional design work, tests, or other changes before your pull req
 
 ## Style guides
 
+* It is preffered to use tabs for indentation, but the `.editorconfig` file should help with that.
+  * For some langauges or definitions it may not be perfect but try to respect settings from it.
+
+
 ### Git Commit Messages
 
 * Use the present tense ("Add feature" not "Added feature")
@@ -164,7 +168,6 @@ to complete additional design work, tests, or other changes before your pull req
     * :lock: `:lock:` when dealing with security
     * :arrow_up: `:arrow_up:` when upgrading dependencies
     * :arrow_down: `:arrow_down:` when downgrading dependencies
-    * :shirt: `:shirt:` when removing linter warnings
 
 # Note
 
