@@ -69,25 +69,29 @@
 		/**
 		 * @var array $routes List of available routes
 		 */
-		private array $routes = [];
-		/**
-		 * @var array $routes Temporary holder of route information until it all gets stored in the primary $routes array
-		 */
-		private array $tmpRoutes = [];
+        private array $routes = [];
+        /**
+         * @var array $routes Temporary holder of route information until it all gets stored in the primary $routes array
+         */
+        private array $tmpRoutes = [];
 
-		/**
-		 * @var array|null Array of the current route being processed for eas of access in other methods
-		 */
-		private ?array $currentRoute = NULL;
+        /**
+         * @var array|null Array of the current route being processed for eas of access in other methods
+         */
+        private ?array $currentRoute = NULL;
 
-		/**
-		 * Routes constructor
-		 */
-		public function __construct() {
-			$this->request = new Request;
-		}
+        private Response $response;
 
-		/**
+        /**
+         * Routes constructor
+         */
+        public function __construct()
+        {
+            $this->request = new Request;
+            $this->response = Response::getInstance();
+        }
+
+        /**
 		 * Method used for adding new routes
 		 *
 		 * @param string $path Path for the route
@@ -242,12 +246,17 @@
 
 			$callbackArguments = [];
 			foreach ( $parameters as $name => $type ) {
-				if ( strtolower($type) === strtolower('Gac\Routing\Request') ) {
-					$callbackArguments[$name] = $this->request;
-					continue;
-				}
-				$callbackArguments[$name] = $arguments[$name] ?? NULL;
-			}
+                if (strtolower($type) === strtolower('Gac\Routing\Request')) {
+                    $callbackArguments[$name] = $this->request;
+                    continue;
+                }
+
+                if (strtolower($type) === strtolower('Gac\Routing\Response')) {
+                    $callbackArguments[$name] = $this->response;
+                    continue;
+                }
+                $callbackArguments[$name] = $arguments[$name] ?? NULL;
+            }
 
 			foreach ( $this->currentRoute["di"] as $argument ) {
 				$name = array_key_first($argument);
