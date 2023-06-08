@@ -82,6 +82,10 @@
 
         private Response $response;
 
+        /*** @var Response Instance of a Response class to be passed as an argument to routes callback
+         */
+        private Response $response;
+
         /**
          * Routes constructor
          */
