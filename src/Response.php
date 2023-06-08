@@ -1,11 +1,18 @@
 <?php
-	declare( strict_types=1 );
+
+	/**
+	 * @author    Igor Ilić <github@igorilic.net>
+	 * @license   GNU General Public License v3.0
+	 * @copyright 2020-2023 Igor Ilić
+	 */
+
+	declare(strict_types=1);
 
 	namespace Gac\Routing;
 
 	use JsonException;
 
-    class Response
+	class Response
 	{
 		/**
 		 * @var int HTTP status code to be sent in the response header
@@ -41,24 +48,25 @@
 		 *
 		 */
 		public static function send(array|object|string $data = NULL, string $type = "JSON"): void
-        {
-            if (!is_null($data)) {
-                self::$body = $data;
-            }
+		{
+			if (!is_null($data)) {
+				self::$body = $data;
+			}
 
-            echo match (mb_strtoupper($type)) {
-                "JSON" => self::json(),
-            };
-        }
+			echo match (mb_strtoupper($type)) {
+				"JSON" => self::json(),
+			};
+		}
 
 		/**
 		 * Private method for turning response body into json encoded string
 		 *
+		 * @return string|bool Returns a JSON encoded string on success or FALSE on failure
 		 * @throws JsonException If the response type == JSON and json_encode fails to encode the body data
 		 *
-		 * @return string|bool Returns a JSON encoded string on success or FALSE on failure
 		 */
-		public static function json() : string|bool {
+		public static function json(): string|bool
+		{
 			return json_encode(self::$body, JSON_THROW_ON_ERROR);
 		}
 
@@ -69,7 +77,8 @@
 		 *
 		 * @return Response Returns an instance of itself to allow method chaining
 		 */
-		public static function withBody(array|object|string $data) : self {
+		public static function withBody(array|object|string $data): self
+		{
 			self::$body = $data;
 			return self::getInstance();
 		}
@@ -81,7 +90,8 @@
 		 *
 		 * @return void
 		 */
-		private static function setHTTPStatus(bool $replace = false) : void {
+		private static function setHTTPStatus(bool $replace = false): void
+		{
 			header(self::$httpVersion . ' ' . self::$statusCode . ' ' . self::$statusMessage, $replace,
 				self::$statusCode);
 		}
@@ -94,7 +104,8 @@
 		 *
 		 * @return Response Returns an instance of itself to allow method chaining
 		 */
-		public static function withStatus(int $code, string $message) : self {
+		public static function withStatus(int $code, string $message): self
+		{
 			self::$statusCode = $code;
 			self::$statusMessage = $message;
 			self::setHTTPStatus();
@@ -109,12 +120,13 @@
 		 *
 		 * @return Response Returns an instance of itself to allow method chaining
 		 */
-		public static function withHeader(string|array|object $key, mixed $value) : self {
-			if ( is_string($key) ) {
+		public static function withHeader(string|array|object $key, mixed $value): self
+		{
+			if (is_string($key)) {
 				header("$key: $value");
-			} elseif ( is_array($key) || is_object($key) ) {
+			} elseif (is_array($key) || is_object($key)) {
 				$keys = $key;
-				foreach ( $keys as $key => $value ) {
+				foreach ($keys as $key => $value) {
 					header("$key: $value");
 				}
 			}
@@ -127,8 +139,9 @@
 		 *
 		 * @return Response Returns an existing instance of itself or creates a new one
 		 */
-		public static function getInstance() : Response {
-			if ( is_null(self::$instance) ) {
+		public static function getInstance(): Response
+		{
+			if (is_null(self::$instance)) {
 				self::$instance = new static();
 			}
 
@@ -142,7 +155,8 @@
 		 *
 		 * @return Response Returns an instance of itself to allow method chaining
 		 */
-		public static function setStatusCode(int $statusCode) : self {
+		public static function setStatusCode(int $statusCode): self
+		{
 			self::$statusCode = $statusCode;
 			self::setHTTPStatus(true);
 			return self::getInstance();
@@ -155,7 +169,8 @@
 		 *
 		 * @return Response Returns an instance of itself to allow method chaining
 		 */
-		public static function setStatusMessage(string $statusMessage) : self {
+		public static function setStatusMessage(string $statusMessage): self
+		{
 			self::$statusMessage = $statusMessage;
 			self::setHTTPStatus(true);
 			return self::getInstance();
@@ -168,7 +183,8 @@
 		 *
 		 * @return Response Returns an instance of itself to allow method chaining
 		 */
-		public static function setHttpVersion(string $httpVersion) : self {
+		public static function setHttpVersion(string $httpVersion): self
+		{
 			self::$httpVersion = $httpVersion;
 			return self::getInstance();
 		}
@@ -178,7 +194,8 @@
 		 *
 		 * @return mixed Returns body data to be or that was already sent back
 		 */
-		public static function getBody() : mixed {
+		public static function getBody(): mixed
+		{
 			return self::$body;
 		}
 
@@ -187,7 +204,8 @@
 		 *
 		 * @return int Returns HTTP status code
 		 */
-		public static function getStatusCode() : int {
+		public static function getStatusCode(): int
+		{
 			return self::$statusCode;
 		}
 
@@ -196,7 +214,8 @@
 		 *
 		 * @return string Returns HTTP status message
 		 */
-		public static function getStatusMessage() : string {
+		public static function getStatusMessage(): string
+		{
 			return self::$statusMessage;
 		}
 	}
