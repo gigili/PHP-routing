@@ -1,21 +1,131 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
-    ],
-    "content-hash": "6c411cd9bec1ec132797d71789f2ab50",
-    "packages": [],
-    "packages-dev": [
+  "_readme": [
+    "This file locks the dependencies of your project to a known state",
+    "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+    "This file is @generated automatically"
+  ],
+  "content-hash": "148267a0b559512b6dfa62ba07d6a80e",
+  "packages": [
+    {
+      "name": "psr/http-message",
+      "version": "2.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/php-fig/http-message.git",
+        "reference": "402d35bcb92c70c026d1a6a9883f06b2ead23d71"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/php-fig/http-message/zipball/402d35bcb92c70c026d1a6a9883f06b2ead23d71",
+        "reference": "402d35bcb92c70c026d1a6a9883f06b2ead23d71",
+        "shasum": ""
+      },
+      "require": {
+        "php": "^7.2 || ^8.0"
+      },
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "2.0.x-dev"
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "Psr\\Http\\Message\\": "src/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
         {
-            "name": "doctrine/instantiator",
-            "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "c6222283fa3f4ac679f8b9ced9a4e23f163e80d0"
-            },
-            "dist": {
+          "name": "PHP-FIG",
+          "homepage": "https://www.php-fig.org/"
+        }
+      ],
+      "description": "Common interface for HTTP messages",
+      "homepage": "https://github.com/php-fig/http-message",
+      "keywords": [
+        "http",
+        "http-message",
+        "psr",
+        "psr-7",
+        "request",
+        "response"
+      ],
+      "support": {
+        "source": "https://github.com/php-fig/http-message/tree/2.0"
+      },
+      "time": "2023-04-04T09:54:51+00:00"
+    },
+    {
+      "name": "psr/http-server-handler",
+      "version": "1.0.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/php-fig/http-server-handler.git",
+        "reference": "84c4fb66179be4caaf8e97bd239203245302e7d4"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/php-fig/http-server-handler/zipball/84c4fb66179be4caaf8e97bd239203245302e7d4",
+        "reference": "84c4fb66179be4caaf8e97bd239203245302e7d4",
+        "shasum": ""
+      },
+      "require": {
+        "php": ">=7.0",
+        "psr/http-message": "^1.0 || ^2.0"
+      },
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "1.0.x-dev"
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "Psr\\Http\\Server\\": "src/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "PHP-FIG",
+          "homepage": "https://www.php-fig.org/"
+        }
+      ],
+      "description": "Common interface for HTTP server-side request handler",
+      "keywords": [
+        "handler",
+        "http",
+        "http-interop",
+        "psr",
+        "psr-15",
+        "psr-7",
+        "request",
+        "response",
+        "server"
+      ],
+      "support": {
+        "source": "https://github.com/php-fig/http-server-handler/tree/1.0.2"
+      },
+      "time": "2023-04-10T20:06:20+00:00"
+    }
+  ],
+  "packages-dev": [
+    {
+      "name": "doctrine/instantiator",
+      "version": "2.0.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/doctrine/instantiator.git",
+        "reference": "c6222283fa3f4ac679f8b9ced9a4e23f163e80d0"
+      },
+      "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/doctrine/instantiator/zipball/c6222283fa3f4ac679f8b9ced9a4e23f163e80d0",
                 "reference": "c6222283fa3f4ac679f8b9ced9a4e23f163e80d0",
