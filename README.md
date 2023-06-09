@@ -137,7 +137,8 @@ When using chained methods either use `->save()` or `->add()` as the last method
 **NOTE**
 
 * `->save(true|false)` method can still be chained onto if needed
-  * Passing `false` (the default value is `true`) to the `->save()` method will preserve all the previous prefixes and middlewares in that chain
+  * Passing `false` (the default value is `true`) to the `->save()` method will preserve all the previous prefixes and
+    middlewares in that chain
 * `->add()` **CAN NOT** be chained onto and should be the last call in chain
 
 ```php

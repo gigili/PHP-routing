@@ -2,7 +2,7 @@
 charset = utf-8
 end_of_line = crlf
 indent_size = 4
-indent_style = space
+indent_style = tab
 insert_final_newline = false
 max_line_length = 120
 tab_width = 4
@@ -846,6 +846,8 @@ ij_html_text_wrap = normal
 ij_html_uniform_ident = false
 
 [{*.markdown, *.md}]
+indent_size = 4
+indent_style = tab
 ij_markdown_force_one_space_after_blockquote_symbol = true
 ij_markdown_force_one_space_after_header_symbol = true
 ij_markdown_force_one_space_after_list_bullet = true
