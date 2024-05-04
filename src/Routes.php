@@ -396,8 +396,9 @@
 					$function = $key;
 				}
 
-				$parameters = $this->get_all_arguments($function);
+				$parameters = $this->get_all_arguments($function) ?? [];
 				$requestClassIndex = array_search(Request::class, array_values($parameters));
+				$responseClassIndex = array_search(Response::class, array_values($parameters));
 
 				$paramNames = array_keys($parameters);
 				for ( $index = 0; $index < count($parameters); $index++ ) {
@@ -405,6 +406,12 @@
 						$arguments[$index] = $this->request;
 						continue;
 					}
+
+					if ( $index === $responseClassIndex ) {
+						$arguments[$index] = $this->response;
+						continue;
+					}
+
 					$arguments[$index] = $tmpArguments[$index] ?? $namedArguments[$paramNames[$index]] ?? NULL;
 				}
 
