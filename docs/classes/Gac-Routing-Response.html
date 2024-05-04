@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
             <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/template.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.css">
                 <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
         <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
+        <script src="js/template.js"></script>
         <script src="js/search.js"></script>
         <script defer src="js/searchIndex.js"></script>
     </head>
@@ -52,7 +53,7 @@
 <label class="phpdocumentor-sidebar__menu-icon" for="sidebar-button">
     Menu
 </label>
-<aside class="phpdocumentor-column -four phpdocumentor-sidebar">
+<aside class="phpdocumentor-column -three phpdocumentor-sidebar">
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -87,8 +88,9 @@
     </section>
 </aside>
 
-            <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <ul class="phpdocumentor-breadcrumbs">
+            <div class="phpdocumentor-column -nine phpdocumentor-content">
+                                <section>
+                                        <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/gac.html">Gac</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/gac-routing.html">Routing</a></li>
     </ul>
@@ -108,6 +110,11 @@
     
     </h2>
 
+<div class="phpdocumentor-label-line">
+
+
+</div>
+
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Response.php"><a href="files/src-response.html"><abbr title="src/Response.php">Response.php</abbr></a></abbr>
     :
@@ -116,10 +123,6 @@
     </aside>
 
         
-    <section class="phpdocumentor-description"></section>
-
-
-
 
 
 
@@ -127,46 +130,63 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Gac-Routing-Response.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+
 </h3>
 
+
+
+
+
+
+
+
+
+<h4 id="toc-properties">
+    Properties
+    <a href="classes/Gac-Routing-Response.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
 <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -property -private">
+            <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/Gac-Routing-Response.html#property_body">$body</a>
     <span>
-                        &nbsp;: mixed            </span>
+                        &nbsp;: mixed|string            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/Gac-Routing-Response.html#property_httpVersion">$httpVersion</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/Gac-Routing-Response.html#property_instance">$instance</a>
     <span>
                         &nbsp;: <a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a>|null            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/Gac-Routing-Response.html#property_statusCode">$statusCode</a>
     <span>
                         &nbsp;: int            </span>
 </dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -private">
     <a href="classes/Gac-Routing-Response.html#property_statusMessage">$statusMessage</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
-<dd></dd>
 
-                <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    </dl>
+
+<h4 id="toc-methods">
+    Methods
+    <a href="classes/Gac-Routing-Response.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+
+</h4>
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Gac-Routing-Response.html#method_getBody">getBody()</a>
     <span>
                                 &nbsp;: mixed    </span>
@@ -257,7 +277,8 @@
 </dt>
 <dd>Private method used to set the HTTP status on the response header</dd>
 
-        </dl>
+    </dl>
+
 
 
 
@@ -268,6 +289,7 @@
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
             <a href="classes/Gac-Routing-Response.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="
@@ -279,6 +301,7 @@
     <h4 class="phpdocumentor-element__name" id="property_body">
         $body
         <a href="classes/Gac-Routing-Response.html#property_body" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -292,7 +315,7 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">private</span>
-    <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__type">mixed|string</span>
     <span class="phpdocumentor-signature__name">$body</span>
      = <span class="phpdocumentor-signature__default-value">&quot;&quot;</span></code>
 
@@ -313,6 +336,7 @@
     <h4 class="phpdocumentor-element__name" id="property_httpVersion">
         $httpVersion
         <a href="classes/Gac-Routing-Response.html#property_httpVersion" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -347,6 +371,7 @@
     <h4 class="phpdocumentor-element__name" id="property_instance">
         $instance
         <a href="classes/Gac-Routing-Response.html#property_instance" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -381,6 +406,7 @@
     <h4 class="phpdocumentor-element__name" id="property_statusCode">
         $statusCode
         <a href="classes/Gac-Routing-Response.html#property_statusCode" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -415,6 +441,7 @@
     <h4 class="phpdocumentor-element__name" id="property_statusMessage">
         $statusMessage
         <a href="classes/Gac-Routing-Response.html#property_statusMessage" class="headerlink"><i class="fas fa-link"></i></a>
+
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
@@ -445,6 +472,7 @@
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
             <a href="classes/Gac-Routing-Response.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+
         </h3>
                     <article
         class="phpdocumentor-element
@@ -455,6 +483,7 @@
     <h4 class="phpdocumentor-element__name" id="method_getBody">
         getBody()
         <a href="classes/Gac-Routing-Response.html#method_getBody" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Response.php"><a href="files/src-response.html"><abbr title="src/Response.php">Response.php</abbr></a></abbr>
@@ -469,17 +498,21 @@
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">getBody</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">mixed</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>Returns body data to be or that was already sent back</p>
+        <span class="phpdocumentor-signature__response_type">mixed</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Returns body data to be or that was already sent back</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -490,6 +523,7 @@
     <h4 class="phpdocumentor-element__name" id="method_getInstance">
         getInstance()
         <a href="classes/Gac-Routing-Response.html#method_getInstance" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Response.php"><a href="files/src-response.html"><abbr title="src/Response.php">Response.php</abbr></a></abbr>
@@ -504,17 +538,21 @@
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">getInstance</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>Returns an existing instance of itself or creates a new one</p>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Returns an existing instance of itself or creates a new one</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -525,6 +563,7 @@
     <h4 class="phpdocumentor-element__name" id="method_getStatusCode">
         getStatusCode()
         <a href="classes/Gac-Routing-Response.html#method_getStatusCode" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Response.php"><a href="files/src-response.html"><abbr title="src/Response.php">Response.php</abbr></a></abbr>
@@ -539,17 +578,21 @@
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">getStatusCode</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">int</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>Returns HTTP status code</p>
+        <span class="phpdocumentor-signature__response_type">int</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Returns HTTP status code</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -560,6 +603,7 @@
     <h4 class="phpdocumentor-element__name" id="method_getStatusMessage">
         getStatusMessage()
         <a href="classes/Gac-Routing-Response.html#method_getStatusMessage" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Response.php"><a href="files/src-response.html"><abbr title="src/Response.php">Response.php</abbr></a></abbr>
@@ -574,17 +618,21 @@
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">getStatusMessage</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>Returns HTTP status message</p>
+        <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Returns HTTP status message</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -595,6 +643,7 @@
     <h4 class="phpdocumentor-element__name" id="method_json">
         json()
         <a href="classes/Gac-Routing-Response.html#method_json" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Response.php"><a href="files/src-response.html"><abbr title="src/Response.php">Response.php</abbr></a></abbr>
@@ -609,12 +658,15 @@
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">json</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string|bool</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
     
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Gac-Routing-Response.html#method_json#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -627,15 +679,17 @@
 </section>
 
                                     </dd>
-                        </dl>
+                                            </dl>
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string|bool</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>Returns a JSON encoded string on success or FALSE on failure</p>
+        <span class="phpdocumentor-signature__response_type">string|bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Returns a JSON encoded string on success or FALSE on failure</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -646,6 +700,7 @@
     <h4 class="phpdocumentor-element__name" id="method_send">
         send()
         <a href="classes/Gac-Routing-Response.html#method_send" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Response.php"><a href="files/src-response.html"><abbr title="src/Response.php">Response.php</abbr></a></abbr>
@@ -660,6 +715,8 @@
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">send</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|object|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">NULL</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&quot;JSON&quot;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -668,8 +725,7 @@
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|object|string</span>
                  = <span class="phpdocumentor-signature__argument__default-value">NULL</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$type</span>
@@ -685,7 +741,8 @@
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Gac-Routing-Response.html#method_send#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
@@ -698,15 +755,17 @@
 </section>
 
                                     </dd>
-                        </dl>
+                                            </dl>
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>Returns an instance of itself to allow method chaining</p>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Returns an instance of itself to allow method chaining</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -717,6 +776,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setHttpVersion">
         setHttpVersion()
         <a href="classes/Gac-Routing-Response.html#method_setHttpVersion" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Response.php"><a href="files/src-response.html"><abbr title="src/Response.php">Response.php</abbr></a></abbr>
@@ -731,6 +791,8 @@
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">setHttpVersion</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$httpVersion</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -747,13 +809,15 @@
 
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>Returns an instance of itself to allow method chaining</p>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Returns an instance of itself to allow method chaining</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -764,6 +828,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setStatusCode">
         setStatusCode()
         <a href="classes/Gac-Routing-Response.html#method_setStatusCode" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Response.php"><a href="files/src-response.html"><abbr title="src/Response.php">Response.php</abbr></a></abbr>
@@ -778,6 +843,8 @@
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">setStatusCode</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$statusCode</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -794,13 +861,15 @@
 
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>Returns an instance of itself to allow method chaining</p>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Returns an instance of itself to allow method chaining</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -811,6 +880,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setStatusMessage">
         setStatusMessage()
         <a href="classes/Gac-Routing-Response.html#method_setStatusMessage" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Response.php"><a href="files/src-response.html"><abbr title="src/Response.php">Response.php</abbr></a></abbr>
@@ -825,6 +895,8 @@
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">setStatusMessage</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$statusMessage</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -841,13 +913,15 @@
 
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>Returns an instance of itself to allow method chaining</p>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Returns an instance of itself to allow method chaining</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -858,6 +932,7 @@
     <h4 class="phpdocumentor-element__name" id="method_withBody">
         withBody()
         <a href="classes/Gac-Routing-Response.html#method_withBody" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Response.php"><a href="files/src-response.html"><abbr title="src/Response.php">Response.php</abbr></a></abbr>
@@ -872,6 +947,8 @@
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">withBody</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|object|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -888,13 +965,15 @@
 
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>Returns an instance of itself to allow method chaining</p>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Returns an instance of itself to allow method chaining</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -905,6 +984,7 @@
     <h4 class="phpdocumentor-element__name" id="method_withHeader">
         withHeader()
         <a href="classes/Gac-Routing-Response.html#method_withHeader" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Response.php"><a href="files/src-response.html"><abbr title="src/Response.php">Response.php</abbr></a></abbr>
@@ -919,6 +999,8 @@
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">withHeader</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|array&lt;string|int, mixed&gt;|object&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -944,13 +1026,15 @@
 
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>Returns an instance of itself to allow method chaining</p>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Returns an instance of itself to allow method chaining</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -961,6 +1045,7 @@
     <h4 class="phpdocumentor-element__name" id="method_withStatus">
         withStatus()
         <a href="classes/Gac-Routing-Response.html#method_withStatus" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Response.php"><a href="files/src-response.html"><abbr title="src/Response.php">Response.php</abbr></a></abbr>
@@ -975,6 +1060,8 @@
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">withStatus</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$code</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1000,13 +1087,15 @@
 
     
 
+            <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>Returns an instance of itself to allow method chaining</p>
+        <span class="phpdocumentor-signature__response_type"><a href="classes/Gac-Routing-Response.html"><abbr title="\Gac\Routing\Response">Response</abbr></a></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Returns an instance of itself to allow method chaining</p>
 </section>
 
-    
+            </section>
+
 </article>
                     <article
         class="phpdocumentor-element
@@ -1017,6 +1106,7 @@
     <h4 class="phpdocumentor-element__name" id="method_setHTTPStatus">
         setHTTPStatus()
         <a href="classes/Gac-Routing-Response.html#method_setHTTPStatus" class="headerlink"><i class="fas fa-link"></i></a>
+
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Response.php"><a href="files/src-response.html"><abbr title="src/Response.php">Response.php</abbr></a></abbr>
@@ -1031,6 +1121,8 @@
     <span class="phpdocumentor-signature__visibility">private</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">setHTTPStatus</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$replace</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
+    <div class="phpdocumentor-label-line">
+        </div>
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
@@ -1047,78 +1139,153 @@
 
     
 
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
     
 </article>
             </section>
 
-        
+        <div class="phpdocumentor-modal" id="source-view">
+    <div class="phpdocumentor-modal-bg" data-exit-button></div>
+    <div class="phpdocumentor-modal-container">
+        <div class="phpdocumentor-modal-content">
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Response.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+        </div>
+        <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
+    </div>
+</div>
+
     <script type="text/javascript">
-        function loadExternalCodeSnippets(line) {
-            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach((pre) => {
-                var src = pre.getAttribute('data-src').replace( /\\/g, '/');
-                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
-                var language = 'php';
+        (function () {
+            function loadExternalCodeSnippet(el, url, line) {
+                Array.prototype.slice.call(el.querySelectorAll('pre[data-src]')).forEach((pre) => {
+                    const src = url || pre.getAttribute('data-src').replace(/\\/g, '/');
+                    const language = 'php';
 
-                var code = document.createElement('code');
-                code.className = 'language-' + language;
+                    const code = document.createElement('code');
+                    code.className = 'language-' + language;
+                    pre.textContent = '';
+                    pre.setAttribute('data-line', line)
+                    code.textContent = 'Loading…';
+                    pre.appendChild(code);
 
-                pre.textContent = '';
+                    var xhr = new XMLHttpRequest();
 
-                pre.setAttribute('data-line', line)
-                code.textContent = 'Loading…';
+                    xhr.open('GET', src, true);
 
-                pre.appendChild(code);
-
-                var xhr = new XMLHttpRequest();
-
-                xhr.open('GET', src, true);
-
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4) {
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState !== 4) {
+                            return;
+                        }
 
                         if (xhr.status < 400 && xhr.responseText) {
                             code.textContent = xhr.responseText;
-
                             Prism.highlightElement(code);
+                            return;
                         }
-                        else if (xhr.status >= 400) {
+
+                        if (xhr.status === 404) {
+                            code.textContent = '✖ Error: File could not be found';
+                            return;
+                        }
+
+                        if (xhr.status >= 400) {
                             code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                            return;
                         }
-                        else {
-                            code.textContent = '✖ Error: File does not exist, is empty or trying to view from localhost';
-                        }
+
+                        code.textContent = '✖ Error: An unknown error occurred';
+                    };
+
+                    xhr.send(null);
+                });
+            }
+
+            const modalButtons = document.querySelectorAll("[data-modal]");
+            const openedAsLocalFile = window.location.protocol === 'file:';
+            if (modalButtons.length > 0 && openedAsLocalFile) {
+                console.warn(
+                    'Viewing the source code is unavailable because you are opening this page from the file:// scheme; ' +
+                    'browsers block XHR requests when a page is opened this way'
+                );
+            }
+
+            modalButtons.forEach(function (trigger) {
+                if (openedAsLocalFile) {
+                    trigger.setAttribute("hidden", "hidden");
+                }
+
+                trigger.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const modal = document.getElementById(trigger.dataset.modal);
+                    if (!modal) {
+                        console.error(`Modal with id "${trigger.dataset.modal}" could not be found`);
+                        return;
                     }
-                };
+                    modal.classList.add("phpdocumentor-modal__open");
 
-                xhr.send(null);
-            });
-        }
-
-        var modals = document.querySelectorAll("[data-modal]");
-
-        modals.forEach(function (trigger) {
-            trigger.addEventListener("click", function (event) {
-                //event.preventDefault();
-                const modal = document.getElementById(trigger.dataset.modal);
-                modal.classList.add("phpdocumentor-modal__open");
-                loadExternalCodeSnippets(trigger.dataset.line)
-                const exits = modal.querySelectorAll("[data-exit-button]");
-                exits.forEach(function (exit) {
-                    exit.addEventListener("click", function (event) {
-                        event.preventDefault();
-                        modal.classList.remove("phpdocumentor-modal__open");
+                    loadExternalCodeSnippet(modal, trigger.dataset.src || null, trigger.dataset.line)
+                    const exits = modal.querySelectorAll("[data-exit-button]");
+                    exits.forEach(function (exit) {
+                        exit.addEventListener("click", function (event) {
+                            event.preventDefault();
+                            modal.classList.remove("phpdocumentor-modal__open");
+                        });
                     });
                 });
             });
-        });
+        })();
     </script>
 
     </article>
-                <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
+                                </section>
+                <section class="phpdocumentor-on-this-page__sidebar">
+                                
+    <section class="phpdocumentor-on-this-page__content">
+        <strong class="phpdocumentor-on-this-page__title">On this page</strong>
+
+        <ul class="phpdocumentor-list -clean">
+            <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                                            <li><a href="classes/Gac-Routing-Response.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/Gac-Routing-Response.html#toc-methods">Methods</a></li>
+                                    </ul>
+            </li>
+            
+                            <li class="phpdocumentor-on-this-page-section__title">Properties</li>
+                <li>
+                    <ul class="phpdocumentor-list -clean">
+                                                    <li><a href="classes/Gac-Routing-Response.html#property_body">$body<a href="classes/Gac-Routing-Response.html"></li>
+                                                    <li><a href="classes/Gac-Routing-Response.html#property_httpVersion">$httpVersion<a href="classes/Gac-Routing-Response.html"></li>
+                                                    <li><a href="classes/Gac-Routing-Response.html#property_instance">$instance<a href="classes/Gac-Routing-Response.html"></li>
+                                                    <li><a href="classes/Gac-Routing-Response.html#property_statusCode">$statusCode<a href="classes/Gac-Routing-Response.html"></li>
+                                                    <li><a href="classes/Gac-Routing-Response.html#property_statusMessage">$statusMessage<a href="classes/Gac-Routing-Response.html"></li>
+                                            </ul>
+                </li>
+            
+                        <li class="phpdocumentor-on-this-page-section__title">Methods</li>
+            <li>
+                <ul class="phpdocumentor-list -clean">
+                                            <li><a href="classes/Gac-Routing-Response.html#method_getBody">getBody()</a></li>
+                                            <li><a href="classes/Gac-Routing-Response.html#method_getInstance">getInstance()</a></li>
+                                            <li><a href="classes/Gac-Routing-Response.html#method_getStatusCode">getStatusCode()</a></li>
+                                            <li><a href="classes/Gac-Routing-Response.html#method_getStatusMessage">getStatusMessage()</a></li>
+                                            <li><a href="classes/Gac-Routing-Response.html#method_json">json()</a></li>
+                                            <li><a href="classes/Gac-Routing-Response.html#method_send">send()</a></li>
+                                            <li><a href="classes/Gac-Routing-Response.html#method_setHttpVersion">setHttpVersion()</a></li>
+                                            <li><a href="classes/Gac-Routing-Response.html#method_setStatusCode">setStatusCode()</a></li>
+                                            <li><a href="classes/Gac-Routing-Response.html#method_setStatusMessage">setStatusMessage()</a></li>
+                                            <li><a href="classes/Gac-Routing-Response.html#method_withBody">withBody()</a></li>
+                                            <li><a href="classes/Gac-Routing-Response.html#method_withHeader">withHeader()</a></li>
+                                            <li><a href="classes/Gac-Routing-Response.html#method_withStatus">withStatus()</a></li>
+                                            <li><a href="classes/Gac-Routing-Response.html#method_setHTTPStatus">setHTTPStatus()</a></li>
+                                    </ul>
+            </li>
+                    </ul>
+    </section>
+
+                </section>
+                            </div>
+            <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
     <section class="phpdocumentor-search-results__dialog">
         <header class="phpdocumentor-search-results__header">
             <h2 class="phpdocumentor-search-results__title">Search results</h2>
@@ -1129,7 +1296,6 @@
         </section>
     </section>
 </section>
-            </div>
         </div>
         <a href="classes/Gac-Routing-Response.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
