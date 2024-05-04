@@ -1,12 +1,12 @@
 <?php
 
 	/**
-	 * Custom routing library
-	 *
-	 * @author    Igor Ilić <github@igorilic.net>
-	 * @license   GNU General Public License v3.0
-	 * @copyright 2020-2022 Igor Ilić
-	 */
+     * Custom routing library
+     *
+     * @author    Igor Ilić <github@igorilic.net>
+     * @license   GNU General Public License v3.0
+     * @copyright 2020-2023 Igor Ilić
+     */
 
 	declare( strict_types=1 );
 
@@ -14,15 +14,15 @@
 
 
 	use Closure;
-    use Gac\Routing\Exceptions\CallbackNotFound;
-    use Gac\Routing\Exceptions\RouteNotFoundException;
-    use ReflectionException;
-    use ReflectionFunction;
-    use ReflectionMethod;
-    use ReflectionNamedType;
-    use ReflectionUnionType;
+	use Gac\Routing\Exceptions\CallbackNotFound;
+	use Gac\Routing\Exceptions\RouteNotFoundException;
+	use ReflectionException;
+	use ReflectionFunction;
+	use ReflectionMethod;
+	use ReflectionNamedType;
+	use ReflectionUnionType;
 
-    class Routes
+	class Routes
 	{
 		/**
 		 * @var string GET Constant representing a GET request method
@@ -70,28 +70,29 @@
 		 * @var array $routes List of available routes
 		 */
         private array $routes = [];
-        /**
-         * @var array $routes Temporary holder of route information until it all gets stored in the primary $routes array
-         */
-        private array $tmpRoutes = [];
+	    /**
+	     * @var array $routes Temporary holder of route information until it all gets stored in the primary $routes array
+	     */
+	    private array $tmpRoutes = [];
 
-        /**
-         * @var array|null Array of the current route being processed for eas of access in other methods
-         */
-        private ?array $currentRoute = NULL;
+	    /**
+	     * @var array|null Array of the current route being processed for eas of access in other methods
+	     */
+	    private ?array $currentRoute = NULL;
 
-        /**
-         * @var Response Instance of a Response class to be passed as an argument to routes callback
-         */
-        private Response $response;
+	    /**
+	     * @var Response Instance of a Response class to be passed as an argument to routes callback
+	     */
+	    private Response $response;
 
-        /**
-         * Routes constructor
-         */
-        public function __construct()
-        {
-            $this->request = new Request;
-            $this->response = Response::getInstance();
+
+	    /**
+	     * Routes constructor
+	     */
+	    public function __construct()
+	    {
+		    $this->request = new Request;
+		    $this->response = Response::getInstance();
         }
 
         /**
@@ -395,8 +396,9 @@
 					$function = $key;
 				}
 
-				$parameters = $this->get_all_arguments($function);
+				$parameters = $this->get_all_arguments($function) ?? [];
 				$requestClassIndex = array_search(Request::class, array_values($parameters));
+				$responseClassIndex = array_search(Response::class, array_values($parameters));
 
 				$paramNames = array_keys($parameters);
 				for ( $index = 0; $index < count($parameters); $index++ ) {
@@ -404,6 +406,12 @@
 						$arguments[$index] = $this->request;
 						continue;
 					}
+
+					if ( $index === $responseClassIndex ) {
+						$arguments[$index] = $this->response;
+						continue;
+					}
+
 					$arguments[$index] = $tmpArguments[$index] ?? $namedArguments[$paramNames[$index]] ?? NULL;
 				}
 
