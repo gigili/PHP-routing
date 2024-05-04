@@ -43,6 +43,15 @@
 		}
 
 		/**
+		 * Returns all body request arguments
+		 *
+		 * @return mixed All body arguments
+		 */
+		public function getAllData(): mixed {
+			return $this->data;
+		}
+
+		/**
 		 * Returns list of all the header items or a value of a specified key.
 		 * It will return NULL if the specified key can't be found.
 		 *
