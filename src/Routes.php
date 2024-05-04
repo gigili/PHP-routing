@@ -371,46 +371,54 @@
 		 *
 		 * @throws CallbackNotFound When the specified middleware method is not found
 		 */
-		private function execute_middleware(array $data) : void {
-			$namedArguments = match ( is_null($this->currentRoute) ) {
-				false => $this->get_route_arguments($this->currentRoute, $this->get_path()),
-				default => []
-			};
+        private function execute_middleware(array $data): void
+        {
+            $namedArguments = match (is_null($this->currentRoute)) {
+                false => $this->get_route_arguments($this->currentRoute, $this->get_path()),
+                default => []
+            };
 
-			foreach ( $data as $key => $function ) {
-				$arguments = [];
-				$tmpArguments = [];
+            foreach ( $data as $key => $function ) {
+                $arguments = [];
+                $tmpArguments = [];
 
-				if ( is_integer($key) && is_array($function) ) {
-					$class = $function[0];
-					$method = $function[1];
-					array_shift($function);
-					array_shift($function);
-					$tmpArguments = $function;
-					$function = [ new $class, $method ];
-				}
+                if ( is_integer($key) && is_array($function) ) {
+                    $class = $function[0];
+                    $method = $function[1];
+                    array_shift($function);
+                    array_shift($function);
+                    $tmpArguments = $function;
+                    $function = [new $class, $method];
+                }
 
-				if ( is_string($key) ) {
-					$tmpArguments = [ $function ];
-					$function = $key;
-				}
+                if ( is_string($key) ) {
+                    $tmpArguments = [$function];
+                    $function = $key;
+                }
 
-				$parameters = $this->get_all_arguments($function);
-				$requestClassIndex = array_search(Request::class, array_values($parameters));
+                $parameters = $this->get_all_arguments($function) ?? [];
+                $requestClassIndex = array_search(Request::class, array_values($parameters));
+                $responseClassIndex = array_search(Response::class, array_values($parameters));
 
-				$paramNames = array_keys($parameters);
-				for ( $index = 0; $index < count($parameters); $index++ ) {
-					if ( $index === $requestClassIndex ) {
-						$arguments[$index] = $this->request;
-						continue;
-					}
-					$arguments[$index] = $tmpArguments[$index] ?? $namedArguments[$paramNames[$index]] ?? NULL;
-				}
+                $paramNames = array_keys($parameters);
+                for ( $index = 0; $index < count($parameters); $index++ ) {
+                    if ( $index === $requestClassIndex ) {
+                        $arguments[$index] = $this->request;
+                        continue;
+                    }
 
-				if ( !is_callable($function) ) throw new CallbackNotFound("Middleware method $function not found", 404);
-				call_user_func($function, ...$arguments);
-			}
-		}
+                    if ( $index === $responseClassIndex ) {
+                        $arguments[$index] = $this->response;
+                        continue;
+                    }
+
+                    $arguments[$index] = $tmpArguments[$index] ?? $namedArguments[$paramNames[$index]] ?? NULL;
+                }
+
+                if ( !is_callable($function) ) throw new CallbackNotFound("Middleware method $function not found", 404);
+                call_user_func($function, ...$arguments);
+            }
+        }
 
 		/**
 		 * Private method used to fetch the arguments of the route's callback methods
