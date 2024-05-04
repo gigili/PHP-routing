@@ -28,8 +28,8 @@ class Request
             }
         }
 
-        if(is_string($input) && str_contains($input, "Content-Disposition")){
-            $input = $this->parse_raw_form_data($input);
+        if ( is_array($input) && str_contains(array_keys($input)[0], "Content-Disposition") ) {
+            $input = $this->parse_raw_form_data();
         }
 
         $_REQUEST = array_merge($_REQUEST, (array)$input);
@@ -255,9 +255,11 @@ class Request
      *
      * @return array Returns parsed raw form data into an array
      */
-    private function parse_raw_form_data($input): array
+    private function parse_raw_form_data(): array
     {
         $a_data = [];
+
+        $input = file_get_contents('php://input');
 
         // grab multipart boundary from content type header
         preg_match('/boundary=(.*)$/', $_SERVER['CONTENT_TYPE'], $matches);
