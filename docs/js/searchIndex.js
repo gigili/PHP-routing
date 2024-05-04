@@ -36,6 +36,11 @@ Search.appendIndex(
             "summary": "Returns\u0020a\u0020value\u0020for\u0020a\u0020specified\u0020body\u0020argument",
             "url": "classes/Gac-Routing-Request.html#method_get"
         },                {
+            "fqsen": "\\Gac\\Routing\\Request\u003A\u003AgetAllData\u0028\u0029",
+            "name": "getAllData",
+            "summary": "Returns\u0020all\u0020body\u0020request\u0020arguments",
+            "url": "classes/Gac-Routing-Request.html#method_getAllData"
+        },                {
             "fqsen": "\\Gac\\Routing\\Request\u003A\u003Aheaders\u0028\u0029",
             "name": "headers",
             "summary": "Returns\u0020list\u0020of\u0020all\u0020the\u0020header\u0020items\u0020or\u0020a\u0020value\u0020of\u0020a\u0020specified\u0020key.",
