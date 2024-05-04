@@ -28,8 +28,11 @@ class Request
             }
         }
 
-        if ( is_array($input) && str_contains(array_keys($input)[0], "Content-Disposition") ) {
-            $input = $this->parse_raw_form_data();
+        if ( is_array($input) ) {
+            $keys = array_keys($input);
+            if ( isset($keys[0]) && str_contains($keys[0], "Content-Disposition") ) {
+                $input = $this->parse_raw_form_data();
+            }
         }
 
         $_REQUEST = array_merge($_REQUEST, (array)$input);
