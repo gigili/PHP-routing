@@ -71,6 +71,11 @@ Search.appendIndex(
             "summary": "Private\u0020method\u0020used\u0020for\u0020parsing\u0020request\u0020body\u0020data\u0020for\u0020PUT\u0020and\u0020PATCH\u0020requests",
             "url": "classes/Gac-Routing-Request.html#method_parse_patch_and_put_request_data"
         },                {
+            "fqsen": "\\Gac\\Routing\\Request\u003A\u003Aparse_raw_form_data\u0028\u0029",
+            "name": "parse_raw_form_data",
+            "summary": "Parse\u0020raw\u0020form\u0020input\u0020data\u0020back\u0020into\u0020an\u0020array",
+            "url": "classes/Gac-Routing-Request.html#method_parse_raw_form_data"
+        },                {
             "fqsen": "\\Gac\\Routing\\Request\u003A\u003A\u0024data",
             "name": "data",
             "summary": "",
