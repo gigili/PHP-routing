@@ -183,87 +183,87 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "Routes\u0020constructor",
+            "summary": "Routes\u0020constructor.",
             "url": "classes/Gac-Routing-Routes.html#method___construct"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aadd\u0028\u0029",
             "name": "add",
-            "summary": "Method\u0020used\u0020for\u0020adding\u0020new\u0020routes",
+            "summary": "Adds\u0020a\u0020new\u0020route\u0020to\u0020the\u0020routing\u0020system.",
             "url": "classes/Gac-Routing-Routes.html#method_add"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aroute\u0028\u0029",
             "name": "route",
-            "summary": "Method\u0020used\u0020for\u0020adding\u0020new\u0020routes\u0020into\u0020the\u0020temporary\u0020list\u0020when\u0020using\u0020chained\u0020method\u0020approach",
+            "summary": "Adds\u0020a\u0020new\u0020route\u0020to\u0020the\u0020temporary\u0020route\u0020list\u0020for\u0020chained\u0020method\u0020calls.",
             "url": "classes/Gac-Routing-Routes.html#method_route"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Asave\u0028\u0029",
             "name": "save",
-            "summary": "Method\u0020used\u0020for\u0020saving\u0020routing\u0020information\u0020into\u0020the\u0020global\u0020\u0024routes\u0020array",
+            "summary": "Commits\u0020temporary\u0020routes\u0020to\u0020the\u0020main\u0020route\u0020list.",
             "url": "classes/Gac-Routing-Routes.html#method_save"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Ahandle\u0028\u0029",
             "name": "handle",
-            "summary": "Method\u0020used\u0020to\u0020handle\u0020execution\u0020of\u0020routes\u0020and\u0020middlewares",
+            "summary": "Handles\u0020the\u0020execution\u0020of\u0020the\u0020routes\u0020and\u0020their\u0020associated\u0020middlewares.",
             "url": "classes/Gac-Routing-Routes.html#method_handle"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aget_route_arguments\u0028\u0029",
             "name": "get_route_arguments",
-            "summary": "Method\u0020used\u0020for\u0020getting\u0020a\u0020list\u0020of\u0020arguments\u0020for\u0020a\u0020route",
+            "summary": "Retrieves\u0020the\u0020arguments\u0020for\u0020a\u0020given\u0020route\u0020based\u0020on\u0020the\u0020URL\u0020path.",
             "url": "classes/Gac-Routing-Routes.html#method_get_route_arguments"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Asetup_callback\u0028\u0029",
             "name": "setup_callback",
-            "summary": "Method\u0020used\u0020to\u0020set\u0020up\u0020callback\u0020properties\u0020for\u0020routes",
+            "summary": "Sets\u0020up\u0020the\u0020callback\u0020properties\u0020for\u0020a\u0020route.",
             "url": "classes/Gac-Routing-Routes.html#method_setup_callback"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aget_path\u0028\u0029",
             "name": "get_path",
-            "summary": "Method\u0020which\u0020returns\u0020the\u0020current\u0020path\u0020the\u0020user\u0020is\u0020trying\u0020to\u0020access",
+            "summary": "Returns\u0020the\u0020current\u0020URL\u0020path.",
             "url": "classes/Gac-Routing-Routes.html#method_get_path"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aexecute_middleware\u0028\u0029",
             "name": "execute_middleware",
-            "summary": "Method\u0020which\u0020executes\u0020each\u0020specified\u0020middleware\u0020before\u0020the\u0020route\u0027s\u0020callback\u0020is\u0020executed",
+            "summary": "Executes\u0020all\u0020specified\u0020middleware\u0020before\u0020the\u0020route\u0027s\u0020callback.",
             "url": "classes/Gac-Routing-Routes.html#method_execute_middleware"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aget_all_arguments\u0028\u0029",
             "name": "get_all_arguments",
-            "summary": "Private\u0020method\u0020used\u0020to\u0020fetch\u0020the\u0020arguments\u0020of\u0020the\u0020route\u0027s\u0020callback\u0020methods",
+            "summary": "Retrieves\u0020the\u0020arguments\u0020for\u0020the\u0020route\u0027s\u0020callback\u0020method.",
             "url": "classes/Gac-Routing-Routes.html#method_get_all_arguments"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aget_routes\u0028\u0029",
             "name": "get_routes",
-            "summary": "Method\u0020used\u0020for\u0020fetching\u0020a\u0020list\u0020of\u0020all\u0020the\u0020created\u0020routes",
+            "summary": "Retrieves\u0020a\u0020list\u0020of\u0020all\u0020defined\u0020routes.",
             "url": "classes/Gac-Routing-Routes.html#method_get_routes"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aget\u0028\u0029",
             "name": "get",
-            "summary": "Wrapper\u0020method\u0020used\u0020for\u0020adding\u0020new\u0020GET\u0020routes",
+            "summary": "Wrapper\u0020method\u0020for\u0020adding\u0020a\u0020new\u0020GET\u0020route.",
             "url": "classes/Gac-Routing-Routes.html#method_get"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Apost\u0028\u0029",
             "name": "post",
-            "summary": "Wrapper\u0020method\u0020used\u0020for\u0020adding\u0020new\u0020POST\u0020routes",
+            "summary": "Wrapper\u0020method\u0020for\u0020adding\u0020a\u0020new\u0020POST\u0020route.",
             "url": "classes/Gac-Routing-Routes.html#method_post"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aput\u0028\u0029",
             "name": "put",
-            "summary": "Wrapper\u0020method\u0020used\u0020for\u0020adding\u0020new\u0020PUT\u0020routes",
+            "summary": "Wrapper\u0020method\u0020for\u0020adding\u0020a\u0020new\u0020PUT\u0020route.",
             "url": "classes/Gac-Routing-Routes.html#method_put"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Apatch\u0028\u0029",
             "name": "patch",
-            "summary": "Wrapper\u0020method\u0020used\u0020for\u0020adding\u0020new\u0020PATCH\u0020routes",
+            "summary": "Wrapper\u0020method\u0020for\u0020adding\u0020a\u0020new\u0020PATCH\u0020route.",
             "url": "classes/Gac-Routing-Routes.html#method_patch"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Adelete\u0028\u0029",
             "name": "delete",
-            "summary": "Wrapper\u0020method\u0020used\u0020for\u0020adding\u0020new\u0020DELETE\u0020routes",
+            "summary": "Wrapper\u0020method\u0020for\u0020adding\u0020a\u0020new\u0020DELETE\u0020route.",
             "url": "classes/Gac-Routing-Routes.html#method_delete"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aoptions\u0028\u0029",
             "name": "options",
-            "summary": "Wrapper\u0020method\u0020used\u0020for\u0020adding\u0020new\u0020OPTIONS\u0020routes",
+            "summary": "Wrapper\u0020method\u0020for\u0020adding\u0020a\u0020new\u0020OPTIONS\u0020route.",
             "url": "classes/Gac-Routing-Routes.html#method_options"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003A\u0024prefix",
@@ -273,12 +273,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Amiddleware\u0028\u0029",
             "name": "middleware",
-            "summary": "Method\u0020used\u0020to\u0020set\u0020the\u0020middlewares\u0020for\u0020routes",
+            "summary": "Sets\u0020the\u0020middlewares\u0020to\u0020be\u0020applied\u0020to\u0020routes.",
             "url": "classes/Gac-Routing-Routes.html#method_middleware"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003Aappend\u0028\u0029",
             "name": "append",
-            "summary": "Method\u0020used\u0020to\u0020append\u0020more\u0020routes\u0020to\u0020the\u0020main\u0020route\u0020handler",
+            "summary": "Appends\u0020additional\u0020routes\u0020to\u0020the\u0020main\u0020route\u0020handler.",
             "url": "classes/Gac-Routing-Routes.html#method_append"
         },                {
             "fqsen": "\\Gac\\Routing\\Routes\u003A\u003AGET",
