@@ -216,6 +216,20 @@ $routes
 Every middleware function can also accept an argument of type `Gac\Routing\Request` at any position as long as it has
 the proper type specified.
 
+### Optional parameters
+
+```php
+$routes->add(
+    '/demo/{id?}',
+    function($id = 'defaultValue'){
+    	echo "ID: . $id";
+    },
+    Routes::GET
+);
+```
+
+When calling this endpoint with `/demo` it will output `ID: defaultValue` and with `/demo/123` it will output `ID: 123`
+
 ### Dependency injection on route classes
 
 When using classes to handle your route callback, and those classes have some dependencies that need to be injected
@@ -296,6 +310,7 @@ Source code documentation can be found at [PHP Routing documentation](https://gi
 
 * [x] Static routes
 * [x] Dynamic routes
+* [x] Dynamic routes with optional parameters
 * [x] Middlewares
   * [x] Pass arguments to middlewares
 * [x] Route prefixes
