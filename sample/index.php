@@ -3,16 +3,16 @@
 
 	/** @noinspection PhpUnusedParameterInspection */
 
-	use Gac\Routing\Exceptions\CallbackNotFound;
-	use Gac\Routing\Exceptions\RouteNotFoundException;
-	use Gac\Routing\Request;
-	use Gac\Routing\Routes;
-	use Gac\Routing\sample\HomeController;
-	use Gac\Routing\sample\InjectController;
-	use Gac\Routing\sample\InjectedClass;
-	use Gac\Routing\sample\Middleware;
+use Gac\Routing\Exceptions\CallbackNotFound;
+use Gac\Routing\Exceptions\RouteNotFoundException;
+use Gac\Routing\Request;
+use Gac\Routing\Routes;
+use Gac\Routing\sample\HomeController;
+use Gac\Routing\sample\InjectController;
+use Gac\Routing\sample\InjectedClass;
+use Gac\Routing\sample\Middleware;
 
-	#include_once "../Routes.php"; # IF YOU'RE NOT USING composer
+#include_once "../Routes.php"; # IF YOU'RE NOT USING composer
 	#include_once "HomeController.php"; # IF YOU'RE NOT USING composer
 
 	include_once '../vendor/autoload.php'; # IF YOU'RE USING composer
@@ -160,7 +160,9 @@
 		//This $otherRoutes variable could be defined in a different file and included here only via require or include
 		$otherRoutes = new Routes();
 		$otherRoutes->prefix("/sample")
-					->get("/", function (Request $request) { })
+				->get("/", function (Request $request) {
+					echo "hello";
+				})
 					->get("/sample1", function (Request $request) { })
 					->get("/sample2", function (Request $request) { })
 					->save();
@@ -186,6 +188,14 @@
 			"/inject",
 			[ InjectController::class ]
 		);
+
+		#echo "<pre>";
+		#print_r($routes->get_routes());
+		#die(1);
+
+		$routes->get("/optional/{id?}", function (Request $request, $id = -999) {
+			echo "Optional route here with id: $id";
+		});
 
 		$routes->handle();
 	} catch ( RouteNotFoundException $ex ) {

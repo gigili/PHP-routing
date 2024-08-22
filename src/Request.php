@@ -183,8 +183,11 @@ class Request
         /* Close the streams */
         fclose($putData);
 
-        // Fetch content and determine boundary
-        $boundary = substr($raw_data, 0, strpos($raw_data, "\r\n"));
+		$index = strpos($raw_data, "\r\n");
+		$index = $index === false ? 0 : $index;
+
+		// Fetch content and determine boundary
+		$boundary = substr($raw_data, 0, $index);
 
         if ( empty($boundary) ) {
             parse_str($raw_data, $data);
